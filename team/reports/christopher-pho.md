@@ -1,5 +1,17 @@
 ## Contribution Log for Christopher Pho
 
+### November 1, 2024
+- **Task**: Lead weekly scheduled meeting during Friday lab time
+- **Details**: Checked in with team members on progress with ongoing tasks and facilitated communication of blockers. Started discussion of potential names we could use for the final product.
+- **Link to Commit**: N/A
+
+
+### October 25, 2024
+- **Task**: Lead weekly scheduled meeting during Friday lab time
+- **Details**: Went through Milestone #3 requirements, created tasks for each feature, assigned point values to each task, and assigned tasks to group members.
+- **Link to Commit**: N/A
+
+
 ### October 21, 2024
 - **Task**: Lead team meeting for Milestone #2, update problem.md, update users.md, update roles.md, christopher-pho.md
 - **Details**: Created meeting notes template, lead discussion on all files of Milestone #2 submission, updated personal roles.md submission and personal contributions log.
