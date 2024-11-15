@@ -1,6 +1,6 @@
 import { Service } from "./service.js";
 import { Events } from "../eventhub/Events.js";
-import { fetch } from "../fetch.js";
+import { fetch } from "../utility/fetch.js";
 
 export class TranslationService extends Service {
   constructor() {
