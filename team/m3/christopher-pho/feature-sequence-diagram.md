@@ -38,3 +38,27 @@ Feedback should be displayed when an exercise is answered correctly or incorrect
 
 When an exercise is answered, it should be scored and this attempt will be stored per user to track exercise progress over time.
 
+```mermaid
+sequenceDiagram
+actor user
+participant app as application
+participant db as IndexedDB
+
+    Note over user,db: Creating a new exercise
+    user->>app: Accesses Exercise page
+    app-->>user: Display exercise builder
+    user->>app: Input exercise details to be cached
+    app->>db: Cache new exercise
+
+    Note over user,db: Doing an exercise
+    user->>app: Accesses Exercise page
+    app->>db: Request cached exercises
+    db-->>app: Send cached exercise library
+    app-->>user: Displays exercise library
+    user->>app: Choose specific exercise
+    app-->>user: Displays specific exercise
+    user->>app: Input and submit answers
+    app-->>user: Give score and feedback
+    app->>db: Track user progress on exercise
+    
+```
