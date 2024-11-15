@@ -7,6 +7,39 @@
     <title>Language Learning App (name tbd)</title>
   </head>
   <body>
+    <header>
+      <img class="logo" src="logo.png" alt="logo">
+      <nav>
+          <ul class="nav__links">
+              <li class="dropdown"><a href="#" id="language-select">Select Language</a>
+                  <ul class="dropdown-content">
+                      <li><a href="#" class="language-option" data-language="Spanish">Spanish</a></li>
+                      <li><a href="#" class="language-option" data-language="English">English</a></li>
+                      <li><a href="#" class="language-option" data-language="French">French</a></li>
+                      <li><a href="#" class="language-option" data-language="German">German</a></li>
+                  </ul>
+              </li>
+              <li><a href="#">Flashcard</a></li>
+              <li><a href="#">Exercises</a></li>
+              <li><a href="#">Translate</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Contact</a></li>
+          </ul>
+      </nav>
+      <div class="profile-container">
+          <button class="profile-button" onclick="toggleProfileMenu()">👤</button>
+          <div class="profile-dropdown" id="profileDropdown">
+              <ul>
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="#">Logout</a></li>
+              </ul>
+          </div>
+      </div>
+  </header>
+  <footer class="footer">
+      All rights reserved © Language Study App
+  </footer>
     <div id="app"></div>
     <link rel="stylesheet" href="main.css">
     <script type="module" src="./main.js"></script>
