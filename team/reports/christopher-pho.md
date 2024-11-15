@@ -1,5 +1,17 @@
 ## Contribution Log for Christopher Pho
 
+### November 15, 2024
+- **Task**: Fixed folder structure and lead weekly scheduled meeting during Friday lab time
+- **Details**: Worked with Alex Tong to merge his pull request (PR #7 and #12) to the main branch. 
+- **Link to Commit**: [Merge pull request #12](https://github.com/chrispho/language-study-app/commit/3102d8896d21e1efd10500c90a0f85f474a463b0)
+
+
+### November 14, 2024
+- **Task**: Wrote sequence diagram, worked on exercise page, and reviewed code
+- **Details**: Wrote sequence diagram for exercise page. Created the basis for a dynamically-updating single page application and general folder structure of the front end. Implemented rudimentary exercise page functionality. Reviewed team members code, approving and requesting changes as needed.
+- **Link to Commit**: [write feature descriptions for exercise page](https://github.com/chrispho/language-study-app/commit/cd9435e3d8234839c50b8cbe8b9e9a7913432ebf) [exercise mermaid sequence diagram](https://github.com/chrispho/language-study-app/commit/855e05c4fff6215d908df97d65852e154cba3612) [html boilerplate and folder structure](https://github.com/chrispho/language-study-app/commit/3f3d71a3472d56d62c2c39fe99a41e5a8f84786f) [type buttons and changes to exercise script](https://github.com/chrispho/language-study-app/commit/c493506f8eb4646a5968034bc8a6d0ee2a138822)
+
+
 ### November 1, 2024
 - **Task**: Lead weekly scheduled meeting during Friday lab time
 - **Details**: Checked in with team members on progress with ongoing tasks and facilitated communication of blockers. Started discussion of potential names we could use for the final product.
