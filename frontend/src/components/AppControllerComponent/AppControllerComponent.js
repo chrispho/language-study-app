@@ -1,5 +1,6 @@
 import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/landingpagecomponent.js";
+import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 // import { Events } from "../../eventhub/Events";
 // TODO add imports for each component
 
@@ -7,11 +8,13 @@ export class AppControllerComponent {
   #container = null; // Private container for the component
   #currentView = "main"; // Track the current view ('main' or 'simple')
   #landingPageComponent = null; // Instance of the main task list component
+  #exercisePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
     this.#hub = EventHub.getInstance();
     this.#landingPageComponent = new LandingPageComponent();
+    this.#exercisePageComponent = new ExercisePageComponent();
     // TODO add variables for each page/component
   }
 
@@ -71,6 +74,7 @@ export class AppControllerComponent {
       All rights reserved © Language Study App
   </footer>
     `; // TODO whoever is making multiui view: add more buttons for each page
+    // <button id="switchViewBtn">Switch to Simple View</button>
   }
 
   // Attaches the necessary event listeners
@@ -143,7 +147,8 @@ this.#hub.subscribe('LanguageChanged', (data) => {
 
     switch (this.#currentView) {
       case "main":
-        viewContainer.appendChild(this.#landingPageComponent.render())
+        viewContainer.appendChild(this.#exercisePageComponent.render())
+        // viewContainer.appendChild(this.#mainpagecomponent.render())
         break;
     }
   }
