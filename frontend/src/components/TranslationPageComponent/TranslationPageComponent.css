@@ -1,0 +1,76 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.submit-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: black;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #d0d0d0;
+  border-radius: 10px;
+  padding:15px;
+  width:80%;
+  margin:auto
+}
+
+.translationSection{
+  display:flex; 
+  flex-direction: row;
+  margin: auto;
+  width:100%;
+}
+
+.inputSide {
+  display: flex;
+  flex-direction: column;
+  padding: 5vh;
+  width: 50%;
+}
+
+.outputSide{
+  display: flex;
+  flex-direction: column;
+  padding: 5vh;
+  width: 50%;
+}
+
+#output, #input {
+  height: 20vh;
+  font-size: 20px;
+  
+}
+
+#input_lang, #output_lang{
+  font-size: 20px
+}
+
+.arrow{
+  margin:auto
+}

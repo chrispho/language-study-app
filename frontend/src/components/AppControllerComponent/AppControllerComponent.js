@@ -2,6 +2,7 @@ import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { Events } from "../../eventhub/Events.js";
+import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
 // TODO add imports for each component
 
 export class AppControllerComponent {
@@ -14,7 +15,7 @@ export class AppControllerComponent {
   constructor() {
     this.#hub = EventHub.getInstance();
     this.#landingPageComponent = new LandingPageComponent();
-    this.#exercisePageComponent = new ExercisePageComponent();
+    this.#exercisePageComponent = new TranslationPageComponent();
     // TODO add variables for each page/component
   }
 
