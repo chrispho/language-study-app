@@ -38,34 +38,34 @@ export class ExercisePageComponent extends Component {
   #setupContainerContent() {
     this.#container.innerHTML = `
       <div class="container">
-      <h1>LET'S PRACTICE!</h1>
-      <p class="exercise-type">Q1. Choose the correct option</p>
-      <div class="question-box">
-          <p>Your friend tells you, <em>Son las siete y cinco.</em> What time is it?</p>
-          <label>
-            <input type="radio" name="answer" value="5:17">
-            5:17
-          </label>
-          <label>
-            <input type="radio" name="answer" value="7:15">
-            7:15
-          </label>
-          <label>
-            <input type="radio" name="answer" value="5:07">
-            5:07
-          </label> 
-          <label>
-            <input type="radio" name="answer" value="7:05">
-            7:05
-          </label> 
-          <div>
-            <button class="submit-btn">SUBMIT</button>
-          </div>
-      </div>
+        <h1>LET'S PRACTICE!</h1>
+        <p class="exercise-type">Q1. Choose the correct option</p>
+        <div class="question-box">
+            <p>Your friend tells you, <em>Son las siete y cinco.</em> What time is it?</p>
+            <label>
+              <input type="radio" name="answer" value="5:17">
+              5:17
+            </label>
+            <label>
+              <input type="radio" name="answer" value="7:15">
+              7:15
+            </label>
+            <label>
+              <input type="radio" name="answer" value="5:07">
+              5:07
+            </label> 
+            <label>
+              <input type="radio" name="answer" value="7:05">
+              7:05
+            </label> 
+            <div>
+              <button class="submit-btn">SUBMIT</button>
+            </div>
+        </div>
         <div class="feedback-panel">
-            <button class="try-again-btn">TRY AGAIN</button>
-            <button class="correct-btn">CORRECT</button>
-            <button class="next-btn">NEXT</button>
+          <button class="try-again-btn">TRY AGAIN</button>
+          <button class="correct-btn">CORRECT</button>
+          <button class="next-btn">NEXT</button>
         </div>
       </div>
 
@@ -92,8 +92,11 @@ export class ExercisePageComponent extends Component {
   #attachEventListeners() {
     const backToMainViewBtn = this.#container.querySelector('#backToMainViewBtn');
 
-    // const submitBtn = document.getElementsByClassName("submit-btn")
-    // submitBtn.addEventListener("onclick", () => {
+    const submitBtn = this.#container.getElementsByClassName("submit-btn")
+    const feedbackPanel = this.#container.getElementsByClassName("feedback-panel")
+    submitBtn[0].addEventListener("click", () => {
+      feedbackPanel[0].classList.add("visible");
+    })
       
     // })
 
