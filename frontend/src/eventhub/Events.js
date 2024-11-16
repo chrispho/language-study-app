@@ -3,5 +3,11 @@ export const Events = {
 
   Translate: "Translate",
   TranslateSuccess: "TranslateSuccess",
-  TranslateFailure: "TranslateFailure"
+  TranslateFailure: "TranslateFailure",
+
+  RedirectToHomepage: "RedirectToHomepage",
+  ToggleProfileMenu: "ToggleProfileMenu",
+  CloseProfileMenu: "CloseProfileMenu",
+  LanguageChanged: "LanguageChanged",
+  
 }

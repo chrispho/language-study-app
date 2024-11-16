@@ -1,4 +1,4 @@
-import { TranslationService } from "./translationService";
+import { TranslationService } from "./translationService.js";
 
 export class TranslationFactory {
   constructor(){

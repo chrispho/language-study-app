@@ -1,17 +1,20 @@
 import { EventHub } from "../../eventhub/EventHub.js";
-import { LandingPageComponent } from "../LandingPageComponent/landingpagecomponent.js";
-// import { Events } from "../../eventhub/Events";
+import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
+import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
+import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
 
 export class AppControllerComponent {
   #container = null; // Private container for the component
   #currentView = "main"; // Track the current view ('main' or 'simple')
-  #landingPageComponent = null; // Instance of the main task list component
+  #landingPageComponent = null; 
+  #exercisePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
     this.#hub = EventHub.getInstance();
     this.#landingPageComponent = new LandingPageComponent();
+    this.#exercisePageComponent = new ExercisePageComponent();
     // TODO add variables for each page/component
   }
 
@@ -70,71 +73,76 @@ export class AppControllerComponent {
     <footer class="footer">
       All rights reserved © Language Study App
   </footer>
-    `; // TODO whoever is making multiui view: add more buttons for each page
+    `;
+    // <button id="switchViewBtn">Switch to Simple View</button>
   }
 
   // Attaches the necessary event listeners
   #attachEventListeners() {
     // TODO whoever is making multiui view: add multiple buttons and then add listeners to publish the corresponding events
     // const switchViewBtn = this.#container.querySelector("#switchViewBtn");
-    
-// Redirect to the homepage when the logo is clicked
-const logo = this.#container.querySelector('.logo');
-logo.addEventListener('click', () => {
-  this.#hub.publish('RedirectToHomepage');
-});
 
-// Subscribe to the 'RedirectToHomepage' event and handle the redirection
-this.#hub.subscribe('RedirectToHomepage', () => {
-  window.location.href = 'index.html';
-});
-
-// Profile Menu Functionality
-const profileButton = this.#container.querySelector('.profile-button');
-const profileDropdown = this.#container.querySelector('#profileDropdown');
-
-// Toggle profile menu when the button is clicked
-profileButton.addEventListener('click', () => {
-  this.#hub.publish('ToggleProfileMenu');
-});
-
-// Subscribe to 'ToggleProfileMenu' and toggle visibility of profile dropdown
-this.#hub.subscribe('ToggleProfileMenu', () => {
-  profileDropdown.style.display =
-    profileDropdown.style.display === 'block' ? 'none' : 'block';
-});
-
-// Close the profile menu when clicking outside of it
-window.addEventListener('click', (event) => {
-  if (!profileDropdown.contains(event.target) && event.target !== profileButton) {
-    this.#hub.publish('CloseProfileMenu');
-  }
-});
-
-// Subscribe to 'CloseProfileMenu' to hide the dropdown
-this.#hub.subscribe('CloseProfileMenu', () => {
-  profileDropdown.style.display = 'none';
-});
-
-// Language Selection Functionality
-const languageSelection = this.#container.querySelector('#language-select');
-const languageOptions = this.#container.querySelectorAll('.language-option');
-
-// Update selected language when a language option is clicked
-languageOptions.forEach((option) => {
-  option.addEventListener('click', (event) => {
-    event.preventDefault();
-    this.#hub.publish('LanguageChanged', {
-      selectedLanguage: option.getAttribute('data-language'),
+    // Redirect to the homepage when the logo is clicked
+    const logo = this.#container.querySelector(".logo");
+    logo.addEventListener("click", () => {
+      this.#hub.publish("RedirectToHomepage");
     });
-  });
-});
 
-// Subscribe to 'LanguageChanged' and update the language selection text
-this.#hub.subscribe('LanguageChanged', (data) => {
-  languageSelection.textContent = data.selectedLanguage;
-});
-}
+    // Subscribe to the 'RedirectToHomepage' event and handle the redirection
+    this.#hub.subscribe("RedirectToHomepage", () => {
+      window.location.href = "index.html";
+    });
+
+    // Profile Menu Functionality
+    const profileButton = this.#container.querySelector(".profile-button");
+    const profileDropdown = this.#container.querySelector("#profileDropdown");
+
+    // Toggle profile menu when the button is clicked
+    profileButton.addEventListener("click", () => {
+      this.#hub.publish("ToggleProfileMenu");
+    });
+
+    // Subscribe to 'ToggleProfileMenu' and toggle visibility of profile dropdown
+    this.#hub.subscribe("ToggleProfileMenu", () => {
+      profileDropdown.style.display =
+        profileDropdown.style.display === "block" ? "none" : "block";
+    });
+
+    // Close the profile menu when clicking outside of it
+    window.addEventListener("click", (event) => {
+      if (
+        !profileDropdown.contains(event.target) &&
+        event.target !== profileButton
+      ) {
+        this.#hub.publish("CloseProfileMenu");
+      }
+    });
+
+    // Subscribe to 'CloseProfileMenu' to hide the dropdown
+    this.#hub.subscribe("CloseProfileMenu", () => {
+      profileDropdown.style.display = "none";
+    });
+
+    // Language Selection Functionality
+    const languageSelection = this.#container.querySelector("#language-select");
+    const languageOptions =
+      this.#container.querySelectorAll(".language-option");
+
+    // Update selected language when a language option is clicked
+    languageOptions.forEach((option) => {
+      option.addEventListener("click", (event) => {
+        event.preventDefault();
+        this.#hub.publish("LanguageChanged", {
+          selectedLanguage: option.getAttribute("data-language"),
+        });
+      });
+    });
+
+    // Subscribe to 'LanguageChanged' and update the language selection text
+    this.#hub.subscribe("LanguageChanged", (data) => {
+      languageSelection.textContent = data.selectedLanguage;
+    });
+  }
 
   // Renders the current view based on the #currentView state
   #renderCurrentView() {
@@ -143,7 +151,8 @@ this.#hub.subscribe('LanguageChanged', (data) => {
 
     switch (this.#currentView) {
       case "main":
-        viewContainer.appendChild(this.#landingPageComponent.render())
+        viewContainer.appendChild(this.#exercisePageComponent.render());
+        // viewContainer.appendChild(this.#mainpagecomponent.render())
         break;
     }
   }
