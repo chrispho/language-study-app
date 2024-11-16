@@ -36,40 +36,86 @@ export class ExercisePageComponent extends Component {
 
   // Sets up the basic HTML structure of the component
   #setupContainerContent() {
-    this.#container.innerHTML = `
-      <div class="container">
-        <h1>LET'S PRACTICE!</h1>
-        <p class="exercise-type">Q1. Choose the correct option</p>
-        <div class="question-box">
-            <p>Your friend tells you, <em>Son las siete y cinco.</em> What time is it?</p>
-            <label>
-              <input type="radio" name="answer" value="5:17">
-              5:17
-            </label>
-            <label>
-              <input type="radio" name="answer" value="7:15">
-              7:15
-            </label>
-            <label>
-              <input type="radio" name="answer" value="5:07">
-              5:07
-            </label> 
-            <label>
-              <input type="radio" name="answer" value="7:05">
-              7:05
-            </label> 
-            <div>
-              <button class="submit-btn">SUBMIT</button>
-            </div>
-        </div>
-        <div class="feedback-panel">
-          <button class="try-again-btn">TRY AGAIN</button>
-          <button class="correct-btn">CORRECT</button>
-          <button class="next-btn">NEXT</button>
-        </div>
-      </div>
+    const mainContainer = document.createElement('div');
+    mainContainer.classList.add('container');
 
-    `;// TODO add inputs here
+    // Create the heading and paragraph
+    const heading = document.createElement('h1');
+    heading.textContent = 'LET\'S PRACTICE!';
+    const exerciseType = document.createElement('p');
+    exerciseType.classList.add('exercise-type');
+    exerciseType.textContent = 'Q1. Choose the correct option';
+
+    // Create the question box
+    const questionBox = document.createElement('div');
+    questionBox.classList.add('question-box');
+
+    // Create the question and answer options
+    const question = document.createElement('p');
+    question.innerHTML = 'Your friend tells you, <b><em>Son las siete y cinco.</em></b> What time is it?';
+    const answerOptions = document.createElement('div');
+
+    // Create individual answer options
+    const options = [
+      { value: '5:17', correct: false},
+      { value: '7:15', correct: false},
+      { value: '5:07', correct: false},
+      { value: '7:05', correct: true}
+    ];
+
+    options.forEach(option => {
+      const optionBox = document.createElement('button');
+      optionBox.classList.add('option-box');
+      optionBox.classList.add(option.correct ? 'correct-option' : 'incorrect-option')
+      const optionText = document.createTextNode(option.value);
+
+      optionBox.addEventListener('click', () => {
+        // Remove the 'selected' class from all option boxes
+        const optionBoxes = document.querySelectorAll('.option-box');
+        optionBoxes.forEach(box => box.classList.remove('selected'));
+
+        // Add the 'selected' class to the clicked option box
+        optionBox.classList.add('selected');
+      });
+      optionBox.appendChild(optionText);
+      answerOptions.appendChild(optionBox);
+    });
+
+    // Create the submit button
+    const submitButton = document.createElement('button');
+    submitButton.classList.add('submit-btn');
+    submitButton.textContent = 'SUBMIT';
+    const submitButtonContainer = document.createElement('div');
+    submitButtonContainer.appendChild(submitButton);
+
+    // Append elements to the question box
+    questionBox.appendChild(question);
+    questionBox.appendChild(answerOptions);
+    questionBox.appendChild(submitButtonContainer);
+
+    // Create the feedback panel
+    const feedbackPanel = document.createElement('div');
+    feedbackPanel.classList.add('feedback-panel');
+
+    // Create the try again and next buttons
+    const tryAgainButton = document.createElement('button');
+    tryAgainButton.classList.add('try-again-btn');
+    tryAgainButton.textContent = 'TRY AGAIN';
+    const nextButton = document.createElement('button');
+    nextButton.classList.add('next-btn');
+    nextButton.textContent = 'NEXT';
+
+    // Append buttons to the feedback panel
+    feedbackPanel.appendChild(tryAgainButton);
+    feedbackPanel.appendChild(nextButton);
+
+    // Append all elements to the main container
+    mainContainer.appendChild(heading);
+    mainContainer.appendChild(exerciseType);
+    mainContainer.appendChild(questionBox);
+    mainContainer.appendChild(feedbackPanel);
+
+    this.#container.appendChild(mainContainer)
   }
 
   // Renders the tasks in the list
@@ -96,6 +142,24 @@ export class ExercisePageComponent extends Component {
     const feedbackPanel = this.#container.getElementsByClassName("feedback-panel")
     submitBtn[0].addEventListener("click", () => {
       feedbackPanel[0].classList.add("visible");
+      const options = this.#container.getElementsByClassName("option-box")
+      console.log(options)
+      for (let i = 0; i < options.length; i++) {
+        options[i].classList.add("submitted")
+      }
+    })
+    const tryAgain = this.#container.getElementsByClassName("try-again-btn")
+    tryAgain[0].addEventListener("click", () => {
+      feedbackPanel[0].classList.remove("visible");
+      const options = this.#container.getElementsByClassName("option-box")
+      for (let i = 0; i < options.length; i++) {
+        options[i].classList.remove("submitted")
+        options[i].classList.remove("selected")
+      }
+    })
+    const nextButton = this.#container.getElementsByClassName("next-btn")
+    nextButton[0].addEventListener("click", () => {
+      
     })
       
     // })
