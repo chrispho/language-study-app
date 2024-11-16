@@ -22,12 +22,6 @@ export class ExercisePageComponent extends Component {
     return this.#container;
   }
 
-  // Method to set the list of tasks to display
-  // setTasks(tasks) {
-  //   this.#tasks = tasks;
-  //   this.#renderTasks();
-  // }
-
   // Creates the container element for the component
   #createContainer() {
     this.#container = document.createElement("div");
