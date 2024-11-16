@@ -14,7 +14,7 @@ export class TranslationPageComponent extends Component {
 
   constructor() {
     super();
-    // this.loadCSS("TranslationPageComponent");
+    this.loadCSS("TranslationPageComponent");
   }
 
   // Method to render the component and return the container
