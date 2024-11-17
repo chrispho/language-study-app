@@ -5,6 +5,7 @@ export const Events = {
   RedirectToExercise: "RedirectToExercise",
   RedirectToTranslation: "RedirectToTranslation",
   RedirectToProfile: "RedirectToProfile",
+  RedirectToProfilePage: "RedirectToProfilePage",
 
   ToggleProfileMenu: "ToggleProfileMenu",
   CloseProfileMenu: "CloseProfileMenu",

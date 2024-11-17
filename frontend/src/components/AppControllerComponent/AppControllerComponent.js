@@ -1,7 +1,8 @@
-import { EventHub } from "../../eventhub/EventHub.js";
+ import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
+import { ProfilePageComponent } from "../ProfilePageComponent/ProfilePageComponent.js";
 import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
 
@@ -11,6 +12,7 @@ export class AppControllerComponent {
   #landingPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
+  #profilePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
@@ -18,6 +20,7 @@ export class AppControllerComponent {
     this.#landingPageComponent = new LandingPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
+    this.#profilePageComponent = new ProfilePageComponent();
     // TODO add variables for each page/component
   }
 
@@ -59,6 +62,7 @@ export class AppControllerComponent {
               <li id="translate"><a>Translate</a></li>
               <li id="about"><a>About Us</a></li>
               <li id="contact"><a>Contact</a></li>
+              <li id="profile"><a>Profile</a></li>
           </ul>
       </nav>
       <div class="profile-container">
@@ -100,6 +104,11 @@ export class AppControllerComponent {
       this.#renderCurrentView();
     });
 
+    this.#hub.subscribe(Events.RedirectToProfilePage, () => {
+      this.#currentView = "profile";
+      this.#renderCurrentView();
+    });
+
     // Add events listeners to publish redirection events
     const logo = this.#container.querySelector(".logo");
     logo.addEventListener("click", () => {
@@ -114,6 +123,11 @@ export class AppControllerComponent {
     const exercise = this.#container.querySelector("#exercise");
     exercise.addEventListener("click", () => {
       this.#hub.publish(Events.RedirectToExercise);
+    });
+
+    const profile = this.#container.querySelector("#profile");
+    profile.addEventListener("click", () => {
+      this.#hub.publish(Events.RedirectToProfilePage);
     });
 
     const translate = this.#container.querySelector("#translate");
@@ -191,6 +205,9 @@ export class AppControllerComponent {
       switch (this.#currentView) {
         case "main":
           viewContainer.appendChild(this.#landingPageComponent.render());
+          break;
+        case "profile":
+          viewContainer.appendChild(this.#profilePageComponent.render());
           break;
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
