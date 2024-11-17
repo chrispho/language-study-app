@@ -15,9 +15,6 @@ Next to the recent exercises, there will also be recent flashcard decks. This al
 ### Showcasing trophy progress
 This will show the trophies that the user is working on and display the progress they have achieved so far with earning those trophies. Users collect more as they spend more time learning without our application. 
 
-### Showing time spent on application for each day of the recent week
-This shows the time in minutes/hours that the user has spent learning on our application. They can choose to set a goal for the amount of time they want to allot to practicing each day and this can be used to track it and act as motivation. 
-
 ## Mermaid Diagram for Dashboard Features
 
 ```mermaid
@@ -39,10 +36,5 @@ participant server
     application ->> server: fetch trophy progress
     server ->> application: return trophy data
     application ->> user: display trophies and progress bars
-else showing time spent for the week
-    user ->> application: view time spent for the week
-    application ->> server: fetch time data for the past week
-    server ->> application: return time spent for each day
-    application ->> user: display time spent for each day of the week
   end
 ```

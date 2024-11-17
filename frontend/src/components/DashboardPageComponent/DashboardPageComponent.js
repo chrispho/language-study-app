@@ -1,12 +1,16 @@
 import { Component } from "../Component/Component.js"
+import { EventHub } from "../../eventhub/EventHub.js";
+import { Events } from "../../eventhub/Events.js";
 
 
 export class DashboardPageComponent extends Component {
   #container = null; // Private variable to store the container element
   #tasks = []; // To store task data
+  #hub = null; // EventHub instance for managing events
 
   constructor() {
     super();
+    this.#hub = EventHub.getInstance();
     this.loadCSS('DashboardPageComponent');
   }
 
@@ -55,8 +59,8 @@ export class DashboardPageComponent extends Component {
                             </div>
                             <p>78% Completed</p>
                             <div class="buttons">
-                                <button class="btn" id="exercise-continue-button">Continue</button>
-                                <button class="btn">Restart</button>
+                                <button class="btn exercise-button">Continue</button>
+                                <button class="btn exercise-button">Restart</button>
                             </div>
                         </div>
                         <div class="exercise">
@@ -66,8 +70,8 @@ export class DashboardPageComponent extends Component {
                             </div>
                             <p>78% Completed</p>
                             <div class="buttons">
-                                <button class="btn">Continue</button>
-                                <button class="btn">Restart</button>
+                                <button class="btn exercise-button">Continue</button>
+                                <button class="btn exercise-button">Restart</button>
                             </div>
                         </div>
                         <div class="exercise">
@@ -78,8 +82,8 @@ export class DashboardPageComponent extends Component {
                                 </div>
                                 <p>78% Completed</p>
                                 <div class="buttons">
-                                    <button class="btn">Continue</button>
-                                    <button class="btn">Restart</button>
+                                    <button class="btn exercise-button">Continue</button>
+                                    <button class="btn exercise-button">Restart</button>
                                 </div>
                             </div>
                         </div>
@@ -90,8 +94,8 @@ export class DashboardPageComponent extends Component {
                             </div>
                             <p>78% Completed</p>
                             <div class="buttons">
-                                <button class="btn">Continue</button>
-                                <button class="btn">Restart</button>
+                                <button class="btn exercise-button">Continue</button>
+                                <button class="btn exercise-button">Restart</button>
                             </div>
                         </div>
                     </div>
@@ -105,25 +109,25 @@ export class DashboardPageComponent extends Component {
                             <div class="flashcard">
                                 <h3>Sports</h3>
                                 <div class="buttons">
-                                    <button class="btn review-button">Review</button>
+                                    <button class="btn flashcards-button">Review</button>
                                 </div>
                             </div>
                             <div class="flashcard">
                                 <h3>Drinks</h3>
                                 <div class="buttons">
-                                    <button class="btn">Review</button>
+                                    <button class="btn  flashcards-button">Review</button>
                                 </div>
                             </div>
                             <div class="flashcard">
                                 <h3>Clothes</h3>
                                 <div class="buttons">
-                                    <button class="btn review-button">Review</button>
+                                    <button class="btn flashcards-button">Review</button>
                                 </div>
                             </div>
                             <div class="flashcard">
                                 <h3>Foods</h3>
                                 <div class="buttons">
-                                    <button class="btn review-button">Review</button>
+                                    <button class="btn flashcards-button">Review</button>
                                 </div>
                             </div>
                         </div>
@@ -173,6 +177,21 @@ export class DashboardPageComponent extends Component {
   // Attaches the event listeners to the component
   #attachEventListeners() {
 
+    // all the buttons in the exercises (restart/continue) link to exercises page right now
+    const exerciseButtons = this.#container.querySelectorAll('.exercise-button');
+    exerciseButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            this.#hub.publish(Events.RedirectToExercise);
+        });
+    });
+
+    // all the buttons in the flashcards (review) link to exercises page right now
+    const flashcardsButtons = this.#container.querySelectorAll('.flashcards-button');
+    flashcardsButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            this.#hub.publish(Events.RedirectToFlashcard);
+        });
+    });
 
     // const backToMainViewBtn = this.#container.querySelector('#backToMainViewBtn');
 
