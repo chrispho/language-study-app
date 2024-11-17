@@ -62,14 +62,13 @@ export class AppControllerComponent {
               <li id="translate"><a>Translate</a></li>
               <li id="about"><a>About Us</a></li>
               <li id="contact"><a>Contact</a></li>
-              <li id="profile"><a>Profile</a></li>
           </ul>
       </nav>
       <div class="profile-container">
           <button class="profile-button" onclick="toggleProfileMenu()">👤</button>
           <div class="profile-dropdown" id="profileDropdown">
               <ul>
-                  <li><a>Profile</a></li>
+                  <li id="profile"><a>Profile</a></li>
                   <li><a>Settings</a></li>
                   <li><a>Logout</a></li>
               </ul>
