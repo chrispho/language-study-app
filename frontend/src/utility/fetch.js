@@ -3,7 +3,6 @@ export function fetch(endpoint, data) {
     ok: true,
     status: 200,
     statusText: "OK",
-    url,
     json: undefined,
     text: undefined,
   };
@@ -33,7 +32,6 @@ export function fetch(endpoint, data) {
       } else {
         rej("unknown http method");
       }
-
       res(mockResponse);
     }, timeout);
   });
