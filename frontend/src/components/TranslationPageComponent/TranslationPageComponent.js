@@ -4,13 +4,13 @@ import { Events } from "../../eventhub/Events.js";
 
 export class TranslationPageComponent extends Component {
   #container = null; // Private variable to store the container element
-  #tasks = []; // To store task data
 
   #inputLangElem = null;
   #inputElem = null;
   #outputLangElem = null;
   #outputElem = null;
   #translateButton = null;
+  #toFlashcardButton = null;
 
   constructor() {
     super();
@@ -71,13 +71,19 @@ export class TranslationPageComponent extends Component {
           id="translate"
           value="TRANSLATE"
         />
+        <input
+          type="button"
+          class="flashcard-btn"
+          id="to_flashcard"
+          value="CREATE FLASHCARD"
+        />
       </div>
     </form>
   </div>
     `; // TODO add inputs here
   }
 
-  async translate() {
+  translate() {
     const input = this.#inputElem.value;
     const inputLang = this.#inputLangElem.value;
     const outputLang = this.#outputLangElem.value;
@@ -89,6 +95,20 @@ export class TranslationPageComponent extends Component {
     });
   }
 
+  toFlashcard() {
+    const input = this.#inputElem.value;
+    const inputLang = this.#inputLangElem.value;
+    const output = this.#outputElem.value;
+    const outputLang = this.#outputLangElem.value;
+
+    EventHub.getInstance().publish(Events.RedirectToFlashcard, {
+      input: input,
+      inputLang: inputLang,
+      output: output,
+      outputLang: outputLang,
+    });
+  }
+
   // Attaches the event listeners to the component
   #attachEventListeners() {
     this.#inputLangElem = this.#container.querySelector("#input_lang");
@@ -96,8 +116,11 @@ export class TranslationPageComponent extends Component {
     this.#outputLangElem = this.#container.querySelector("#output_lang");
     this.#outputElem = this.#container.querySelector("#output");
     this.#translateButton = this.#container.querySelector("#translate");
+    this.#toFlashcardButton = this.#container.querySelector("#to_flashcard");
 
     this.#translateButton.addEventListener("click", () => this.translate());
+
+    this.#toFlashcardButton.addEventListener("click", () => this.toFlashcard());
 
     EventHub.getInstance().subscribe(
       Events.TranslateSuccess,
@@ -108,5 +131,16 @@ export class TranslationPageComponent extends Component {
       Events.TranslateFailure,
       (failure) => (this.#outputElem.value = failure)
     );
+
+    // for switching from flashcards page
+    EventHub.getInstance().subscribe(Events.RedirectToTranslation, (data) => {
+      if (data === undefined) return;
+      this.#inputElem.value = data.input;
+      if (data.inputLang !== undefined)
+        this.#inputLangElem.value = data.inputLang;
+      this.#outputElem.value = data.translated;
+      if (data.outputLang !== undefined)
+        this.#outputLangElem.value = data.inputLang;
+    });
   }
 }

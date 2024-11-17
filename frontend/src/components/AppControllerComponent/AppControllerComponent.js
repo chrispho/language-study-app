@@ -3,7 +3,6 @@ import { LandingPageComponent } from "../LandingPageComponent/LandingPageCompone
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
 import { Events } from "../../eventhub/Events.js";
-import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
 // TODO add imports for each component
 
 export class AppControllerComponent {
@@ -196,10 +195,11 @@ export class AppControllerComponent {
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
           break;
-        case "translate":
+        case "translation":
           viewContainer.appendChild(this.#translationPageComponent.render());
+          break;
         default:
-          throw Error("Invalid View");
+          throw Error(`Invalid View ${this.#currentView}`);
       }
     }, 50);
   }
