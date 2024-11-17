@@ -195,10 +195,11 @@ export class AppControllerComponent {
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
           break;
-        case "translate":
+        case "translation":
           viewContainer.appendChild(this.#translationPageComponent.render());
+          break;
         default:
-          throw Error("Invalid View");
+          throw Error(`Invalid View ${this.#currentView}`);
       }
     }, 50);
   }
