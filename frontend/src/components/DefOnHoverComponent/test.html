@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    .definition-popup {
+      position: absolute;
+      font-family: sans-serif;
+      background-color: #fff;
+      border: 1px solid #000;
+      padding: 10px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+
+</head>
+<body>
+    <h1>Pronounce a word on click!</h1>
+    <p><span = class="fr-FR word">le</span> <span id = "test" class="fr-FR word">chat</span></p>
+    <div id="definitionPopup" class="definition-popup"></div>
+</body>
+<script>
+    test2 = document.querySelectorAll('.word').forEach(wordElement => {
+      wordElement.addEventListener('mouseover', function() {
+        const popup = document.getElementById('definitionPopup');
+        popup.textContent = getDefinition(wordElement.innerHTML);
+        popup.style.display = 'block';
+        popup.style.left = `${event.pageX + 10}px`;
+        popup.style.top = `${event.pageY + 10}px`;
+      });
+
+      wordElement.addEventListener('mouseleave', function() {
+        document.getElementById('definitionPopup').style.display = 'none';
+      });
+
+      wordElement.addEventListener('click', () => {
+        speakPhrase(wordElement.innerHTML, test.classList[0])
+      });
+    });
+
+    function getDefinition(word){
+      return "Definition: " + "Backend not implemented.";
+    }
+    function speakPhrase(phrase, language) {
+      // Create a new SpeechSynthesisUtterance object
+      const utterance = new SpeechSynthesisUtterance(phrase);
+      utterance.lang = language;
+      speechSynthesis.speak(utterance);
+    }
+</script>
+</html>
