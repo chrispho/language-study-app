@@ -47,7 +47,7 @@ export class ExercisePageComponent extends Component {
     // Create the question and answer options
     const question = document.createElement("p");
     question.innerHTML =
-      "Your friend tells you, <b><em>Son las siete y cinco.</em></b> What time is it?";
+      "Your friend tells you, <b><em><span class = word es-ES>Son</span> <span class = word es-ES>las</span> <span class = word es-ES>siete</span> <span class = word es-ES>y</span> <span class = word es-ES>cinco</span>.</em></b> What time is it?";
     const answerOptions = document.createElement("div");
 
     // Create individual answer options
@@ -134,6 +134,23 @@ export class ExercisePageComponent extends Component {
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
+    document.querySelectorAll('.word').forEach(wordElement => {
+      wordElement.addEventListener('mouseover', function() {
+        const popup = document.getElementById('definitionPopup');
+        popup.textContent = getDefinition(wordElement.innerHTML);
+        popup.style.display = 'block';
+        popup.style.left = `${event.pageX + 10}px`;
+        popup.style.top = `${event.pageY + 10}px`;
+      });
+
+      wordElement.addEventListener('mouseleave', function() {
+        document.getElementById('definitionPopup').style.display = 'none';
+      });
+
+      wordElement.addEventListener('click', () => {
+        speakPhrase(wordElement.innerHTML, test.classList[0])
+      });
+    });
     const backToMainViewBtn =
       this.#container.querySelector("#backToMainViewBtn");
 
@@ -173,4 +190,14 @@ export class ExercisePageComponent extends Component {
     //   this.#renderTasks();
     // });
   }
+}
+
+function getDefinition(word){
+  return "Definition: " + "Backend not implemented.";
+}
+function speakPhrase(phrase, language) {
+  // Create a new SpeechSynthesisUtterance object
+  const utterance = new SpeechSynthesisUtterance(phrase);
+  utterance.lang = language;
+  speechSynthesis.speak(utterance);
 }

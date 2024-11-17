@@ -17,7 +17,7 @@
       <h1>LET'S PRACTICE!</h1>
       <p class="exercise-type">Q1. Choose the correct option</p>
       <div class="question-box">
-          <p>Your friend tells you, <em>Son las siete y cinco.</em> What time is it?</p>
+          <p>Your friend tells you, <em><span class = word es-ES>Son</span> <span class = word es-ES>las</span> <span class = word es-ES>siete</span> <span class = word es-ES>y</span> <span class = word es-ES>cinco</span>.</em></b> What time is it?  </p>
           <label>
             <input type="radio" name="answer" value="5:17">
             5:17
@@ -44,5 +44,34 @@
         <button class="next-btn">NEXT</button>
       </div>
     </div>
+    <script>
+      test2 = document.querySelectorAll('.word').forEach(wordElement => {
+        wordElement.addEventListener('mouseover', function() {
+          const popup = document.getElementById('definitionPopup');
+          popup.textContent = getDefinition(wordElement.innerHTML);
+          popup.style.display = 'block';
+          popup.style.left = `${event.pageX + 10}px`;
+          popup.style.top = `${event.pageY + 10}px`;
+        });
+  
+        wordElement.addEventListener('mouseleave', function() {
+          document.getElementById('definitionPopup').style.display = 'none';
+        });
+  
+        wordElement.addEventListener('click', () => {
+          speakPhrase(wordElement.innerHTML, test.classList[0])
+        });
+      });
+  
+      function getDefinition(word){
+        return "Definition: " + "Backend not implemented.";
+      }
+      function speakPhrase(phrase, language) {
+        // Create a new SpeechSynthesisUtterance object
+        const utterance = new SpeechSynthesisUtterance(phrase);
+        utterance.lang = language;
+        speechSynthesis.speak(utterance);
+      }
+    </script>
   </body>
 </html>
