@@ -4,6 +4,7 @@ import { Events } from "../../eventhub/Events.js";
 
 export class TranslationPageComponent extends Component {
   #container = null; // Private variable to store the container element
+  #hub = null;
 
   #inputLangElem = null;
   #inputElem = null;
@@ -14,6 +15,7 @@ export class TranslationPageComponent extends Component {
 
   constructor() {
     super();
+    this.#hub = EventHub.getInstance()
     this.loadCSS("TranslationPageComponent");
   }
 
@@ -88,7 +90,7 @@ export class TranslationPageComponent extends Component {
     const inputLang = this.#inputLangElem.value;
     const outputLang = this.#outputLangElem.value;
 
-    EventHub.getInstance().publish(Events.Translate, {
+    this.#hub.publish(Events.Translate, {
       inLang: inputLang,
       outLang: outputLang,
       text: input,
@@ -101,7 +103,7 @@ export class TranslationPageComponent extends Component {
     const output = this.#outputElem.value;
     const outputLang = this.#outputLangElem.value;
 
-    EventHub.getInstance().publish(Events.RedirectToFlashcard, {
+    this.#hub.publish(Events.RedirectToFlashcard, {
       input: input,
       inputLang: inputLang,
       output: output,
@@ -122,18 +124,18 @@ export class TranslationPageComponent extends Component {
 
     this.#toFlashcardButton.addEventListener("click", () => this.toFlashcard());
 
-    EventHub.getInstance().subscribe(
+    this.#hub.subscribe(
       Events.TranslateSuccess,
       (translatedObj) => (this.#outputElem.value = translatedObj.translated)
     );
 
-    EventHub.getInstance().subscribe(
+    this.#hub.subscribe(
       Events.TranslateFailure,
       (failure) => (this.#outputElem.value = failure)
     );
 
     // for switching from flashcards page
-    EventHub.getInstance().subscribe(Events.RedirectToTranslation, (data) => {
+    this.#hub.subscribe(Events.RedirectToTranslation, (data) => {
       if (data === undefined) return;
       this.#inputElem.value = data.input;
       if (data.inputLang !== undefined)
