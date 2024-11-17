@@ -155,28 +155,11 @@ export class DashboardPageComponent extends Component {
     </body>
 
 
-    `;// TODO add inputs here
+    `;
   }
-
-  // Renders the tasks in the list
-  // #renderTasks() {
-  //   const taskList = this.#container.querySelector('#simpleTaskList');
-  //   taskList.innerHTML = ''; // Clear existing content
-
-  //   this.#tasks.forEach(taskData => {
-  //     const taskContainer = document.createElement('li');
-  //     taskContainer.classList.add('task-item');
-      
-  //     // Create a new TaskComponent for each task
-  //     const task = new TaskComponent(taskData);
-  //     taskContainer.appendChild(task.render());
-  //     taskList.appendChild(taskContainer);
-  //   });
-  // }
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
-
     // all the buttons in the exercises (restart/continue) link to exercises page right now
     const exerciseButtons = this.#container.querySelectorAll('.exercise-button');
     exerciseButtons.forEach(button => {
@@ -192,18 +175,5 @@ export class DashboardPageComponent extends Component {
             this.#hub.publish(Events.RedirectToFlashcard);
         });
     });
-
-    // const backToMainViewBtn = this.#container.querySelector('#backToMainViewBtn');
-
-    // const hub = EventHub.getInstance();
-    // hub.subscribe(Events.NewTask, (taskData) => {
-    //   this.#tasks.push(taskData);      
-    //   this.#renderTasks();
-    // });
-
-    // hub.subscribe(Events.UnStoreTasks, () => {
-    //   this.#tasks = [];
-    //   this.#renderTasks();
-    // });
   }
 }
