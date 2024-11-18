@@ -68,3 +68,11 @@ For additional features,
 2. There will also be a **new translation button** so that the user can easily clear the content in the textbox on the right to translate a different word/phrase.
 
 **Use Case**: A user is trying to learn how to say a specific phrase in French. They would type their phrase into the next box on the right. The translated phrase would appear in the other text box and the user can decide if they would like to copy it or move on to a new translation - each with their own respective buttons for intuitiveness.
+
+## Dashboard Page
+
+The **Dashboard Page** is the page that users are brought to after they log in. It displays exercises or flashcards that the user has been recently working on for ease of access. From this page, they can decide to continue or restart an exercise as well as review flashcards. In the bottom right corner it will also display the trophies that the user has earned so far. 
+
+![image](https://raw.githubusercontent.com/tiffany112/test1/refs/heads/main/Screenshot%202024-11-17%20174622.png?token=GHSAT0AAAAAACYZ7SPXTT2RF24QQSRO5TGWZZ2P44Q)
+
+**Use Case**: A user logs in to the application and wants to quickly review the flashcards while in between classes. User can choose a flashcard deck straight from the dashboard and review their words. 

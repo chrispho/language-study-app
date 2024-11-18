@@ -1,8 +1,10 @@
-import { EventHub } from "../../eventhub/EventHub.js";
+ import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
+import { DashboardPageComponent } from "../DashboardPageComponent/DashboardPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
 import { FlashcardPageComponent } from "../FlashcardsPageComponent/FlashcardsPageComponent.js";
+import { ProfilePageComponent } from "../ProfilePageComponent/ProfilePageComponent.js";
 import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
 
@@ -10,17 +12,21 @@ export class AppControllerComponent {
   #container = null; // Private container for the component
   #currentView = "main"; // Track the current view ('main' or 'simple')
   #landingPageComponent = null;
+  #dashboardPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
   #flashcardPageComponent = null;
+  #profilePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
     this.#hub = EventHub.getInstance();
     this.#landingPageComponent = new LandingPageComponent();
+    this.#dashboardPageComponent = new DashboardPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
     this.#flashcardPageComponent = new FlashcardPageComponent();
+    this.#profilePageComponent = new ProfilePageComponent();
     // TODO add variables for each page/component
   }
 
@@ -49,6 +55,7 @@ export class AppControllerComponent {
       <img class="logo" src="language-study-app/frontend/public/images/logo.png" alt="logo">
       <nav>
           <ul class="nav__links">
+              <li id="dashboard"><a>Dashboard</a></li>
               <li class="dropdown"><a id="language-select">Select Language</a>
                   <ul class="dropdown-content">
                       <li><a class="language-option" data-language="Spanish">Spanish</a></li>
@@ -68,7 +75,7 @@ export class AppControllerComponent {
           <button class="profile-button" onclick="toggleProfileMenu()">👤</button>
           <div class="profile-dropdown" id="profileDropdown">
               <ul>
-                  <li><a>Profile</a></li>
+                  <li id="profile"><a>Profile</a></li>
                   <li><a>Settings</a></li>
                   <li><a>Logout</a></li>
               </ul>
@@ -93,6 +100,11 @@ export class AppControllerComponent {
       this.#renderCurrentView();
     });
 
+    this.#hub.subscribe(Events.RedirectToDashboard, () => {
+      this.#currentView = "dashboard";
+      this.#renderCurrentView();
+    });
+
     this.#hub.subscribe(Events.RedirectToExercise, () => {
       this.#currentView = "exercise";
       this.#renderCurrentView();
@@ -102,9 +114,14 @@ export class AppControllerComponent {
       this.#currentView = "translation";
       this.#renderCurrentView();
     });
-
+    
     this.#hub.subscribe(Events.RedirectToFlashcard, () => {
       this.#currentView = "flashcard";
+      this.#renderCurrentView();
+    });
+      
+    this.#hub.subscribe(Events.RedirectToProfilePage, () => {
+      this.#currentView = "profile";
       this.#renderCurrentView();
     });
 
@@ -112,6 +129,11 @@ export class AppControllerComponent {
     const logo = this.#container.querySelector(".logo");
     logo.addEventListener("click", () => {
       this.#hub.publish(Events.RedirectToHomepage);
+    });
+
+    const dashboard = this.#container.querySelector("#dashboard");
+    dashboard.addEventListener("click", () => {
+      this.#hub.publish(Events.RedirectToDashboard);
     });
 
     const flashcard = this.#container.querySelector("#flashcard");
@@ -122,6 +144,11 @@ export class AppControllerComponent {
     const exercise = this.#container.querySelector("#exercise");
     exercise.addEventListener("click", () => {
       this.#hub.publish(Events.RedirectToExercise);
+    });
+
+    const profile = this.#container.querySelector("#profile");
+    profile.addEventListener("click", () => {
+      this.#hub.publish(Events.RedirectToProfilePage);
     });
 
     const translate = this.#container.querySelector("#translate");
@@ -200,17 +227,24 @@ export class AppControllerComponent {
         case "main":
           viewContainer.appendChild(this.#landingPageComponent.render());
           break;
+          
+        case "dashboard":
+          viewContainer.appendChild(this.#dashboardPageComponent.render());  
+          break;
+        case "profile":
+          viewContainer.appendChild(this.#profilePageComponent.render());
+          break;
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
           break;
-        case "translate":
+        case "translation":
           viewContainer.appendChild(this.#translationPageComponent.render());
           break;
         case "flashcard":
           viewContainer.appendChild(this.#flashcardPageComponent.render());
           break;
         default:
-          throw Error("Invalid View");
+          throw Error(`Invalid View ${this.#currentView}`);
       }
     }, 50);
   }

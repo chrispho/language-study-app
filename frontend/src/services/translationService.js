@@ -13,13 +13,13 @@ export class TranslationService extends Service {
     // const outputLang = outputLangElem.value;
 
     const translatedResp = await fetch("/api/translate", {
-      body: data,//{ inLang: inputLang, outLang: outputLang, text: input },
+      body: data,
     });
 
     const translatedObj = await translatedResp.json();
 
     // outputElem.value = translatedObj.translated;
-    if(translatedObj.success){
+    if(translatedResp.ok){
       this.publish(Events.TranslateSuccess, translatedObj);
     }else{
       this.publish(Events.TranslateFailure, translatedObj);
