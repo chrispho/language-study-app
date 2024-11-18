@@ -27,10 +27,9 @@
 ## Alex Tong - Note Taker
 - **Role**: Responsible for taking notes during the team meeting in the team Google Doc.
 - **Top 3 Commits**:
-  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/e518b2fd7e242b889915d0c204c9d6d785a3b553  ): Copied over the Milestone 2 example MD files
-  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/30e42e475f02d144c1ef26aa60a197ec285f5233): Added report template in ``team/reports``
-  3. [Commit 3](https://github.com/chrispho/language-study-app/commit/594d6bee81696600cda1befd90efa932f2926fba): Proof-read and edited ``features.md``
-
+  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/a4bdca0b20be2668b6930db3363fe7d243b9f818): made a basic html and js page that calls a dummy server translation endpoint
+  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/0edb9476564736cc6b7bfc637d9264a883d8fe9d): created files mirroring in class examples that will use js components and the event hub/service model
+  3. [Commit 3](https://github.com/chrispho/language-study-app/commit/3077a041435ae5947483e547d1e00c226fc431c9): Integrate translation page with component js project structure and style it 
 
 
 ## Henry Wheeler-Klainberg - Task Manager
