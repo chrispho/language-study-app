@@ -47,7 +47,7 @@ export class ExercisePageComponent extends Component {
     // Create the question and answer options
     const question = document.createElement("p");
     question.innerHTML =
-      "Your friend tells you, <b><em><span class = word es-ES>Son</span> <span class = word es-ES>las</span> <span class = word es-ES>siete</span> <span class = word es-ES>y</span> <span class = word es-ES>cinco</span>.</em></b> What time is it?";
+      "Your friend tells you, <b><em><span class = 'word es-ES'>Son</span> <span class = 'word es-ES'>las</span> <span class = 'word es-ES'>siete</span> <span class = 'word es-ES'>y</span> <span class = 'word es-ES'>cinco</span>.</em></b> What time is it?";
     const answerOptions = document.createElement("div");
 
     // Create individual answer options
