@@ -1,10 +1,12 @@
 export const Events = {
 
   RedirectToHomepage: "RedirectToHomepage",
+  RedirectToDashboard: "RedirectToDashboard",
   RedirectToFlashcard: "RedirectToFlashcard",
   RedirectToExercise: "RedirectToExercise",
   RedirectToTranslation: "RedirectToTranslation",
   RedirectToProfile: "RedirectToProfile",
+  RedirectToProfilePage: "RedirectToProfilePage",
 
   ToggleProfileMenu: "ToggleProfileMenu",
   CloseProfileMenu: "CloseProfileMenu",

@@ -1,9 +1,8 @@
 # Feature: exercise page
 
-- design exercise structure (3 points)
-- exercise builder (3 points)
-- make user interface (2 points)
-- implement scoring and feedback (1 point)
+- design exercise structure (4 points)
+- make user interface (3 points)
+- implement scoring and feedback (2 point)
 - track user progress (1 point)
 
 ## Feature descriptions
@@ -16,15 +15,6 @@ To provide a diverse and engaging learning experience, the app will support mult
 - Matching: Users connect pairs of related items (e.g., words and their translations).
 - Listening Comprehension: Users listen to audio clips and answer questions based on the content.
 Each exercise will be defined by a JSON-like structure with attributes such as exercise type, prompt, correct answers, incorrect answers, hints, and feedback.
-
-### Exercise builder
-
-Develop a user-friendly interface that allows users to create their own language learning exercises. This feature should include:
-- Exercise Type Selection: Provide options for various exercise types.
-- Prompt and Response Input: Enable users to input the prompt or question for the exercise, as well as the correct and incorrect answers.
-- Hint and Feedback Customization: Provide the option to add hints and specific feedback messages for correct and incorrect answers.
-- Exercise Preview and Editing: Offer a preview function to visualize the created exercise and make necessary adjustments before saving.
-- Exercise Library Management: Allow users to organize and categorize their created exercises into a personal library.
 
 ### Make user interface 
 
@@ -43,12 +33,6 @@ sequenceDiagram
 actor user
 participant app as application
 participant db as IndexedDB
-
-    Note over user,db: Creating a new exercise
-    user->>app: Accesses Exercise page
-    app-->>user: Display exercise builder
-    user->>app: Input exercise details to be cached
-    app->>db: Cache new exercise
 
     Note over user,db: Doing an exercise
     user->>app: Accesses Exercise page

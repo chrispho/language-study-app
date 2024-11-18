@@ -26,12 +26,25 @@ A new user visiting the homepage can either join the platform by creating an acc
 ## Flashcards Screen
 ![image](https://github.com/user-attachments/assets/ab876ef7-aae4-49bd-97d3-4d96ed043144)
 
+### Revised in M3:
+Sets:
+![image](https://github.com/user-attachments/assets/e7a62b19-d704-4828-a122-1a2fa19bffcf)
+
+Adding a set:
+![image]([https://github.com/user-attachments/assets/e7a62b19-d704-4828-a122-1a2fa19bffcf](https://github.com/user-attachments/assets/309d2c7c-fd59-420c-addf-bccb20c74d1a))
+
+Viewing a set:
+![image](https://github.com/user-attachments/assets/626310de-8e31-422d-99e1-884168218aee)
+
+Adding a flashcard
+![image](https://github.com/user-attachments/assets/8a3ca4ae-ae11-4788-ba9c-bada1d4e4e14)
 
 The **Flashcards Screen** allows users to create easily view all their different flashcards on one page. They are organized into folders, displayed on the main page with an option to add more folders - this way, the user can make different categories of words and or different languages. They would be able to name each folder.
 
 
 Inside each folder, the user will be allowed to create each of their own flashcards as well as create them. They would be prompted to type two different inputs for the front and back of each flashcard. Then they will be able to review the cards at their own discretion. This page is meant to be easy to use and for quick references and review of vocabulary words.
 
+Viewing each set you can go the previous or next card in the set. You can add flashcards here, that way all flashcards are added based on sets. You can also shuffle the set. 
 
 **Use Case**:
 
@@ -68,3 +81,11 @@ For additional features,
 2. There will also be a **new translation button** so that the user can easily clear the content in the textbox on the right to translate a different word/phrase.
 
 **Use Case**: A user is trying to learn how to say a specific phrase in French. They would type their phrase into the next box on the right. The translated phrase would appear in the other text box and the user can decide if they would like to copy it or move on to a new translation - each with their own respective buttons for intuitiveness.
+
+## Dashboard Page
+
+The **Dashboard Page** is the page that users are brought to after they log in. It displays exercises or flashcards that the user has been recently working on for ease of access. From this page, they can decide to continue or restart an exercise as well as review flashcards. In the bottom right corner it will also display the trophies that the user has earned so far. 
+
+![image](https://raw.githubusercontent.com/tiffany112/test1/refs/heads/main/Screenshot%202024-11-17%20174622.png?token=GHSAT0AAAAAACYZ7SPXTT2RF24QQSRO5TGWZZ2P44Q)
+
+**Use Case**: A user logs in to the application and wants to quickly review the flashcards while in between classes. User can choose a flashcard deck straight from the dashboard and review their words. 

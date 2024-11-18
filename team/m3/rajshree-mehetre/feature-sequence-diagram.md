@@ -45,3 +45,4 @@ sequenceDiagram
     User->>WebApp: Click desired language Button
     WebApp->>User: Update interface to selected language
 ```
+![mermaid-diagram-2024-11-13-133955](https://github.com/user-attachments/assets/4029a243-8f4e-40f8-b985-10b3da34a57a)
