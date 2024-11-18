@@ -51,6 +51,6 @@
 ## August Huber - Documentation Lead
 - **Role**: Responsible for overseeing the organization and maintenance of all project documentation.
 - **Top 3 Commits**:
-  1. [Commit 1](https://github.com/repo/commit1): Updated ``roles.md`` with team member roles.
-  2. [Commit 2](https://github.com/repo/commit2): Drafted the initial version of the `roles.md` file, including each team member's top three commits.
-  3. [Commit 3](https://github.com/repo/commit3): Updated the project’s `README.md` file.
+  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/e0ad0d4ebcbf88640abc9a4e70207888d078b4ef): Updated design language.
+  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/b1c18e7fb966850a994e7a69510f8d59f52d08d7): Integrate audio on click and definition on hover.
+  3. Task 3: Code review.
