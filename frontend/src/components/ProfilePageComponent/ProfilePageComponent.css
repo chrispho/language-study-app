@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre&display=swap');
 
 /* Reset */
 * {
@@ -16,7 +17,7 @@ body {
 
 /* Header */
 .profile-header {
-  background: #b1d8b7;
+  background: #AFBC88;
   color: black;
   padding: 1.5rem;
   display: flex;
@@ -65,7 +66,7 @@ body {
 }
 
 .tab:hover, .tab.active {
-  background-color: #76b9f0;
+  background-color: #618B4A;
   color: white;
 }
 
@@ -180,4 +181,8 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
+}
+
+.username{
+  font-family: "Edu AU VIC WA NT Pre", cursive;
 }

@@ -84,7 +84,7 @@ export class AppControllerComponent {
   </header>
     <div id="viewContainer"></div>
     <footer class="footer">
-      All rights reserved © Language Study App
+      All rights reserved © <span class = 'lsa'>Language Study App</span>
   </footer>
     `;
     // <button id="switchViewBtn">Switch to Simple View</button>

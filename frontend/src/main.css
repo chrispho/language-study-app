@@ -5,14 +5,14 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
- 
+    color: #40531B;
 }
 
 li,a, button, footer, .lang-menu, .profile-dropdown{
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
-    color: black;
+    color: #D7F9F1;
     text-decoration: none;
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -21,12 +21,18 @@ li,a, button, footer, .lang-menu, .profile-dropdown{
     user-select: none
 }
 
+
+button{
+    color: #618B4A;
+    background-color: #AFBC88;
+}
+
 header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 10%;
-    background-color: #b1d8b7;
+    background-color: #40531B;
 }
 
 .logo{
@@ -53,7 +59,7 @@ header{
 }
 
 .nav__links li a:hover{
-    color: grey;
+    color: #AFBC88;
 }
 
 .dropdown-content {
@@ -61,7 +67,7 @@ header{
     position: absolute;
     top: 100%;
     left: 100;
-    background-color: #b1d8b7;
+    background-color: #40531B;
     /* border: 1px solid #ccc; */
     z-index: 1;
     min-width: 100px;
@@ -76,7 +82,7 @@ header{
 }
 
 .dropdown-content li a {
-    color: black;
+    color: #D7F9F1;
     text-decoration: none;
 }
 
@@ -87,7 +93,7 @@ header{
 
 .profile-button{
     background-color: white;
-    border: black;
+    border: #D7F9F1;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
@@ -95,7 +101,7 @@ header{
 }
 
 button:hover{
-    background-color: grey;
+    background-color: #AFBC88;
 }
 
 .profile-container {
@@ -116,8 +122,8 @@ button:hover{
     position: absolute;
     top: 115%;
     right: 0;
-    background-color: #b1d8b7;
-    border: 1px solid #ccc;
+    background-color: #40531B;
+    border: 1px solid #AFBC88;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     z-index: 1;
     min-width: 150px;
@@ -135,13 +141,13 @@ button:hover{
 }
 
 .profile-dropdown ul li a {
-    color: black;
+    color: #D7F9F1;
     text-decoration: none;
     display: block;
 }
 
 .profile-dropdown ul li a:hover{
-    color: grey;
+    color: #AFBC88;
 }
 
 /* Centering and styling the main content */
@@ -201,8 +207,8 @@ button:hover{
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #76b9f0;
-    color: white;
+    background-color: #7AA095;
+    color: #D7F9F1;
     transition: background-color 0.3s;
     display: flex;
     justify-content: center;
@@ -212,15 +218,20 @@ button:hover{
 }
 
 .action-button:hover {
-    background-color: #64ace7;
+    background-color: #7AA095;
 }
 
 footer{
     text-align: center;
-    background-color:#b1d8b7;
+    background-color:#40531B;
     padding: 12px;
     bottom: 0;
     width: 100%;
-    position: absolute;
+    position: fixed;
     font-size: 10px;
+}
+
+.lsa{
+    font-family: "Edu AU VIC WA NT Pre", cursive;
+    color: #AFBC88;
 }
