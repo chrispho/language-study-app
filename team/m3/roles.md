@@ -10,9 +10,9 @@
 ## Tiffany Lin - Time Keeper
 - **Role**: Manages the timing of all team activities.
 - **Top 3 Commits**:
- 1. [Commit 1](https://github.com/chrispho/language-study-app/commit/cf044946fb293925d858c9eb2d51cc8f8507a773): Co-Authored ``ui-diagrams.md``
- 2. [Commit 2](https://github.com/chrispho/language-study-app/commit/fb44a9749d47ae1b0f20d699992b48a81c4f51f2): Co-Designed two diagrams for ``ui-diagrams.md``
- 3. [Commit 3](https://github.com/chrispho/language-study-app/commit/2132c628179cc719fd96cea6cee9df54f820d550): Co-Designed two features -- the Flashcard Screen and Translation Screen.
+ 1. [added features sequence diagram] https://github.com/chrispho/language-study-app/commit/e01e3e223aecd62b1fb8963c637a6554be8da744 -- added features and mermaid diagram
+ 2. [dashboard draft 1] https://github.com/chrispho/language-study-app/commit/1e185f2efe7f727ca3531377d69ae9d8cc795886 -- added core features of dashboard
+ 3. [added ui diagram and functioning buttons] https://github.com/chrispho/language-study-app/commit/7b44239532ab6155ee93adbb7b72b83f18bf71c9 -- finalized features and added function to buttons
 
 
 ## Rajshree Mehetre - Communication Lead
