@@ -32,7 +32,7 @@ export class LandingPageComponent extends Component {
   #setupContainerContent() {
     this.#container.innerHTML = `
       <main class="main-content">
-        <h1 class="content" data-key="title">Welcome to the <span class = lsa>Language Study App</span>!</h1>
+        <h1 class="content" data-key="title">Welcome to the <span class = 'lsa'>Language Study App</span>!</h1>
     <p class="content" data-key="description">
         Language-Study-App offers personalized paths that adapt to your schedules. Features like flashcards and progress tracking help you focus on what matters most.
     </p>
