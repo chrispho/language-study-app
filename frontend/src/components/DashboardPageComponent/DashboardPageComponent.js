@@ -54,7 +54,7 @@ export class DashboardPageComponent extends Component {
                     <div class="exercises-grid">
                         <div class="exercise">
                             <h3>Exercise 2: Vegetables</h3>
-                            <div class="progress-bar">
+                            <div class="dashboard-progress-bar">
                                 <div class="progress"></div>
                             </div>
                             <p>78% Completed</p>
@@ -65,7 +65,7 @@ export class DashboardPageComponent extends Component {
                         </div>
                         <div class="exercise">
                             <h3>Exercise 3: Foods</h3>
-                            <div class="progress-bar">
+                            <div class="dashboard-progress-bar">
                                 <div class="progress"></div>
                             </div>
                             <p>78% Completed</p>
@@ -77,7 +77,7 @@ export class DashboardPageComponent extends Component {
                         <div class="exercise">
                             <div class="test">
                                 <h3>Exercise 4: Sports</h3>
-                                <div class="progress-bar">
+                                <div class="dashboard-progress-bar">
                                     <div class="progress"></div>
                                 </div>
                                 <p>78% Completed</p>
@@ -89,7 +89,7 @@ export class DashboardPageComponent extends Component {
                         </div>
                         <div class="exercise">
                             <h3>Exercise 5: Clothes</h3>
-                            <div class="progress-bar">
+                            <div class="dashboard-progress-bar">
                                 <div class="progress"></div>
                             </div>
                             <p>78% Completed</p>
@@ -106,25 +106,25 @@ export class DashboardPageComponent extends Component {
                     <div class="recent-flashcards">
                         <h2>Recent Flashcards</h2>
                         <div class="flashcards-grid">
-                            <div class="flashcard">
+                            <div class="dashboard-flashcard">
                                 <h3>Sports</h3>
                                 <div class="buttons">
                                     <button class="btn flashcards-button">Review</button>
                                 </div>
                             </div>
-                            <div class="flashcard">
+                            <div class="dashboard-flashcard">
                                 <h3>Drinks</h3>
                                 <div class="buttons">
                                     <button class="btn  flashcards-button">Review</button>
                                 </div>
                             </div>
-                            <div class="flashcard">
+                            <div class="dashboard-flashcard">
                                 <h3>Clothes</h3>
                                 <div class="buttons">
                                     <button class="btn flashcards-button">Review</button>
                                 </div>
                             </div>
-                            <div class="flashcard">
+                            <div class="dashboard-flashcard">
                                 <h3>Foods</h3>
                                 <div class="buttons">
                                     <button class="btn flashcards-button">Review</button>
