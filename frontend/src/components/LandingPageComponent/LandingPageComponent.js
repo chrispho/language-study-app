@@ -39,9 +39,9 @@ export class LandingPageComponent extends Component {
 
     <!-- Image Container -->
     <div class="image-container">
-        <img src="language-study-app/frontend/public/images/translate.png" alt="Translate" class="feature-image">
-        <img src="language-study-app/frontend/public/images/exercises.png" alt="Exercises" class="feature-image">
-        <img src="language-study-app/frontend/public/images/progress.png" alt="Progress" class="feature-image">
+        <img src="/frontend/public/images/translate.png" alt="Translate" class="feature-image">
+        <img src="/frontend/public/images/exercises.png" alt="Exercises" class="feature-image">
+        <img src="/frontend/public/images/progress.png" alt="Progress" class="feature-image">
     </div>
 
     <!-- Buttons Container -->
