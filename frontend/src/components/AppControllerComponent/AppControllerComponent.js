@@ -52,7 +52,7 @@ export class AppControllerComponent {
   #setupContainerContent() {
     this.#container.innerHTML = `
       <header>
-      <img class="logo" src="language-study-app/frontend/public/images/logo.png" alt="logo">
+      <img class="logo" src="/frontend/public/images/logo.png" alt="logo">
       <nav>
           <ul class="nav__links">
               <li id="dashboard"><a>Dashboard</a></li>
