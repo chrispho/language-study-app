@@ -30,3 +30,7 @@
 - **Details**: created files mirroring in class examples that will use js components and the event hub/service model
 - **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/0edb9476564736cc6b7bfc637d9264a883d8fe9d)
 
+### November 16, 2024
+- **Task**: integrate tasks page with component strucuter
+- **Details**: also styled the page and improved the mock fetch
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/3077a041435ae5947483e547d1e00c226fc431c9)
