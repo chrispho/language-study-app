@@ -1,5 +1,6 @@
  import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
+import { DashboardPageComponent } from "../DashboardPageComponent/DashboardPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
 import { ProfilePageComponent } from "../ProfilePageComponent/ProfilePageComponent.js";
@@ -10,6 +11,7 @@ export class AppControllerComponent {
   #container = null; // Private container for the component
   #currentView = "main"; // Track the current view ('main' or 'simple')
   #landingPageComponent = null;
+  #dashboardPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
   #profilePageComponent = null;
@@ -18,6 +20,7 @@ export class AppControllerComponent {
   constructor() {
     this.#hub = EventHub.getInstance();
     this.#landingPageComponent = new LandingPageComponent();
+    this.#dashboardPageComponent = new DashboardPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
     this.#profilePageComponent = new ProfilePageComponent();
@@ -49,6 +52,7 @@ export class AppControllerComponent {
       <img class="logo" src="language-study-app/frontend/public/images/logo.png" alt="logo">
       <nav>
           <ul class="nav__links">
+              <li id="dashboard"><a>Dashboard</a></li>
               <li class="dropdown"><a id="language-select">Select Language</a>
                   <ul class="dropdown-content">
                       <li><a class="language-option" data-language="Spanish">Spanish</a></li>
@@ -93,6 +97,11 @@ export class AppControllerComponent {
       this.#renderCurrentView();
     });
 
+    this.#hub.subscribe(Events.RedirectToDashboard, () => {
+      this.#currentView = "dashboard";
+      this.#renderCurrentView();
+    });
+
     this.#hub.subscribe(Events.RedirectToExercise, () => {
       this.#currentView = "exercise";
       this.#renderCurrentView();
@@ -112,6 +121,11 @@ export class AppControllerComponent {
     const logo = this.#container.querySelector(".logo");
     logo.addEventListener("click", () => {
       this.#hub.publish(Events.RedirectToHomepage);
+    });
+
+    const dashboard = this.#container.querySelector("#dashboard");
+    dashboard.addEventListener("click", () => {
+      this.#hub.publish(Events.RedirectToDashboard);
     });
 
     const flashcard = this.#container.querySelector("#flashcard");
@@ -205,16 +219,21 @@ export class AppControllerComponent {
         case "main":
           viewContainer.appendChild(this.#landingPageComponent.render());
           break;
+          
+        case "dashboard":
+          viewContainer.appendChild(this.#dashboardPageComponent.render());  
+
         case "profile":
           viewContainer.appendChild(this.#profilePageComponent.render());
           break;
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
           break;
-        case "translate":
+        case "translation":
           viewContainer.appendChild(this.#translationPageComponent.render());
+          break;
         default:
-          throw Error("Invalid View");
+          throw Error(`Invalid View ${this.#currentView}`);
       }
     }, 50);
   }
