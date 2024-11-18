@@ -59,7 +59,7 @@ h3 {
     padding-top: 15%;
 }
 
-.progress-bar {
+.dashboard-progress-bar {
     background-color: #fff;
     height: 8px;
     border-radius: 5px;
@@ -130,7 +130,7 @@ h3 {
     gap: 10px;
 }
 
-.flashcard {
+.dashboard-flashcard {
     background-color: #b08c8c;
     color: #fff;
     padding: 40px;
