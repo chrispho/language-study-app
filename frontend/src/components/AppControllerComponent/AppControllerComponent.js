@@ -3,6 +3,7 @@ import { LandingPageComponent } from "../LandingPageComponent/LandingPageCompone
 import { DashboardPageComponent } from "../DashboardPageComponent/DashboardPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
+import { FlashcardPageComponent } from "../FlashcardsPageComponent/FlashcardsPageComponent.js";
 import { ProfilePageComponent } from "../ProfilePageComponent/ProfilePageComponent.js";
 import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
@@ -14,6 +15,7 @@ export class AppControllerComponent {
   #dashboardPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
+  #flashcardPageComponent = null;
   #profilePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
@@ -23,6 +25,7 @@ export class AppControllerComponent {
     this.#dashboardPageComponent = new DashboardPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
+    this.#flashcardPageComponent = new FlashcardPageComponent();
     this.#profilePageComponent = new ProfilePageComponent();
     // TODO add variables for each page/component
   }
@@ -111,7 +114,12 @@ export class AppControllerComponent {
       this.#currentView = "translation";
       this.#renderCurrentView();
     });
-
+    
+    this.#hub.subscribe(Events.RedirectToFlashcard, () => {
+      this.#currentView = "flashcard";
+      this.#renderCurrentView();
+    });
+      
     this.#hub.subscribe(Events.RedirectToProfilePage, () => {
       this.#currentView = "profile";
       this.#renderCurrentView();
@@ -231,6 +239,9 @@ export class AppControllerComponent {
           break;
         case "translation":
           viewContainer.appendChild(this.#translationPageComponent.render());
+          break;
+        case "flashcard":
+          viewContainer.appendChild(this.#flashcardPageComponent.render());
           break;
         default:
           throw Error(`Invalid View ${this.#currentView}`);
