@@ -47,7 +47,7 @@ export class ExercisePageComponent extends Component {
     // Create the question and answer options
     const question = document.createElement("p");
     question.innerHTML =
-      "Your friend tells you, <b><em>Son las siete y cinco.</em></b> What time is it?";
+      "Your friend tells you, <b><em><span class = 'word es-ES'>Son</span> <span class = 'word es-ES'>las</span> <span class = 'word es-ES'>siete</span> <span class = 'word es-ES'>y</span> <span class = 'word es-ES'>cinco</span>.</em></b> What time is it?";
     const answerOptions = document.createElement("div");
 
     // Create individual answer options
@@ -94,6 +94,11 @@ export class ExercisePageComponent extends Component {
     const feedbackPanel = document.createElement("div");
     feedbackPanel.classList.add("feedback-panel");
 
+    // Create the definition pop-up
+    const definition = document.createElement("div");
+    definition.classList.add("definition-popup");
+    definition.id = "definition";
+
     // Create the try again and next buttons
     const tryAgainButton = document.createElement("button");
     tryAgainButton.classList.add("try-again-btn");
@@ -111,6 +116,7 @@ export class ExercisePageComponent extends Component {
     mainContainer.appendChild(exerciseType);
     mainContainer.appendChild(questionBox);
     mainContainer.appendChild(feedbackPanel);
+    mainContainer.appendChild(definition);
 
     this.#container.appendChild(mainContainer);
   }
@@ -134,8 +140,22 @@ export class ExercisePageComponent extends Component {
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
-    const backToMainViewBtn =
-      this.#container.querySelector("#backToMainViewBtn");
+    this.#container.querySelectorAll('.word').forEach(wordElement => {
+      console.log(wordElement)
+      wordElement.addEventListener('mouseover', function() {
+        const popup = document.getElementById('definition');
+        popup.textContent = getDefinition(wordElement.innerHTML);
+        popup.style.display = 'block';
+      });
+
+      wordElement.addEventListener('mouseleave', function() {
+        document.getElementById('definition').style.display = 'none';
+      });
+
+      wordElement.addEventListener('click', () => {
+        speakPhrase(wordElement.innerHTML, wordElement.classList[1])
+      });
+    });
 
     const submitBtn = this.#container.getElementsByClassName("submit-btn");
     const feedbackPanel =
@@ -173,4 +193,14 @@ export class ExercisePageComponent extends Component {
     //   this.#renderTasks();
     // });
   }
+}
+
+function getDefinition(word){
+  return "Definition: " + "Backend not implemented.";
+}
+function speakPhrase(phrase, language) {
+  // Create a new SpeechSynthesisUtterance object
+  const utterance = new SpeechSynthesisUtterance(phrase);
+  utterance.lang = language;
+  speechSynthesis.speak(utterance);
 }
