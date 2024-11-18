@@ -1,5 +1,17 @@
 ## Contribution Log for Christopher Pho
 
+### November 17, 2024
+- **Task**: Meet with team to integrate different pages together and merge PR's. Code review.
+- **Details**: Assisted Tiffany and Henry with making components for their pages. Reviewed Alex Tong's PR #17.
+- **Link to Commit**: n/a
+
+
+### November 16, 2024
+- **Task**: Reformat and finish exercise page. Set up multi-view-ui for navigating his pages. Code review.
+- **Details**: Finished exercise page with minor reformatting and deleting commented code. Modified header to have unselectable text. Added events to Events.js for redirecting to pages. Added event listeners so the header sends redirection events on click. Subscribed main app controller to switch the current view based on events. Reviewed and merged Alex Tong's translation page PR.
+- **Link to Commit**: [added new events to event library](https://github.com/chrispho/language-study-app/commit/16d8399ad0b38c5e55fbf85868bc2dde9f2f3d7a) [formatting and renaming file](https://github.com/chrispho/language-study-app/commit/fd007a1eb654112d73d869d022d3619d8915c5bf) [deleted commented lecture code](https://github.com/chrispho/language-study-app/commit/ef8394c2fdba0c920e9752dd0cd441080ad86fe9) [Merge pull request #16](https://github.com/chrispho/language-study-app/commit/3c13e16debbc8ab750e2e374e930e70ee240ac48) [make buttons unselectable](https://github.com/chrispho/language-study-app/commit/519e05fb72385c8d2eecef03df5d7ba020b5f638) [Add event-based page navigation to multi-view-ui](https://github.com/chrispho/language-study-app/commit/c0e8a094bacbe94c85597718b07eeed40557dd05) [Merge pull request #18](https://github.com/chrispho/language-study-app/commit/5fc3a795d55dc6a975cbdccd71395608d0459118)
+
+
 ### November 15, 2024
 - **Task**: Fixed folder structure and lead weekly scheduled meeting during Friday lab time
 - **Details**: Worked with Alex Tong to merge his pull request (PR #7 and #12) to the main branch. 
