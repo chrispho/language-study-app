@@ -1,8 +1,9 @@
-import { EventHub } from "../../eventhub/EventHub.js";
+ import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
 import { DashboardPageComponent } from "../DashboardPageComponent/DashboardPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
+import { ProfilePageComponent } from "../ProfilePageComponent/ProfilePageComponent.js";
 import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
 
@@ -13,6 +14,7 @@ export class AppControllerComponent {
   #dashboardPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
+  #profilePageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
@@ -21,6 +23,7 @@ export class AppControllerComponent {
     this.#dashboardPageComponent = new DashboardPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
+    this.#profilePageComponent = new ProfilePageComponent();
     // TODO add variables for each page/component
   }
 
@@ -69,7 +72,7 @@ export class AppControllerComponent {
           <button class="profile-button" onclick="toggleProfileMenu()">👤</button>
           <div class="profile-dropdown" id="profileDropdown">
               <ul>
-                  <li><a>Profile</a></li>
+                  <li id="profile"><a>Profile</a></li>
                   <li><a>Settings</a></li>
                   <li><a>Logout</a></li>
               </ul>
@@ -109,6 +112,11 @@ export class AppControllerComponent {
       this.#renderCurrentView();
     });
 
+    this.#hub.subscribe(Events.RedirectToProfilePage, () => {
+      this.#currentView = "profile";
+      this.#renderCurrentView();
+    });
+
     // Add events listeners to publish redirection events
     const logo = this.#container.querySelector(".logo");
     logo.addEventListener("click", () => {
@@ -128,6 +136,11 @@ export class AppControllerComponent {
     const exercise = this.#container.querySelector("#exercise");
     exercise.addEventListener("click", () => {
       this.#hub.publish(Events.RedirectToExercise);
+    });
+
+    const profile = this.#container.querySelector("#profile");
+    profile.addEventListener("click", () => {
+      this.#hub.publish(Events.RedirectToProfilePage);
     });
 
     const translate = this.#container.querySelector("#translate");
@@ -206,8 +219,12 @@ export class AppControllerComponent {
         case "main":
           viewContainer.appendChild(this.#landingPageComponent.render());
           break;
+          
         case "dashboard":
-          viewContainer.appendChild(this.#dashboardPageComponent.render());
+          viewContainer.appendChild(this.#dashboardPageComponent.render());  
+          break;
+        case "profile":
+          viewContainer.appendChild(this.#profilePageComponent.render());
           break;
         case "exercise":
           viewContainer.appendChild(this.#exercisePageComponent.render());
