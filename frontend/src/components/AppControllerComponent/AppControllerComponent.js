@@ -222,7 +222,7 @@ export class AppControllerComponent {
           
         case "dashboard":
           viewContainer.appendChild(this.#dashboardPageComponent.render());  
-
+          break;
         case "profile":
           viewContainer.appendChild(this.#profilePageComponent.render());
           break;
