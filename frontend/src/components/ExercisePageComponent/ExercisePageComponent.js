@@ -140,7 +140,8 @@ export class ExercisePageComponent extends Component {
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
-    document.querySelectorAll('.word').forEach(wordElement => {
+    this.#container.querySelectorAll('.word').forEach(wordElement => {
+      console.log(wordElement)
       wordElement.addEventListener('mouseover', function() {
         const popup = document.getElementById('definition');
         popup.textContent = getDefinition(wordElement.innerHTML);
@@ -155,8 +156,6 @@ export class ExercisePageComponent extends Component {
         speakPhrase(wordElement.innerHTML, wordElement.classList[0])
       });
     });
-    const backToMainViewBtn =
-      this.#container.querySelector("#backToMainViewBtn");
 
     const submitBtn = this.#container.getElementsByClassName("submit-btn");
     const feedbackPanel =
