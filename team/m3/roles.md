@@ -35,9 +35,9 @@
 ## Henry Wheeler-Klainberg - Task Manager
 - **Role**: Responsible for organizing and tracking team tasks through the team Google Doc.
 - **Top 3 Commits**:
-  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/87b8b86d0560349785b7094d28706c184e84a1a0): Updated ``features.md`` with key information on the application's planned features. 
-  2. Task 2: Made sure that each markdown was allocated to the properly-skilled teammates 
-  3. Task 3: Facilitated conversations and took notes around project features to inspire the writing of ``features.md`` to incorporate multiple perspecitives and capabilities of the whole teams' skills.
+  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/97096a2e4e2f1de57982a9e8867f858a871a504f): Added flashcards integration to main branch, included js and css files for flashcards page, and integration into the app controller.
+  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/4552a0cb7c14bc5956bbb36340a37632c7c8b861): Added features and sequence diagram to my milestone report
+  3. Task 3: Reviewed requests in repository before submission
 
 
 ## Shivang Mehta - Quality Control
