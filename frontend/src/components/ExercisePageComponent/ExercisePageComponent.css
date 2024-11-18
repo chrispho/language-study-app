@@ -101,3 +101,13 @@ h1 {
   margin: 5px;
   width: 100%;
 }
+
+.definition-popup {
+  position: absolute;
+  font-family: sans-serif;
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 10px;
+  display: none;
+  z-index: 1000;
+}

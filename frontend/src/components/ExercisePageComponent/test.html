@@ -11,13 +11,24 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="test.css">
+    <style>
+      .definition-popup {
+        position: absolute;
+        font-family: sans-serif;
+        background-color: #fff;
+        border: 1px solid #000;
+        padding: 10px;
+        display: none;
+        z-index: 1000;
+      }
+    </style>  
   </head>
   <body>
     <div class="container">
       <h1>LET'S PRACTICE!</h1>
       <p class="exercise-type">Q1. Choose the correct option</p>
       <div class="question-box">
-          <p>Your friend tells you, <em><span class = word es-ES>Son</span> <span class = word es-ES>las</span> <span class = word es-ES>siete</span> <span class = word es-ES>y</span> <span class = word es-ES>cinco</span>.</em></b> What time is it?  </p>
+          <p>Your friend tells you, <em><span class = "word es-ES">Son</span> <span class = "word es-ES">las</span> <span class = "word es-ES">siete</span> <span class = "word es-ES">y</span> <span class = "word es-ES">cinco</span>.</em></b> What time is it?  </p>
           <label>
             <input type="radio" name="answer" value="5:17">
             5:17
@@ -44,10 +55,11 @@
         <button class="next-btn">NEXT</button>
       </div>
     </div>
+    <div id="definition" class="definition-popup"></div>
     <script>
       test2 = document.querySelectorAll('.word').forEach(wordElement => {
         wordElement.addEventListener('mouseover', function() {
-          const popup = document.getElementById('definitionPopup');
+          const popup = document.getElementById('definition');
           popup.textContent = getDefinition(wordElement.innerHTML);
           popup.style.display = 'block';
           popup.style.left = `${event.pageX + 10}px`;
@@ -55,11 +67,11 @@
         });
   
         wordElement.addEventListener('mouseleave', function() {
-          document.getElementById('definitionPopup').style.display = 'none';
+          document.getElementById('definition').style.display = 'none';
         });
   
         wordElement.addEventListener('click', () => {
-          speakPhrase(wordElement.innerHTML, test.classList[0])
+          speakPhrase(wordElement.innerHTML, wordElement.classList[1])
         });
       });
   

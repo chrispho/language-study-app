@@ -94,6 +94,11 @@ export class ExercisePageComponent extends Component {
     const feedbackPanel = document.createElement("div");
     feedbackPanel.classList.add("feedback-panel");
 
+    // Create the definition pop-up
+    const definition = document.createElement("div");
+    definition.classList.add("definition-popup");
+    definition.id = "definition";
+
     // Create the try again and next buttons
     const tryAgainButton = document.createElement("button");
     tryAgainButton.classList.add("try-again-btn");
@@ -111,6 +116,7 @@ export class ExercisePageComponent extends Component {
     mainContainer.appendChild(exerciseType);
     mainContainer.appendChild(questionBox);
     mainContainer.appendChild(feedbackPanel);
+    mainContainer.appendChild(definition);
 
     this.#container.appendChild(mainContainer);
   }
