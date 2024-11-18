@@ -153,7 +153,7 @@ export class ExercisePageComponent extends Component {
       });
 
       wordElement.addEventListener('click', () => {
-        speakPhrase(wordElement.innerHTML, wordElement.classList[0])
+        speakPhrase(wordElement.innerHTML, wordElement.classList[1])
       });
     });
 
