@@ -2,7 +2,7 @@
 
 - Small feature(2 points): Language Switch Option
 - Medium Feature(3 points): Nav-bar/multi ui Header and footer
-- Large Feature(5 points): Landing Page → Dashboard
+- Large Feature(5 points): Landing Page
 
 ### Feature Descriptions
 
@@ -12,34 +12,36 @@
 2. **Nav-bar/Multi-UI Header and Footer (Medium Feature, 3 Points)**:
    - **Description**: The navigation bar, header, and footer are designed to provide a cohesive UI. The navigation bar allows users to access different sections of the application ,the header provides branding. The footer contains links to important resources, such as privacy policies and terms of service. This multi-UI component ensures that users can navigate the application.
 
-3. **Landing Page to Dashboard Navigation (Large Feature, 5 Points)**:
+3. **Landing Page Navigation (Large Feature, 5 Points)**:
    - **Description**: The landing page serves as the entry point for users. Once users successfully authenticate, they are directed to the dashboard, which serves as the central hub for accessing key features such as flashcards and exercises. This feature helps in transitioning between different application states. The layout is designed to be user-friendly, with clear calls to action that encourage engagement.
 
 ### Mermaind Syntax Flow:
 ```
-flowchart TD
-    A[Open Application] --> B[Display Landing Page]
-    
-    B --> C[Show Sign Up Button]
-    B --> D[Show Log In Button]
-    B --> E[Show Language Switch Button]
+sequenceDiagram
+    participant User
+    participant WebApp
 
-    C --> F[Click Sign Up Button]
-    F --> G[Show Sign Up Form]
-    G --> H[Click Submit Button]
-    H --> I[Display Confirmation Message]
-    I --> J[Navigate to Dashboard]
+    User->>WebApp: Click "Open Application" Button
+    WebApp->>User: Display landing page
+    WebApp->>User: Show "Sign Up" Button
+    WebApp->>User: Show "Log In" Button
 
-    D --> K[Click Log In Button]
-    K --> L[Show Login Form]
-    L --> M[Click Submit Button]
-    M --> N[Display Dashboard with Key Features]
+    User->>WebApp: Click "Sign Up" Button
+    WebApp->>User: Show sign-up form
+    User->>WebApp: Click "Submit" Button (after filling form)
+    WebApp->>User: Display confirmation message
+    WebApp->>User: Navigate to dashboard
 
-    E --> O[Click Language Switch Button]
-    O --> P[Show Available Languages]
-    P --> Q[Click Desired Language Button]
-    Q --> R[Update to Selected Language]
+    User->>WebApp: Click "Log In" Button
+    WebApp->>User: Show login form
+    User->>WebApp: Click "Submit" Button (after filling form)
+    WebApp->>User: Display dashboard with key features
+
+    User->>WebApp: Click "Flashcards" Button
+    WebApp->>User: Show flashcards section
+
+    User->>WebApp: Click "Language Switch" Button (nav bar or top left corner)
+    WebApp->>User: Show available languages
+    User->>WebApp: Click desired language Button
+    WebApp->>User: Update interface to selected language
 ```
-
-**Image view:** ![mermaid-flow (1)](https://github.com/user-attachments/assets/264632b1-0353-49e1-9acc-549de26f6d60)
-
