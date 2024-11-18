@@ -18,7 +18,7 @@ Once a translation is done, users will have the option to save the data to a rem
 
 Users will be able to restore the text from flashcards in case they want to modify the content of a flashcard while seeing the translation or see what effect changing flashcard contents will have on a translation.
 
-## Mermaid diagram for ???
+## Mermaid diagram for translation page
 
 ```mermaid
 sequenceDiagram
@@ -27,8 +27,10 @@ participant application
 participant server
   alt calling translation api and showing data 
     user ->> application: translate "hello"
-    application ->> api: translate "hello" into spanish (selected language)
-    api ->> application: "hola"
+    application ->> server: translate "hello" into spanish (selected language)
+    server ->> api: translate "hello" into spanish (selected language)
+    api ->> server: "hola"
+    server ->> application: "hola"
     application ->> user: display "hola" in the translation box
   else adding translation data to storage/flashcards
     user ->> application: save this to a flashcard
@@ -38,10 +40,5 @@ participant server
   else restoring translation from flashcards
     user ->> application: restore from the "bye -> adios" flashcard
     application ->> user: now on the translate page with "bye" and "adios"
-    Note over user,api: below functionality is calling translation api and showing data
-    user ->> application: change "bye" to "see you later"
-    application ->> api: translate "see you later" into spanish (selected language)
-    api ->> application: "hasta luego"
-    application ->> user: display "hasta luego" in the translation box
   end
 ```
