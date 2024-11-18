@@ -142,15 +142,13 @@ export class ExercisePageComponent extends Component {
   #attachEventListeners() {
     document.querySelectorAll('.word').forEach(wordElement => {
       wordElement.addEventListener('mouseover', function() {
-        const popup = document.getElementById('definitionPopup');
+        const popup = document.getElementById('definition');
         popup.textContent = getDefinition(wordElement.innerHTML);
         popup.style.display = 'block';
-        popup.style.left = `${event.pageX + 10}px`;
-        popup.style.top = `${event.pageY + 10}px`;
       });
 
       wordElement.addEventListener('mouseleave', function() {
-        document.getElementById('definitionPopup').style.display = 'none';
+        document.getElementById('definition').style.display = 'none';
       });
 
       wordElement.addEventListener('click', () => {
