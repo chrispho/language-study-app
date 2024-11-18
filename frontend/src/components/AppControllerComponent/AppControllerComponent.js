@@ -2,6 +2,7 @@ import { EventHub } from "../../eventhub/EventHub.js";
 import { LandingPageComponent } from "../LandingPageComponent/LandingPageComponent.js";
 import { ExercisePageComponent } from "../ExercisePageComponent/ExercisePageComponent.js";
 import { TranslationPageComponent } from "../TranslationPageComponent/TranslationPageComponent.js";
+import { FlashcardPageComponent } from "../FlashcardsPageComponent/FlashcardsPageComponent.js";
 import { Events } from "../../eventhub/Events.js";
 // TODO add imports for each component
 
@@ -11,6 +12,7 @@ export class AppControllerComponent {
   #landingPageComponent = null;
   #exercisePageComponent = null;
   #translationPageComponent = null;
+  #flashcardPageComponent = null;
   #hub = null; // EventHub instance for managing events
 
   constructor() {
@@ -18,6 +20,7 @@ export class AppControllerComponent {
     this.#landingPageComponent = new LandingPageComponent();
     this.#exercisePageComponent = new ExercisePageComponent();
     this.#translationPageComponent = new TranslationPageComponent();
+    this.#flashcardPageComponent = new FlashcardPageComponent();
     // TODO add variables for each page/component
   }
 
@@ -97,6 +100,11 @@ export class AppControllerComponent {
 
     this.#hub.subscribe(Events.RedirectToTranslation, () => {
       this.#currentView = "translation";
+      this.#renderCurrentView();
+    });
+
+    this.#hub.subscribe(Events.RedirectToFlashcard, () => {
+      this.#currentView = "flashcard";
       this.#renderCurrentView();
     });
 
@@ -197,6 +205,10 @@ export class AppControllerComponent {
           break;
         case "translate":
           viewContainer.appendChild(this.#translationPageComponent.render());
+          break;
+        case "flashcard":
+          viewContainer.appendChild(this.#flashcardPageComponent.render());
+          break;
         default:
           throw Error("Invalid View");
       }

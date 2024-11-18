@@ -1,0 +1,163 @@
+#sets{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 60px; /* Space between boxes */
+    max-width: 70%; /* Constrain width */
+    padding: 100px; /* Space around the container’s content */
+    margin: 0 auto; /* Center container horizontally */
+    margin-top: 40px; /* Space below title */
+    background-color: #f9f9f9; /* Optional: subtle background color */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: soft shadow */
+    border-radius: 10px; /* Optional: rounded corners */
+}   
+
+.setbox{
+    display:inline-block;
+    width: 250px;
+    height: 250px;
+    position: sticky;
+    background-color:#ccc;
+    border:1px solid black;
+    text-align: center;
+    text-underline-offset: 5px;
+}
+
+#currcard{
+    display: inline-block;
+    position: sticky;
+}
+
+.overlay{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Optional, for a translucent background */
+    z-index: 10; /* Ensure it overlays other content */
+}
+
+#addset-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for effect */
+    text-align: center;
+    width: 300px; /* Adjust as needed */
+    max-width: 90%;
+}
+
+#viewset-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for effect */
+    text-align: center;
+    width: 300px; /* Adjust as needed */
+    max-width: 90%;
+}
+
+#addflashcard-content {
+    background-color: white;
+    padding: 30px;
+    gap: 100px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for effect */
+    text-align: center;
+    width: 600px; /* Adjust as needed */
+    max-width: 90%;
+}
+
+#set-name {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#currcard-container {
+    display: flex;
+    justify-content: center;  /* Centers the #currcard horizontally */
+    align-items: center;      /* Centers the #currcard vertically */
+    height: 250px;            /* Full viewport height */
+    width: 100%;              /* Full width */
+}
+
+#currcard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 250px;
+    background-color: #f9f9f9;
+    color: black;
+    border: 2px solid #333;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: center;
+    cursor: alias;
+}
+
+/* 
+When you hover on current card it gives a hint on the translation into the back side
+#currcard:hover{
+}
+*/
+
+
+.view-set-button {
+    color: black;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.cancel-button {
+    background-color: #ff6666;
+}
+
+.cancel-button:hover {
+    background-color: #ff3333;
+}
+
+.add-button{
+    background-color: #7FFFD4;
+}
+
+.add-button:hover {
+    background-color: #66CDAA;
+}
+
+#shuffle-set {
+    background-color: #FFEB3B;
+}
+
+#shuffle-set:hover {
+    background-color: #FBC02D;
+}
+
+.card-shift{
+    background-color: #D3D3D3;
+}
+
+.card-shift:hover{
+    background-color: #505050;
+}
+
+.add-setbox-text {
+    width: 100%;         /* Full width of the container */
+    height: 200px;       /* Adjust height as needed */
+    padding: 10px;       /* Adds padding inside the box */
+    font-size: 16px;     /* Controls text size */
+    resize: vertical;    /* Allows vertical resizing, if desired */
+    box-sizing: border-box; /* Ensures padding is included in width/height */
+    overflow-y: auto;
+}
