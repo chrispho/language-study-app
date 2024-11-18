@@ -11,7 +11,7 @@ h1 {
 }
 
 .submit-btn, .flashcard-btn {
-  background-color: #4CAF50;
+  background-color: #618B4A;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -33,7 +33,7 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  background-color: #d0d0d0;
+  background-color: #AFBC88;
   border-radius: 10px;
   padding:15px;
   width:80%;
