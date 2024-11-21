@@ -18,3 +18,9 @@
 ### November 17, 2024
 - **Task**: Frontend - update mermaid syntax with a sequence diagram
 - **Details**: create landing page for the webapp with multi-view ui and language selection option. Added images as well.
+- **Link to Commit**: NA
+
+### November 17, 2024
+- **Task**: Frontend - landing page images
+- **Details**: update the src path for landing page images and logo on the header
+- **Link to Commit**: https://github.com/chrispho/language-study-app/pull/40#issue-2667001278  
