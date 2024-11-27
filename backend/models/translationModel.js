@@ -1,6 +1,6 @@
 class _TranslationModel{
   async translate(params_todo){
-    return "TODO"
+    return "translated" + params_todo;
   }
 }
 

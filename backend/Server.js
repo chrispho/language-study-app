@@ -2,8 +2,11 @@
 // 1. add an import
 // 2. add a line under setupRoutes()
 
+import dotenv from "dotenv";
 import express from "express";
 import TranslationRoutes from "./routes/translationRoutes.js";
+import session from "express-session";
+import passport from "passport";
 
 class Server {
   constructor() {
@@ -14,14 +17,14 @@ class Server {
   }
 
   configureMiddleware() {
-    this.app.use(express.static("../front-end/src"))
+    this.app.use(express.static("../frontend/src"))
     this.app.use(express.json({ limit: "10mb" }))
   }
 
   configureAuth(){
     this.app.use(
       session({
-        secret: process.env.SESSION_SECRET,
+        secret: "test",//process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false
       })

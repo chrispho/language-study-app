@@ -1,3 +1,5 @@
+import ModelFactory from "../models/modelFactory.js"
+
 class TranslationController{
   constructor(){
     ModelFactory.getTranslationModel().then((model) => {
@@ -7,14 +9,15 @@ class TranslationController{
 
   //essentially passes through params to model
   async translate(req, res){
-    const translated = this.model.translate(params_todo);
+    const translated = await this.model.translate("test");
 
     const error = false
     if(error){
       res.status(500).json({ error: "some error" })
     }
 
-    return res.status(200).json({ tbd: "TODO" })
+    res.status(200).json({ tbd: "TODO", tbd2: translated })
+    console.log(`translated ${translated}`)
   }
 }
 
