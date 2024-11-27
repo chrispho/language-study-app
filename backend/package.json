@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/translate": "^8.5.0",
     "@sequelize/sqlite3": "^7.0.0-alpha.43",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",

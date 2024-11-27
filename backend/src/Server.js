@@ -7,6 +7,7 @@ import express from "express";
 import TranslationRoutes from "./routes/translationRoutes.js";
 import session from "express-session";
 import passport from "passport";
+// console.log(process.env)
 
 class Server {
   constructor() {
