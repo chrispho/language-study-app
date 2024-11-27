@@ -14,7 +14,8 @@ class TranslationRoutes{
     response is { "TBD": "TBD" }
     200 or 500
     */
-    this.router.get("/translate", async (req, res) => {
+    this.router.post("/translate", async (req, res) => {
+      console.log("POST /translate")
       await TranslationController.translate(req, res)
     })
   }
