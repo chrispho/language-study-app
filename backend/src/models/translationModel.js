@@ -1,16 +1,9 @@
 import { TranslationServiceClient } from "@google-cloud/translate";
-import dotenv from "dotenv";
-
-// Instantiates a client
-
-// console.log(process.env)
-process.env.GOOGLE_APPLICATION_CREDENTIALS =
-  "/home/alex/Downloads/language-app-441022-95dfc5ef16a8.json";
 
 class _TranslationModel {
   constructor() {
-    this.projectId = "language-app-441022";
-    this.location = "global";
+    this.projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
+    this.location = process.env.GOOGLE_CLOUD_LOCATION;
     this.translationClient = new TranslationServiceClient();
   }
 
