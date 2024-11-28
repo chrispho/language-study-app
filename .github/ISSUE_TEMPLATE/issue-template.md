@@ -8,5 +8,5 @@ assignees: ''
 ---
 
 Details:
-Its purpose:
+Purpose:
 Expected outcomes:
