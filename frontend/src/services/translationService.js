@@ -1,6 +1,5 @@
 import { Service } from "./service.js";
 import { Events } from "../eventhub/Events.js";
-import { fetch } from "../utility/fetch.js";
 
 export class TranslationService extends Service {
   constructor() {
@@ -12,8 +11,12 @@ export class TranslationService extends Service {
     // const inputLang = inputLangElem.value;
     // const outputLang = outputLangElem.value;
 
-    const translatedResp = await fetch("/api/translate", {
-      body: data,
+    const translatedResp = await fetch("/v1/translate", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers:{
+        "Content-Type": "application/json"
+      }
     });
 
     const translatedObj = await translatedResp.json();

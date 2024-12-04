@@ -2,7 +2,7 @@
 // 1. add an import
 // 2. add a line under setupRoutes()
 
-import dotenv from "dotenv";
+import "dotenv/config"
 import express from "express";
 import TranslationRoutes from "./routes/translationRoutes.js";
 import session from "express-session";
