@@ -37,6 +37,7 @@ class Server {
 
   setupRoutes() {
     this.app.use("/v1", TranslationRoutes)
+    this.app.use("/v1", ExerciseRoutes)
     // this.app.use("/v1", AuthRoutes)
   }
 

@@ -1,10 +1,22 @@
-// import { TranslationServiceClient } from "@google-cloud/translate";
+import User from "/authUserModel.js"
 
 class _ExerciseModel {
   constructor() {
     // this.projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
     // this.location = process.env.GOOGLE_CLOUD_LOCATION;
     // this.translationClient = new TranslationServiceClient();
+  }
+
+  async createExercise() {
+
+  }
+
+  async getExerciseLibrary(userId) {
+
+  }
+
+  async getExercise(userId, exerciseId) {
+    
   }
 
   // async translate(inLang, outLang, text) {

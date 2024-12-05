@@ -1,10 +1,29 @@
 import ModelFactory from "../models/modelFactory.js"
 
+
 class ExerciseController{
   constructor(){
     ModelFactory.getExerciseModel().then((model) => {
       this.model = model;
     })
+  }
+
+  async createExercise(req, res) {
+    // TODO: Fix variables when request format is known
+    const exerciseName = req
+    const question = req
+    const options = req
+    const answers = req
+    
+    await this.model.createExercise()
+  }
+
+  async getExerciseLibrary(req, res, userId) {
+    const exerciseLibrary = await this.model.getExerciseLibrary(userId)
+  }
+
+  async getExercise(req, res, userId, exerciseId) {
+    const exercise = await this.model.getExercise(userId, exerciseId)
   }
 
   // //essentially passes through params to model

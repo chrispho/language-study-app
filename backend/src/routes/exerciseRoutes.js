@@ -1,13 +1,14 @@
 import express from "express";
-import ExerciseController from "../controllers/exerciseController.js"
+import ExerciseController from "../controllers/exerciseController.js";
+import { isAuthenticated } from "../auth/middleware.js";
 
-class ExerciseRoutes{
+class ExerciseRoutes {
   constructor() {
-    this.router = express.Router()
-    this.initializeRoutes()
+    this.router = express.Router();
+    this.initializeRoutes();
   }
 
-  initializeRoutes(){
+  initializeRoutes() {
     /*
     translates input
     POST? /translate
@@ -18,10 +19,41 @@ class ExerciseRoutes{
     //   console.log("POST /translate")
     //   await TranslationController.translate(req, res)
     // })
+
+    this.router.post(
+      "/users/:id/exercises",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        console.log(`POST /users/${userId}/exercises`);
+        await ExerciseController.createExercise(req, res);
+      }
+    );
+
+    this.router.get(
+      "/users/:id/exercises",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        console.log(`GET /users/${userId}/exercises`);
+        await ExerciseController.getExerciseLibrary(req, res, userId)
+      }
+    );
+
+    this.router.get(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`GET /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.getExercise(req, res, userId, exericseId)
+      }
+    );
   }
 
-  getRouter(){
-    return this.router
+  getRouter() {
+    return this.router;
   }
 }
 
