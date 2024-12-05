@@ -34,3 +34,13 @@
 - **Task**: integrate tasks page with component strucuter
 - **Details**: also styled the page and improved the mock fetch
 - **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/3077a041435ae5947483e547d1e00c226fc431c9)
+
+### November 23, 2024
+- **Task**: initialize backend folder structure
+- **Details**: also added skeleton files + instructions for team members
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/b3f3ae95676b29c33a7835e02a3d9e1655f34232)
+
+### November 27, 2024
+- **Task**: create backend for cloud translation
+- **Details**: copied and modified code from November 7th, integrating it into the model/controller format
+- **Link to Commit**: link TODO
