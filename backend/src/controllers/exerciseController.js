@@ -1,29 +1,48 @@
-import ModelFactory from "../models/modelFactory.js"
+import ModelFactory from "../models/modelFactory.js";
 
-
-class ExerciseController{
-  constructor(){
+class ExerciseController {
+  constructor() {
     ModelFactory.getExerciseModel().then((model) => {
       this.model = model;
-    })
+    });
+  }
+
+  async createExerciseList(req, res) {
+    await this.model.createExerciseList();
   }
 
   async createExercise(req, res) {
     // TODO: Fix variables when request format is known
-    const exerciseName = req
-    const question = req
-    const options = req
-    const answers = req
-    
-    await this.model.createExercise()
+    const exerciseName = req;
+    const question = req;
+    const options = req;
+    const answers = req;
+
+    await this.model.createExercise();
   }
 
   async getExerciseLibrary(req, res, userId) {
-    const exerciseLibrary = await this.model.getExerciseLibrary(userId)
+    try {
+      const exerciseLibrary = await this.model.getExerciseLibrary(userId);
+      res.status(200).json(exerciseLibrary);
+    } catch {
+      console.error("Error fetching exercise library:", error);
+      res.status(500).json({
+        error: `Failed to fetch exercise library for user #${userId}`,
+      });
+    }
   }
 
   async getExercise(req, res, userId, exerciseId) {
-    const exercise = await this.model.getExercise(userId, exerciseId)
+    try {
+      const exercise = await this.model.getExercise(userId, exerciseId);
+      res.status(200).json(exercise);
+    } catch {
+      console.error("Error fetching exercise:", error);
+      res
+        .status(500)
+        .json({ error: `Failed to fetch exercise #${exerciseId}` });
+    }
   }
 
   // //essentially passes through params to model
