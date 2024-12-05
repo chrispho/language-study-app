@@ -44,10 +44,15 @@ export class ExercisePageComponent extends Component {
     const questionBox = document.createElement("div");
     questionBox.classList.add("question-box");
 
+    function createQuestion(spanishTime) {
+      const words = spanishTime.split(' ');
+      const htmlWords = words.map(word => `<b><em><span class='word es-ES'>${word}</span></em></b>`).join(' ');
+      return `Your friend tells you, ${htmlWords}. What time is it?`;
+    }
+
     // Create the question and answer options
     const question = document.createElement("p");
-    question.innerHTML =
-      "Your friend tells you, <b><em><span class = 'word es-ES'>Son</span> <span class = 'word es-ES'>las</span> <span class = 'word es-ES'>siete</span> <span class = 'word es-ES'>y</span> <span class = 'word es-ES'>cinco</span>.</em></b> What time is it?";
+    question.innerHTML = createQuestion("Son las siete y cinco");
     const answerOptions = document.createElement("div");
 
     // Create individual answer options
@@ -140,20 +145,20 @@ export class ExercisePageComponent extends Component {
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
-    this.#container.querySelectorAll('.word').forEach(wordElement => {
-      console.log(wordElement)
-      wordElement.addEventListener('mouseover', function() {
-        const popup = document.getElementById('definition');
+    this.#container.querySelectorAll(".word").forEach((wordElement) => {
+      console.log(wordElement);
+      wordElement.addEventListener("mouseover", function () {
+        const popup = document.getElementById("definition");
         popup.textContent = getDefinition(wordElement.innerHTML);
-        popup.style.display = 'block';
+        popup.style.display = "block";
       });
 
-      wordElement.addEventListener('mouseleave', function() {
-        document.getElementById('definition').style.display = 'none';
+      wordElement.addEventListener("mouseleave", function () {
+        document.getElementById("definition").style.display = "none";
       });
 
-      wordElement.addEventListener('click', () => {
-        speakPhrase(wordElement.innerHTML, wordElement.classList[1])
+      wordElement.addEventListener("click", () => {
+        speakPhrase(wordElement.innerHTML, wordElement.classList[1]);
       });
     });
 
@@ -195,9 +200,10 @@ export class ExercisePageComponent extends Component {
   }
 }
 
-function getDefinition(word){
+function getDefinition(word) {
   return "Definition: " + "Backend not implemented.";
 }
+
 function speakPhrase(phrase, language) {
   // Create a new SpeechSynthesisUtterance object
   const utterance = new SpeechSynthesisUtterance(phrase);
