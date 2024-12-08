@@ -124,6 +124,15 @@ export class ProfilePageComponent extends Component {
     `;
   }
 
+  #animateProgressBars() {
+    const progressBars = this.#container.querySelectorAll(".progress-bar");
+    progressBars.forEach((bar) => {
+      const fill = bar.querySelector(".fill");
+      const progress = bar.getAttribute("data-progress");
+      fill.style.width = `${progress}%`;
+    });
+  }
+
   #attachEventListeners() {
     const tabs = this.#container.querySelectorAll(".tab");
     const tabContents = this.#container.querySelectorAll(".tab-content");
@@ -138,6 +147,10 @@ export class ProfilePageComponent extends Component {
           content.classList.toggle("active", content.id === target);
         });
       });
+    });
+
+    window.addEventListener("domContentLoaded", () => {
+      this.#animateProgressBars();
     });
   }
 }

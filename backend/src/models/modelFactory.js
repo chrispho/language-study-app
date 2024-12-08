@@ -21,6 +21,17 @@ class _ModelFactory {
   async getTranslationModel(){
     return TranslationModel;
   }
+
+  async getDatabaseModel(model = "sqlite") {
+    if (model === "sqlite") {
+      return SQLiteTaskModel;
+    }else if (model === "sqlite-fresh") {
+      await SQLiteTaskModel.init(true);
+      return SQLiteTaskModel;
+    }else {
+      return InMemoryTaskModel;
+    }
+  }
 }
 
 // more verbose export singleton
