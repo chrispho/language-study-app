@@ -74,6 +74,19 @@ class UserController {
       return res.status(500).json({ success: false, error: "Error deleting user." });
     }
   }
+
+  async deleteAllUsers(req, res) {
+    try {
+      const rowsDeleted = await this.model.deleteAll();
+      if (rowsDeleted === 0) {
+        return res.status(200).json({ success: true, message: "No users to delete." });
+      }
+      return res.status(200).json({ success: true, message: `${rowsDeleted} users deleted.` });
+    } catch (error) {
+      console.error("Error deleting all users:", error);
+      return res.status(500).json({ success: false, error: "Error deleting all users." });
+    }
+  }
 }
 
 export default new UserController();

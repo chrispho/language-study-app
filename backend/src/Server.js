@@ -24,6 +24,7 @@ class Server {
 
   configureMiddleware() {
     this.app.use(express.static("../frontend/src"))
+    this.app.use(express.static("../frontend/public"))
     this.app.use(express.json({ limit: "10mb" }))
   }
 

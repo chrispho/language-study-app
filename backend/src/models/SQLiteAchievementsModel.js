@@ -87,6 +87,15 @@ class _SQLiteAchievementModel {
     }
   }
 
+  async findByUserID(userID) {
+    try {
+      return await Achievement.findAll({ where: { userID } });
+    } catch (error) {
+      console.error(`Error fetching achievements for user ${userID}:`, error);
+      throw new Error("Unable to fetch achievements by userID.");
+    }
+  }
+
   getModel() {
     return Achievement;
   }

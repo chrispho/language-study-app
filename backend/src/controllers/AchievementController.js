@@ -65,6 +65,21 @@ class AchievementController {
     }
   }
 
+  async findByUserID(req, res) {
+    try {
+      const { userID } = req.query;
+      if (!userID) {
+        return res.status(400).json({ success: false, error: "userID is required." });
+      }
+
+      const achievements = await this.model.findByUserID(userID);
+      return res.status(200).json(achievements);
+    } catch (error) {
+      console.error("Error fetching achievements by userID:", error);
+      return res.status(500).json({ success: false, error: "Error fetching achievements by userID." });
+    }
+  }
+
   async deleteAchievement(req, res) {
     try {
       const { id } = req.params;

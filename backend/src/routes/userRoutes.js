@@ -37,6 +37,11 @@ class UserRoutes {
       console.log(`DELETE /users/${req.params.id}`);
       await UserController.deleteUser(req, res);
     });
+
+    this.router.delete("/users", async (req, res) => {
+      console.log(`DELETE /users/all from db`);
+      await UserController.deleteAllUsers(req, res);
+    });
   }
 
   getRouter() {

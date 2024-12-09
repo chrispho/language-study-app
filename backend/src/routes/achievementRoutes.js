@@ -37,6 +37,17 @@ class AchievementRoutes {
       console.log(`DELETE /achievements/${req.params.id}`);
       await AchievementController.deleteAchievement(req, res);
     });
+
+    // GET /v1/achievements?userID=xxx
+    this.router.get("/achievements", async (req, res) => {
+      // If userID query param is present, call findByUserID
+      if (req.query.userID) {
+        await AchievementController.findByUserID(req, res);
+      } else {
+        // If no userID, you can return all achievements or respond with an error
+        const all = await AchievementController.getAllAchievements(req, res);
+      }
+    });
   }
 
   getRouter() {

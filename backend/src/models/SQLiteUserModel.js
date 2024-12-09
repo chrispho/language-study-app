@@ -7,6 +7,43 @@ const sequelize = new Sequelize({
 
 let User; // will hold the defined model
 
+// Helper functions to generate random data
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateRandomLanguageProgress() {
+  return {
+    english: getRandomInt(0, 100),
+    spanish: getRandomInt(0, 100),
+    german: getRandomInt(0, 100),
+    french: getRandomInt(0, 100),
+  };
+}
+
+function generateAchievements() {
+  return [
+    { name: "10 day streak", description: "Completed a 10-day streak" },
+    { name: "100 words translated", description: "Translated 100 words successfully" },
+    { name: "50% language progress", description: "Reached 50% overall progress" },
+  ];
+}
+
+function generateExercises() {
+  // Randomly generate scores and dates if desired
+  return [
+    { name: "Spanish Quiz", date: "2024-11-10", score: getRandomInt(50, 100) },
+    { name: "French Listening", date: "2024-11-12", score: getRandomInt(50, 100) },
+  ];
+}
+
+function generateFlashcards() {
+  return [
+    { front: "Hola", back: "Hello (Spanish)" },
+    { front: "Merci", back: "Thank you (French)" },
+  ];
+}
+
 class _SQLiteUserModel {
   constructor() {
     this.initialized = false;
@@ -84,7 +121,14 @@ class _SQLiteUserModel {
         { username: "demo3", email: "demo3@d.com", password: "demo3pass" },
       ];
       for (const u of demoUsers) {
-        await this.create(u);
+        await this.create({
+          ...u,
+          userStreak: getRandomInt(0, 200),
+          achievements: generateAchievements(),
+          exercisesCompleted: generateExercises(),
+          flashcardsSaved: generateFlashcards(),
+          languageProgress: generateRandomLanguageProgress(),
+        });
       }
     } else {
       console.log("User table already has data, no need to create defaults.");
@@ -143,6 +187,16 @@ class _SQLiteUserModel {
     } catch (error) {
       console.error("Error destroying user:", error);
       throw new Error("Unable to destroy user.");
+    }
+  }
+
+  async deleteAll() {
+    try {
+      const rowsDeleted = await User.destroy({ where: {} });
+      return rowsDeleted; // returns number of rows deleted
+    } catch (error) {
+      console.error("Error deleting all users:", error);
+      throw new Error("Unable to delete all users.");
     }
   }
 
