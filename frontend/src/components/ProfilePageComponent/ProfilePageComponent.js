@@ -9,7 +9,7 @@ export class ProfilePageComponent extends Component {
   constructor() {
     super();
     this.#hub = EventHub.getInstance();
-    this.loadCSS("ProfilePageCoMponent"); // Ensure CSS is dynamically loaded
+    this.loadCSS("ProfilePageCoMponent");
   }
 
   render() {
@@ -21,6 +21,9 @@ export class ProfilePageComponent extends Component {
     this.#setupContainerContent();
     this.#attachEventListeners();
 
+    // Request user profile data when rendering
+    this.#hub.publish(Events.LoadUserProfile);
+
     return this.#container;
   }
 
@@ -30,97 +33,47 @@ export class ProfilePageComponent extends Component {
   }
 
   #setupContainerContent() {
+    // Initially, leave placeholders or empty data.
+    // We'll fill them when UserProfileSuccess is received.
     this.#container.innerHTML = `
       <header class="profile-header">
-    <div class="profile-info">
-      <img src="/frontend/public/images/avatar1.png" alt="User Avatar" class="avatar">
-      <div>
-        <h1 class="username">John Doe</h1>
-        <p class="bio">Lifelong learner | Polyglot | 200-day streak</p>
-        <p class="joined-date">Joined: Jan 2023</p>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <nav class="tabs">
-      <button class="tab active" data-tab="progress">Progress</button>
-      <button class="tab" data-tab="achievements">Achievements</button>
-      <button class="tab" data-tab="flashcards">Flashcards</button>
-      <button class="tab" data-tab="exercises">Exercises</button>
-    </nav>
-
-    <section id="progress" class="tab-content active">
-      <h2>User Progress Overview</h2>
-      <div class="progress-summary">
-        <p>Total Hours Studied: <strong>150 hrs</strong></p>
-        <p>Overall Progress: <strong>75%</strong></p>
-      </div>
-      <div class="progress-bars">
-        <div class="progress-bar">
-          <span>Spanish - 80%</span>
-          <div class="bar"><div class="fill" style="width: 80%;"></div></div>
+        <div class="profile-info">
+          <img src="/images/avatar1.png" alt="User Avatar" class="avatar">
+          <div>
+            <h1 class="username">Loading...</h1>
+            <p class="bio">Fetching user data...</p>
+            <p class="joined-date"></p>
+          </div>
         </div>
-        <div class="progress-bar">
-          <span>French - 60%</span>
-          <div class="bar"><div class="fill" style="width: 60%;"></div></div>
-        </div>
-        <div class="progress-bar">
-          <span>Japanese - 50%</span>
-          <div class="bar"><div class="fill" style="width: 50%;"></div></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="achievements" class="tab-content">
-      <h2>Trophies & Achievements</h2>
-      <div class="achievements-grid">
-        <div class="achievement">
-          <img src="/frontend/public/images/100-day.png" alt="Streak Badge">
-          <p>100-Day Streak</p>
-        </div>
-        <div class="achievement">
-          <img src="/frontend/public/images/level-5.png" alt="Level Completion">
-          <p>Completed Level 5 (Spanish)</p>
-        </div>
-        <div class="achievement">
-          <img src="/frontend/public/images/500-word.png" alt="Challenge">
-          <p>Mastered 500 Words</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="flashcards" class="tab-content">
-      <h2>Saved Flashcards</h2>
-      <div class="flashcards-container">
-        <div class="flashcard">
-          <div class="front">Hola</div>
-          <div class="back">Hello (Spanish)</div>
-        </div>
-        <div class="flashcard">
-          <div class="front">Bonjour</div>
-          <div class="back">Hello (French)</div>
-        </div>
-        <div class="flashcard">
-          <div class="front">ありがとう</div>
-          <div class="back">Thank you (Japanese)</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="exercises" class="tab-content">
-      <h2>Completed Exercises</h2>
-      <ul class="exercise-list">
-        <li>Spanish Quiz 1 - 95% (2024-11-10)</li>
-        <li>French Practice 2 - 88% (2024-11-12)</li>
-        <li>Japanese Kanji Drill - 70% (2024-11-13)</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2024 Learn&Grow</p>
-  </footer>
+      </header>
+      <main>
+        <nav class="tabs">
+          <button class="tab active" data-tab="progress">Progress</button>
+          <button class="tab" data-tab="achievements">Achievements</button>
+          <button class="tab" data-tab="flashcards">Flashcards</button>
+          <button class="tab" data-tab="exercises">Exercises</button>
+        </nav>
+        <section id="progress" class="tab-content active">
+          <h2>User Progress Overview</h2>
+          <div class="progress-summary"></div>
+          <div class="progress-bars"></div>
+        </section>
+        <section id="achievements" class="tab-content">
+          <h2>Trophies & Achievements</h2>
+          <div class="achievements-grid"></div>
+        </section>
+        <section id="flashcards" class="tab-content">
+          <h2>Saved Flashcards</h2>
+          <div class="flashcards-container"></div>
+        </section>
+        <section id="exercises" class="tab-content">
+          <h2>Completed Exercises</h2>
+          <ul class="exercise-list"></ul>
+        </section>
+      </main>
+      <footer>
+        <p>© 2024 Learn&Grow</p>
+      </footer>
     `;
   }
 
@@ -138,6 +91,116 @@ export class ProfilePageComponent extends Component {
           content.classList.toggle("active", content.id === target);
         });
       });
+    });
+
+    // Subscribe to UserProfileSuccess and UserProfileFailure
+    this.#hub.subscribe(Events.UserProfileSuccess, (data) => {
+      this.#updateProfilePage(data);
+    });
+
+    this.#hub.subscribe(Events.UserProfileFailure, (error) => {
+      console.error("Failed to load user profile:", error);
+      const usernameElem = this.#container.querySelector(".username");
+      usernameElem.textContent = "Error loading profile";
+      const bioElem = this.#container.querySelector(".bio");
+      bioElem.textContent = error;
+    });
+  }
+
+  #updateProfilePage(data) {
+    // Extract user response object
+    const userResp = data.user;        // { success: true, data: { ...user fields... } }
+    const userObj = userResp.data;     // The actual user object with all fields
+  
+    // Extract necessary fields from userObj
+    const {
+      username,
+      userStreak,
+      createdAt,
+      achievements,
+      exercisesCompleted,
+      flashcardsSaved,
+      languageProgress
+    } = userObj;
+  
+    // Convert languageProgress object into an array of { language, progress }
+    const progress = Object.keys(languageProgress).map(lang => ({
+      language: lang,
+      progress: languageProgress[lang]
+    }));
+  
+    // Now we have the data we need directly from userObj
+    const achievementsArr = achievements || [];
+    const exercisesArr = exercisesCompleted || [];
+    const flashcardsArr = flashcardsSaved || [];
+  
+    // Update User Info
+    const usernameElem = this.#container.querySelector(".username");
+    usernameElem.textContent = username;
+  
+    const bioElem = this.#container.querySelector(".bio");
+    bioElem.textContent = `Lifelong learner | ${userStreak}-day streak`;
+  
+    const joinedDateElem = this.#container.querySelector(".joined-date");
+    joinedDateElem.textContent = `Joined: ${new Date(createdAt).toLocaleDateString()}`;
+  
+    // Update Progress
+    const progressSummaryElem = this.#container.querySelector(".progress-summary");
+    const totalHours = 0; // If needed, add hours to user model or remove this line
+    const overallProgress = progress.length > 0 
+      ? Math.round(progress.reduce((sum, p) => sum + p.progress, 0) / progress.length) 
+      : 0;
+    progressSummaryElem.innerHTML = `
+      <p>Overall Progress: <strong>${overallProgress}%</strong></p>
+    `;
+  
+    const progressBarsContainer = this.#container.querySelector(".progress-bars");
+    progressBarsContainer.innerHTML = "";
+    progress.forEach((p) => {
+      const barContainer = document.createElement("div");
+      barContainer.classList.add("progress-bar");
+      barContainer.setAttribute("data-progress", p.progress);
+      barContainer.innerHTML = `
+        <span>${p.language} - ${p.progress}%</span>
+        <div class="bar"><div class="fill" style="width: ${p.progress}%;"></div></div>
+      `;
+      progressBarsContainer.appendChild(barContainer);
+    });
+  
+    // Update Achievements
+    const achievementsGrid = this.#container.querySelector(".achievements-grid");
+    achievementsGrid.innerHTML = "";
+    achievementsArr.forEach((a) => {
+      const achievementElem = document.createElement("div");
+      achievementElem.classList.add("achievement");
+      achievementElem.innerHTML = `
+        <img src="/images/trophy.png" alt="${a.name}">
+        <p>${a.name}</p>
+      `;
+      achievementsGrid.appendChild(achievementElem);
+    });
+  
+    // Update Flashcards
+    const flashcardsContainer = this.#container.querySelector(".flashcards-container");
+    flashcardsContainer.innerHTML = "";
+    flashcardsArr.forEach((f) => {
+      const flashcardElem = document.createElement("div");
+      flashcardElem.classList.add("flashcard");
+      flashcardElem.innerHTML = `
+        <div class="front">${f.front}</div>
+        <div class="back">${f.back}</div>
+      `;
+      flashcardsContainer.appendChild(flashcardElem);
+    });
+  
+    // Update Exercises
+    const exerciseList = this.#container.querySelector(".exercise-list");
+    exerciseList.innerHTML = "";
+    exercisesArr.forEach((e) => {
+      const li = document.createElement("li");
+      const dateStr = e.date ? new Date(e.date).toLocaleDateString() : "N/A";
+      li.textContent = `${e.name} - ${e.score || 0}% (${dateStr})`;
+      exerciseList.appendChild(li);
     });
   }
 }
