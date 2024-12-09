@@ -160,10 +160,17 @@ export class ProfilePageComponent extends Component {
       const barContainer = document.createElement("div");
       barContainer.classList.add("progress-bar");
       barContainer.setAttribute("data-progress", p.progress);
+    
+      const fillDiv = document.createElement("div");
+      fillDiv.classList.add("fill");
+      fillDiv.style.setProperty("--progress-width", `${p.progress}%`);
+    
       barContainer.innerHTML = `
         <span>${p.language} - ${p.progress}%</span>
-        <div class="bar"><div class="fill" style="width: ${p.progress}%;"></div></div>
+        <div class="bar"></div>
       `;
+      
+      barContainer.querySelector(".bar").appendChild(fillDiv);
       progressBarsContainer.appendChild(barContainer);
     });
   
