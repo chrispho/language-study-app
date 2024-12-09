@@ -60,6 +60,33 @@ class _SQLiteExerciseModel {
     }
   }
 
+  async findAll() {
+    try {
+      return await Exercise.findAll();
+    } catch (error) {
+      console.error("Error fetching exercises:", error);
+      throw new Error("Unable to fetch exercises.");
+    }
+  }
+
+  async findByPk(id) {
+    try {
+      return await Exercise.findByPk(id);
+    } catch (error) {
+      console.error(`Error fetching exercise by ID ${id}:`, error);
+      throw new Error("Unable to fetch exercise by ID.");
+    }
+  }
+
+  async destroy(options) {
+    try {
+      return await Exercise.destroy(options);
+    } catch (error) {
+      console.error("Error destroying exercise:", error);
+      throw new Error("Unable to destroy exercise.");
+    }
+  }
+
   getModel() {
     return Exercise;
   }

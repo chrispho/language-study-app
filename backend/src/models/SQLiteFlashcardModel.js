@@ -60,6 +60,33 @@ class _SQLiteFlashcardModel {
     }
   }
 
+  async findAll() {
+    try {
+      return await Flashcard.findAll();
+    } catch (error) {
+      console.error("Error fetching flashcards:", error);
+      throw new Error("Unable to fetch flashcards.");
+    }
+  }
+
+  async findByPk(id) {
+    try {
+      return await Flashcard.findByPk(id);
+    } catch (error) {
+      console.error(`Error fetching flashcard by ID ${id}:`, error);
+      throw new Error("Unable to fetch flashcard by ID.");
+    }
+  }
+
+  async destroy(options) {
+    try {
+      return await Flashcard.destroy(options);
+    } catch (error) {
+      console.error("Error destroying flashcard:", error);
+      throw new Error("Unable to destroy flashcard.");
+    }
+  }
+
   getModel() {
     return Flashcard;
   }

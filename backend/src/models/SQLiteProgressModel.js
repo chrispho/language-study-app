@@ -56,6 +56,33 @@ class _SQLiteProgressModel {
     }
   }
 
+  async findAll() {
+    try {
+      return await Progress.findAll();
+    } catch (error) {
+      console.error("Error fetching progress records:", error);
+      throw new Error("Unable to fetch progress records.");
+    }
+  }
+
+  async findByPk(id) {
+    try {
+      return await Progress.findByPk(id);
+    } catch (error) {
+      console.error(`Error fetching progress record by ID ${id}:`, error);
+      throw new Error("Unable to fetch progress record by ID.");
+    }
+  }
+
+  async destroy(options) {
+    try {
+      return await Progress.destroy(options);
+    } catch (error) {
+      console.error("Error destroying progress record:", error);
+      throw new Error("Unable to destroy progress record.");
+    }
+  }
+
   getModel() {
     return Progress;
   }

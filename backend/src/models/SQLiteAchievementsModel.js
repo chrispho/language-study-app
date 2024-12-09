@@ -60,6 +60,33 @@ class _SQLiteAchievementModel {
     }
   }
 
+  async findAll() {
+    try {
+      return await Achievement.findAll();
+    } catch (error) {
+      console.error("Error fetching achievements:", error);
+      throw new Error("Unable to fetch achievements.");
+    }
+  }
+
+  async findByPk(id) {
+    try {
+      return await Achievement.findByPk(id);
+    } catch (error) {
+      console.error(`Error fetching achievement by ID ${id}:`, error);
+      throw new Error("Unable to fetch achievement by ID.");
+    }
+  }
+
+  async destroy(options) {
+    try {
+      return await Achievement.destroy(options);
+    } catch (error) {
+      console.error("Error destroying achievement:", error);
+      throw new Error("Unable to destroy achievement.");
+    }
+  }
+
   getModel() {
     return Achievement;
   }

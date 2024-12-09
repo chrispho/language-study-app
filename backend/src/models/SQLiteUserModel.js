@@ -12,7 +12,7 @@ class _SQLiteUserModel {
     this.initialized = false;
   }
 
-  async init(sequelize, fresh = true) {
+  async init(sequelize, fresh = false) {
     if (this.initialized) return;
     User = sequelize.define("User", {
       userID: {
@@ -74,11 +74,12 @@ class _SQLiteUserModel {
     });
 
     await User.sync({ force: fresh });
-    if (fresh) {
-      console.log("User table created successfully.");
-      await User.destroy({ where: {} });
+
+    const userCount = await User.count();
+    if (userCount === 0) {
+      console.log("No users found. Creating default users...");
       const demoUsers = [
-        { username: "demo1", email: "demo1@d.com", password: "demo1pass" },
+        { username: "shivangmehta", email: "demo1@d.com", password: "demo1pass" },
         { username: "demo2", email: "demo2@d.com", password: "demo2pass" },
         { username: "demo3", email: "demo3@d.com", password: "demo3pass" },
       ];
@@ -86,7 +87,7 @@ class _SQLiteUserModel {
         await this.create(u);
       }
     } else {
-      console.log("User table connected to existing database!");
+      console.log("User table already has data, no need to create defaults.");
     }
 
     this.initialized = true;
@@ -98,6 +99,50 @@ class _SQLiteUserModel {
     } catch (error) {
       console.error("Error creating user:", error);
       throw new Error("Unable to create user.");
+    }
+  }
+
+  async findAll() {
+    try {
+      return await User.findAll();
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw new Error("Unable to fetch users.");
+    }
+  }
+
+  async findByPk(id) {
+    try {
+      return await User.findByPk(id);
+    } catch (error) {
+      console.error(`Error fetching user with ID ${id}:`, error);
+      throw new Error("Unable to fetch user by ID.");
+    }
+  }
+
+  async updateUser(id, updates) {
+    try {
+      const [rowsUpdated, [updatedUser]] = await User.update(updates, {
+        where: { userID: id },
+        returning: true,
+      });
+
+      if (rowsUpdated === 0) {
+        return null; // No user found or no changes made
+      }
+      return updatedUser;
+    } catch (error) {
+      console.error(`Error updating user with ID ${id}:`, error);
+      throw new Error("Unable to update user.");
+    }
+  }
+
+  async destroy(options) {
+    try {
+      return await User.destroy(options);
+    } catch (error) {
+      console.error("Error destroying user:", error);
+      throw new Error("Unable to destroy user.");
     }
   }
 
