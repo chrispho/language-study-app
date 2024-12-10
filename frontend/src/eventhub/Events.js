@@ -18,5 +18,9 @@ export const Events = {
   TranslateSuccess: "TranslateSuccess",
   TranslateFailure: "TranslateFailure",
 
+  // New Events for User Profile Loading
+  LoadUserProfile: "LoadUserProfile",
+  UserProfileSuccess: "UserProfileSuccess",
+  UserProfileFailure: "UserProfileFailure"
   
 }
