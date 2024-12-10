@@ -17,7 +17,7 @@ let colorsIndex = 0;
 let deleting = false;
 
 //Adding flashcard to specific set
-let adding = true;
+let adding = false;
 let addInfo = ["",""]; //First index is english, second is translation
 
 class flashcard{ //flashcard class
