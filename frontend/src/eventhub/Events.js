@@ -13,8 +13,8 @@ export const Events = {
   LanguageChanged: "LanguageChanged",
 
   // Flashcards loading
-  StoreFlashcards: "StoreFlashcard",
-  GetFlashcards: "GetFlashcard",
+  StoreFlashcards: "StoreFlashcards",
+  GetFlashcards: "GetFlashcards",
   FlashcardsSuccess: "FlashcardsSuccess",
   
   Translate: "Translate",

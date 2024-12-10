@@ -263,6 +263,8 @@ export class FlashcardPageComponent extends Component {
 
     // Close overlay when the close button is clicked
     closeSetBtn.addEventListener('click', () => {
+        this.storeSets();
+        this.getSets();
         viewset.style.display = 'none';
     });
 
@@ -494,9 +496,10 @@ export class FlashcardPageComponent extends Component {
                 deleteSet.style.display = 'none';
                 const deletingText = this.#container.querySelector("#deleting");
                 deletingText.style.display = "none";
+                this.storeSets();
+                this.getSets();
             })
             deleting = false;
-
         }
         else if(adding){
             // Functionality for adding flashcard to this set
@@ -515,6 +518,9 @@ export class FlashcardPageComponent extends Component {
                     addInfo = [];
 
                     addToSet.style.display = 'none';
+
+                    this.storeSets();
+                    this.getSets();
                 })
                 const addingText = this.#container.querySelector("#adding");
                 addingText.style.display = 'none';
@@ -546,7 +552,7 @@ export class FlashcardPageComponent extends Component {
 
   updateCards(){
     // Need to set curr card element to show the top of array of this set, if set is empty then put placeholder
-    this.storeSets(); // Store current sets after this additon
+    //this.storeSets(); // Store current sets after this additon
 
     const currCard = this.#container.querySelector("#currcard");
     const currCardText = this.#container.querySelector("#currcard-english");
@@ -574,7 +580,7 @@ export class FlashcardPageComponent extends Component {
   }
 
   storeSets(){ //Publish storing when needed. Will change server
-    this.#hub.publish(Events.StoreFlashcards, {data: flashcardSets});
+    this.#hub.publish(Events.StoreFlashcards, {data: allFlashcards});
   }
 
     async #updateSets(){

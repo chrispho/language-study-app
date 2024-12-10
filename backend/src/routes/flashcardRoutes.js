@@ -9,14 +9,14 @@ class FlashcardRoutes {
 
   initializeRoutes() {
     // Store (Save) Entire Flashcards Dictionary
-    this.router.post("/flashcards", async (req, res) => {
-      console.log("POST /flashcards");
+    this.router.post("/flashcards/:id", async (req, res) => {
+      console.log(`POST /flashcards/${req.params.id}`);
       await FlashcardController.storeFlashcards(req, res);
     });
 
     // Get Entire Flashcards Dictionary
-    this.router.get("/flashcards", async (req, res) => {
-      console.log("GET /flashcards");
+    this.router.get("/flashcards/:id", async (req, res) => {
+      console.log(`GET /flashcards/${req.params.id}`);
       await FlashcardController.getFlashcards(req, res);
     });
 

@@ -8,15 +8,13 @@ class FlashcardController {
   // Fetch the entire flashcard collection for a user
   async getFlashcards(req, res) {
     try {
-      const { userID } = req.body; // Fetch userID from the request body
+      const { id } = req.params; // Fetch userID from the request body
       const model = await this.modelPromise;
       const FlashcardCollection = model.getModel();
-      const collection = await FlashcardCollection.findOne({ where: { userID } });
-
+      const collection = await FlashcardCollection.findOne({ where: { id } });
       if (!collection) {
         return res.status(404).json({ success: false, error: "Flashcard collection not found." });
       }
-
       return res.status(200).json({ success: true, data: collection.flashcards });
     } catch (error) {
       console.error("Error getting flashcards:", error);
@@ -27,17 +25,18 @@ class FlashcardController {
   // Store (update or create) the entire flashcard collection for a user
   async storeFlashcards(req, res) {
     try {
-      const { userID, flashcards } = req.body; // Retrieve flashcards and userID from the request body
+      const { id } = req.params; // Retrieve flashcards and userID from the request body
+      const {flashcards} = req.body;
       const model = await this.modelPromise;
       const FlashcardCollection = model.getModel();
 
-      const collection = await FlashcardCollection.findOne({ where: { userID } });
+      const collection = await FlashcardCollection.findOne({ where: { id } });
       if (collection) {
         collection.flashcards = flashcards; // Update the existing collection
         collection.updatedAt = new Date();
         await collection.save();
       } else {
-        await FlashcardCollection.create({ userID, flashcards }); // Create a new collection
+        await FlashcardCollection.create({ id, flashcards }); // Create a new collection
       }
 
       return res.status(201).json({ success: true, message: "Flashcards stored successfully." });

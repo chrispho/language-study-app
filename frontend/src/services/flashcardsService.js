@@ -1,3 +1,8 @@
+import { Service } from "./service.js";
+import { Events } from "../eventhub/Events.js";
+
+const USER_ID = "b87358c2-c782-4b81-ad2e-4b2290d014c4";
+
 export class FlashcardsService extends Service {
     constructor() {
       super();
@@ -7,21 +12,24 @@ export class FlashcardsService extends Service {
       // const input = inputElem.value;
       // const inputLang = inputLangElem.value;
       // const outputLang = outputLangElem.value;
-  
-      const flashcardResp = await fetch("/v1/flashcards", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers:{
-          "Content-Type": "application/json"
-        }
-      });
+      try{
+        await fetch(`/v1/flashcards/${USER_ID}`, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers:{
+            "Content-Type": "application/json"
+          }
+        });
+      } catch(error){
+        console.error("Error fetching flashcards:", error);
+      }
     }
 
     async getFlashcards(){
       try{
-        const flashcardResp = await fetch(`/v1/flashcards`);
+        const flashcardResp = await fetch(`/v1/flashcards/${USER_ID}`);
         if (!flashcardResp.ok) {
-          throw new Error(`Error fetching user: ${userResp.status} ${userResp.statusText}`);
+          throw new Error(`Error fetching flashcards: ${flashcardResp.status} ${flashcardResp.statusText}`);
         }
         const flashcards = await flashcardResp.json();
 
@@ -32,11 +40,11 @@ export class FlashcardsService extends Service {
     }
   
     addSubscriptions() {
+      this.subscribe(Events.GetFlashcards, () => {
+        this.getFlashcards();
+      });
       this.subscribe(Events.StoreFlashcards, (data) => {
         this.storeFlashcards(data);
       });
-      this.subscribe(Events.GetFlashcards, () => {
-        this.GetFlashcards();
-      })
     }
   }
