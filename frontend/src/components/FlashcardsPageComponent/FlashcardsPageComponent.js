@@ -183,6 +183,12 @@ export class FlashcardPageComponent extends Component {
 
   // Attaches the event listeners to the component
   #attachEventListeners() {
+
+    this.#hub.subscribe( //Only need success, if failed it doesnt load!
+        Events.FlashcardsSuccess,
+        (flashcardsObj) => (flashcardSets = JSON.parse(flashcardsObj)) //Comes out as json file
+    );
+
     const backToMainViewBtn = this.#container.querySelector('#backToMainViewBtn');
 
     const hub = EventHub.getInstance();
@@ -369,6 +375,39 @@ export class FlashcardPageComponent extends Component {
         })
     }
 }
+
+  getSets(){ //Request new flashcards
+    this.#hub.publish(Events.GetFlashcards);
+  }
+
+  storeSets(){ //Publish storing when needed. Will change server
+    this.#hub.publish(Events.StoreFlashcards, {data: flashcardSets});
+  }
+
+    async #updateSets(){
+
+    const translatedResp = await fetch("/v1/flashcards", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers:{
+            "Content-Type": "application/json"
+        }
+    });
+
+    const data = await translatedResp.json();
+
+    const userResp = data.user;        // { success: true, data: { ...user fields... } }
+    const userObj = userResp.data;     // The actual user object with all fields
+  
+    // Extract necessary fields from userObj
+    const {
+      flashcardsSaved,
+    } = userObj;
+
+    const flashcardsArr = flashcardsSaved || [];
+
+
+    }
 }
 
 function shuffleArray(array) {

@@ -16,7 +16,7 @@ class _SQLiteFlashcardModel {
 
   async init(sequelize, fresh = true) {
     if (this.initialized) return;
-    Flashcard = sequelize.define("Flashcard", {
+    Flashcard = sequelize.define("Flashcard", { //Need to change:
       flashcardID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,

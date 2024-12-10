@@ -5,6 +5,29 @@ class FlashcardController {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-flashcard");
   }
 
+  async getFlashcards(req, res){
+    try{
+      req.body; // Dont get
+      const modelPromise = await this.modelPromise;
+      const model = model.getModel();
+      const flashcards = await model.findAll(); // Find all will just give me the dictionary?
+      return res.status(201).json({ success: true, data: record });
+    } catch(error){
+      console.error("Error getting flashcards:", error);
+      return res.status(500).json({ success: false, error: "Error getting flashcards." });
+    }
+  }
+
+  async storeFlashcards(req, res){
+    try{
+      
+      return res.status(201).json({ success: true});
+    } catch(error){
+      console.error("Error stroing flashcards:", error);
+      return res.status(500).json({ success: false, error: "Error storing flashcards." });
+    }
+  }
+
   async createFlashcard(req, res) {
     try {
       const { front, back, userID } = req.body;

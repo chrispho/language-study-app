@@ -12,7 +12,10 @@ export const Events = {
   CloseProfileMenu: "CloseProfileMenu",
   LanguageChanged: "LanguageChanged",
 
-  StoreFlashcard: "StoreFlashcard",
+  // Flashcards loading
+  StoreFlashcards: "StoreFlashcard",
+  GetFlashcards: "GetFlashcard",
+  FlashcardsSuccess: "FlashcardsSuccess",
   
   Translate: "Translate",
   TranslateSuccess: "TranslateSuccess",
