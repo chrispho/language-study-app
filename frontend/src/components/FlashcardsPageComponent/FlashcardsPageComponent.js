@@ -3,8 +3,10 @@ import { Component } from "../Component/Component.js"
 import { EventHub } from "../../eventhub/EventHub.js";
 
 // Dictionary holding all sets
-const flashcardSets = {} // Going to need one for each language
+const allFlashcards = {}
 const currLang = "spanish"
+allFlashcards[currLang] = {};
+const flashcardSets = allFlashcards[currLang]; // Going to need one for each language
 let currSet = NaN;
 let currCardPos = 0;
 
@@ -87,6 +89,7 @@ export class FlashcardPageComponent extends Component {
     this.loadCSS('FlashcardsPageComponent');
     this.#hub = EventHub.getInstance();
 
+    // Get current language, then in getSets set flashcardsSets to allFlashcards[currlang] after get allFlashcards from subscription
     this.getSets(); // Reload the sets we have
   }
 
@@ -197,7 +200,7 @@ export class FlashcardPageComponent extends Component {
         </button>
         <h2 id="adding" style="display: none;">Select a Set to Add the Flashcard to</h2>
         <h2 id="deleting" style="display: none;">Select a Set to Delete</h2>
-        <button class="view-set-button" id="delete-set-btn">
+        <button class="view-set-button" id="delete-set-btn" style="display: none;">
             <h3>DELETE A SET</h3>
         </button>
     </div>
@@ -307,70 +310,76 @@ export class FlashcardPageComponent extends Component {
             const newSet = new flashcardSet(setName,currLang,[]);
             flashcardSets[setName] = newSet;
 
-            const domSet = document.createElement("button");
-            domSet.setAttribute("class","setbox");
-            domSet.setAttribute("id",setName+"-set");
-            domSet.setAttribute("data-set-name",setName);
-            domSet.style.backgroundColor = newSet.color;
+            if(Object.keys(flashcardSets).length > 0){
+                deletSetButton.style.display = 'flex';
+            }
 
-            // Viewset :
-            domSet.addEventListener('click', () => {
-                if(deleting){
-                    //Are you sure question
-                    const deleteSet = this.#container.querySelector("#deleteset");
-                    deleteSet.style.display = 'flex';
+            this.makeSetDiv(setName);
 
-                    const confirmText = this.#container.querySelector("#are-you-sure-delete");
-                    confirmText.innerText += " '"+setName+"'";
+            // const domSet = document.createElement("button");
+            // domSet.setAttribute("class","setbox");
+            // domSet.setAttribute("id",setName+"-set");
+            // domSet.setAttribute("data-set-name",setName);
+            // domSet.style.backgroundColor = newSet.color;
 
-                    const confirmDeleteButton = this.#container.querySelector("#confirm-delete-btn");
-                    confirmDeleteButton.addEventListener('click', () => {
-                        delete flashcardSets[setName];
-                        domSet.remove(); //Remove from html
-                        deleteSet.style.display = 'none';
-                        const deletingText = this.#container.querySelector("#deleting");
-                        deletingText.style.display = "none";
-                    })
-                    deleting = false;
+            // // Viewset :
+            // domSet.addEventListener('click', () => {
+            //     if(deleting){
+            //         //Are you sure question
+            //         const deleteSet = this.#container.querySelector("#deleteset");
+            //         deleteSet.style.display = 'flex';
 
-                }
-                else if(adding){
-                    // Functionality for adding flashcard to this set
-                    if(addInfo.length == 2){ //Make sure we have the info
-                        const addToSet = this.#container.querySelector("#addtoset");
-                        addToSet.style.display = 'flex';
+            //         const confirmText = this.#container.querySelector("#are-you-sure-delete");
+            //         confirmText.innerText += " '"+setName+"'";
 
-                        const confirmText = this.#container.querySelector("#are-you-sure-add");
-                        confirmText.innerText += " '"+setName+"'";
+            //         const confirmDeleteButton = this.#container.querySelector("#confirm-delete-btn");
+            //         confirmDeleteButton.addEventListener('click', () => {
+            //             delete flashcardSets[setName];
+            //             domSet.remove(); //Remove from html
+            //             deleteSet.style.display = 'none';
+            //             const deletingText = this.#container.querySelector("#deleting");
+            //             deletingText.style.display = "none";
+            //         })
+            //         deleting = false;
 
-                        const confirmAddButton = this.#container.querySelector("#confirm-add-btn");
-                        confirmAddButton.addEventListener('click', () => {
-                            const newCard = new flashcard(addInfo[0], addInfo[1], currLang, setName);
-                            const set = flashcardSets[setName]; // get set from dictionary
-                            set.addCard(newCard); //add new card to set array of flashcards
-                            addInfo = [];
+            //     }
+            //     else if(adding){
+            //         // Functionality for adding flashcard to this set
+            //         if(addInfo.length == 2){ //Make sure we have the info
+            //             const addToSet = this.#container.querySelector("#addtoset");
+            //             addToSet.style.display = 'flex';
 
-                            addToSet.style.display = 'none';
-                        })
-                        const addingText = this.#container.querySelector("#adding");
-                        addingText.style.display = 'none';
+            //             const confirmText = this.#container.querySelector("#are-you-sure-add");
+            //             confirmText.innerText += " '"+setName+"'";
 
-                        adding = false; //Reset adding info
-                    }
-                }
-                else{
-                    viewset.style.display = 'flex';
-                    const setName = domSet.getAttribute("data-set-name");
-                    currSet = setName;
-                    this.#container.querySelector("#set-name").textContent = setName;
+            //             const confirmAddButton = this.#container.querySelector("#confirm-add-btn");
+            //             confirmAddButton.addEventListener('click', () => {
+            //                 const newCard = new flashcard(addInfo[0], addInfo[1], currLang, setName);
+            //                 const set = flashcardSets[setName]; // get set from dictionary
+            //                 set.addCard(newCard); //add new card to set array of flashcards
+            //                 addInfo = [];
+
+            //                 addToSet.style.display = 'none';
+            //             })
+            //             const addingText = this.#container.querySelector("#adding");
+            //             addingText.style.display = 'none';
+
+            //             adding = false; //Reset adding info
+            //         }
+            //     }
+            //     else{
+            //         viewset.style.display = 'flex';
+            //         const setName = domSet.getAttribute("data-set-name");
+            //         currSet = setName;
+            //         this.#container.querySelector("#set-name").textContent = setName;
     
-                    const currcard = this.#container.querySelector("#currcard")
-                    currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
-                    currCardPos = 0; //Go to front of array;
-                    newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
-                    this.updateCards();
-                }
-            });
+            //         const currcard = this.#container.querySelector("#currcard")
+            //         currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
+            //         currCardPos = 0; //Go to front of array;
+            //         newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
+            //         this.updateCards();
+            //     }
+            // });
 
             // const title = document.createElement("h3");
             // title.textContent = setName;
@@ -466,19 +475,65 @@ export class FlashcardPageComponent extends Component {
     domSet.setAttribute("class","setbox");
     domSet.setAttribute("id",setName+"-set");
     domSet.setAttribute("data-set-name",setName);
+    domSet.style.backgroundColor = newSet.color;
 
     // Viewset :
     domSet.addEventListener('click', () => {
-        viewset.style.display = 'flex';
-        const setName = domSet.getAttribute("data-set-name");
-        currSet = setName;
-        this.#container.querySelector("#set-name").textContent = setName;
+        if(deleting){
+            //Are you sure question
+            const deleteSet = this.#container.querySelector("#deleteset");
+            deleteSet.style.display = 'flex';
 
-        const currcard = this.#container.querySelector("#currcard")
-        currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
-        currCardPos = 0; //Go to front of array;
-        newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
-        this.updateCards();
+            const confirmText = this.#container.querySelector("#are-you-sure-delete");
+            confirmText.innerText += " '"+setName+"'";
+
+            const confirmDeleteButton = this.#container.querySelector("#confirm-delete-btn");
+            confirmDeleteButton.addEventListener('click', () => {
+                delete flashcardSets[setName];
+                domSet.remove(); //Remove from html
+                deleteSet.style.display = 'none';
+                const deletingText = this.#container.querySelector("#deleting");
+                deletingText.style.display = "none";
+            })
+            deleting = false;
+
+        }
+        else if(adding){
+            // Functionality for adding flashcard to this set
+            if(addInfo.length == 2){ //Make sure we have the info
+                const addToSet = this.#container.querySelector("#addtoset");
+                addToSet.style.display = 'flex';
+
+                const confirmText = this.#container.querySelector("#are-you-sure-add");
+                confirmText.innerText += " '"+setName+"'";
+
+                const confirmAddButton = this.#container.querySelector("#confirm-add-btn");
+                confirmAddButton.addEventListener('click', () => {
+                    const newCard = new flashcard(addInfo[0], addInfo[1], currLang, setName);
+                    const set = flashcardSets[setName]; // get set from dictionary
+                    set.addCard(newCard); //add new card to set array of flashcards
+                    addInfo = [];
+
+                    addToSet.style.display = 'none';
+                })
+                const addingText = this.#container.querySelector("#adding");
+                addingText.style.display = 'none';
+
+                adding = false; //Reset adding info
+            }
+        }
+        else{
+            viewset.style.display = 'flex';
+            const setName = domSet.getAttribute("data-set-name");
+            currSet = setName;
+            this.#container.querySelector("#set-name").textContent = setName;
+
+            const currcard = this.#container.querySelector("#currcard")
+            currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
+            currCardPos = 0; //Go to front of array;
+            newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
+            this.updateCards();
+        }
     });
 
     const title = document.createElement("h3");
@@ -487,8 +542,6 @@ export class FlashcardPageComponent extends Component {
 
     const sets = this.#container.querySelector("#sets");
     sets.insertBefore(domSet, sets.firstChild);
-
-    console.log(flashcardSets)
   }
 
   updateCards(){
