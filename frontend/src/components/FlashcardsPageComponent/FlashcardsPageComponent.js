@@ -66,6 +66,8 @@ export class FlashcardPageComponent extends Component {
     super();
     this.loadCSS('FlashcardsPageComponent');
     this.#hub = EventHub.getInstance();
+
+    this.getSets(); // Reload the sets we have
   }
 
   // Method to render the component and return the container
@@ -186,7 +188,13 @@ export class FlashcardPageComponent extends Component {
 
     this.#hub.subscribe( //Only need success, if failed it doesnt load!
         Events.FlashcardsSuccess,
-        (flashcardsObj) => (flashcardSets = JSON.parse(flashcardsObj)) //Comes out as json file
+        (flashcardsObj) => {
+            flashcardSets = JSON.parse(flashcardsObj)
+            const currDict = flashcardSets[currLang]; //Get current language dictionary
+            for(key in Object.keys(currDict)){ //Make set div for all sets in langauge. Flashcards will auto be made when pressed on each set I beleive
+                this.makeSetDiv(key);
+            }
+        } //Comes out as json file
     );
 
     const backToMainViewBtn = this.#container.querySelector('#backToMainViewBtn');
@@ -246,31 +254,33 @@ export class FlashcardPageComponent extends Component {
             const newSet = new flashcardSet(setName,currLang,[]);
             flashcardSets[setName] = newSet;
 
-            const domSet = document.createElement("button");
-            domSet.setAttribute("class","setbox");
-            domSet.setAttribute("id",setName+"-set");
-            domSet.setAttribute("data-set-name",setName);
+            this.makeSetDiv(setName); //Make set
 
-            // Viewset :
-            domSet.addEventListener('click', () => {
-                viewset.style.display = 'flex';
-                const setName = domSet.getAttribute("data-set-name");
-                currSet = setName;
-                this.#container.querySelector("#set-name").textContent = setName;
+            // const domSet = document.createElement("button");
+            // domSet.setAttribute("class","setbox");
+            // domSet.setAttribute("id",setName+"-set");
+            // domSet.setAttribute("data-set-name",setName);
 
-                const currcard = this.#container.querySelector("#currcard")
-                currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
-                currCardPos = 0; //Go to front of array;
-                newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
-                this.updateCards();
-            });
+            // // Viewset :
+            // domSet.addEventListener('click', () => {
+            //     viewset.style.display = 'flex';
+            //     const setName = domSet.getAttribute("data-set-name");
+            //     currSet = setName;
+            //     this.#container.querySelector("#set-name").textContent = setName;
 
-            const title = document.createElement("h3");
-            title.textContent = setName;
-            domSet.appendChild(title);
+            //     const currcard = this.#container.querySelector("#currcard")
+            //     currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
+            //     currCardPos = 0; //Go to front of array;
+            //     newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
+            //     this.updateCards();
+            // });
 
-            const sets = this.#container.querySelector("#sets");
-            sets.insertBefore(domSet, sets.firstChild);
+            // const title = document.createElement("h3");
+            // title.textContent = setName;
+            // domSet.appendChild(title);
+
+            // const sets = this.#container.querySelector("#sets");
+            // sets.insertBefore(domSet, sets.firstChild);
 
             this.#container.querySelector('#set-add-name').value = '';
             addset.style.display = 'none';
@@ -352,9 +362,42 @@ export class FlashcardPageComponent extends Component {
 
   }
 
+  makeSetDiv(setName){
+    const newSet = flashcardSets[setName];
+
+    const domSet = document.createElement("button");
+    domSet.setAttribute("class","setbox");
+    domSet.setAttribute("id",setName+"-set");
+    domSet.setAttribute("data-set-name",setName);
+
+    // Viewset :
+    domSet.addEventListener('click', () => {
+        viewset.style.display = 'flex';
+        const setName = domSet.getAttribute("data-set-name");
+        currSet = setName;
+        this.#container.querySelector("#set-name").textContent = setName;
+
+        const currcard = this.#container.querySelector("#currcard")
+        currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
+        currCardPos = 0; //Go to front of array;
+        newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
+        this.updateCards();
+    });
+
+    const title = document.createElement("h3");
+    title.textContent = setName;
+    domSet.appendChild(title);
+
+    const sets = this.#container.querySelector("#sets");
+    sets.insertBefore(domSet, sets.firstChild);
+
+    console.log(flashcardSets)
+  }
+
   updateCards(){
     // Need to set curr card element to show the top of array of this set, if set is empty then put placeholder
-    
+    this.storeSets(); // Store current sets after this additon
+
     const currCard = this.#container.querySelector("#currcard");
     const currCardText = this.#container.querySelector("#currcard-english");
     
