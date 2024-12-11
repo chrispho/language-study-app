@@ -1,8 +1,9 @@
 import { Service } from "./service.js";
 import { Events } from "../eventhub/Events.js";
 
+//Please change when new database is created for demo
 // Hardcoded userID for demonstration.
-const USER_ID = "b87358c2-c782-4b81-ad2e-4b2290d014c4";
+const USER_ID = "1";
 
 export class ProfileService extends Service {
   constructor() {

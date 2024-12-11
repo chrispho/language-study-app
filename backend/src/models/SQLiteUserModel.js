@@ -62,8 +62,8 @@ class _SQLiteUserModel {
     if (this.initialized) return;
     User = sequelize.define("User", {
       userID: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
+        defaultValue: "1",
         primaryKey: true,
       },
       username: {
@@ -127,8 +127,6 @@ class _SQLiteUserModel {
       console.log("No users found. Creating default users...");
       const demoUsers = [
         { username: "shivangmehta", email: "demo1@d.com", password: "demo1pass" },
-        { username: "demo2", email: "demo2@d.com", password: "demo2pass" },
-        { username: "demo3", email: "demo3@d.com", password: "demo3pass" },
       ];
       // Sync the User model with the database, optionally forcing a fresh sync
       for (const u of demoUsers) {
