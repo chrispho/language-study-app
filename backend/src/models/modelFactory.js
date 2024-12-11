@@ -11,6 +11,7 @@ import SQLiteExerciseModel from "./SQLiteExerciseModel.js";
 import SQLiteFlashcardModel from "./SQLiteFlashcardModel.js";
 import SQLiteAchievementsModel from "./SQLiteAchievementsModel.js";
 import SQLiteProgressModel from "./SQLiteProgressModel.js";
+import SQLiteTranslationHistoryModel from "./SQLiteTranslationHistoryModel.js";
 
 class _ModelFactory {
 
@@ -49,6 +50,8 @@ class _ModelFactory {
         return SQLiteAchievementsModel;
       } else if (model === "sqlite-progress") {
         return SQLiteProgressModel;
+      } else if (model === "sqlite-translation-history") {
+        return SQLiteTranslationHistoryModel
       } else {
         // Default or fallback model
         return SQLiteTaskModel;

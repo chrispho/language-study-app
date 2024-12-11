@@ -13,6 +13,8 @@ import ExerciseRoutes from "./routes/exerciseRoutes.js";
 import FlashcardRoutes from "./routes/flashcardRoutes.js";
 import AchievementRoutes from "./routes/achievementRoutes.js";
 import ProgressRoutes from "./routes/progressRoutes.js";
+import siteTranslationRoutes from "./routes/siteTranslationRoutes.js";
+
 
 class Server {
   constructor() {
@@ -51,6 +53,7 @@ class Server {
     this.app.use("/v1", FlashcardRoutes);
     this.app.use("/v1", AchievementRoutes);
     this.app.use("/v1", ProgressRoutes);
+    this.app.use("/v1", siteTranslationRoutes);
   }
 
   start(port = 3000) {
