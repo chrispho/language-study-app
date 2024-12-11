@@ -67,8 +67,6 @@ export class AppControllerComponent {
               <li id="flashcard"><a>Flashcard</a></li>
               <li id="exercise"><a>Exercises</a></li>
               <li id="translate"><a>Translate</a></li>
-              <li id="about"><a>About Us</a></li>
-              <li id="contact"><a>Contact</a></li>
           </ul>
       </nav>
       <div class="profile-container">
@@ -76,7 +74,6 @@ export class AppControllerComponent {
           <div class="profile-dropdown" id="profileDropdown">
               <ul>
                   <li id="profile"><a>Profile</a></li>
-                  <li><a>Settings</a></li>
                   <li><a>Logout</a></li>
               </ul>
           </div>
