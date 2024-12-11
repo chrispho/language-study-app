@@ -63,24 +63,6 @@ class _SQLiteTranslationHistoryModel {
     }
   }
 
-  async findByPk(id) {
-    try {
-      return await History.findByPk(id);
-    } catch (error) {
-      console.error(`Error fetching history record by ID ${id}:`, error);
-      throw new Error("Unable to fetch history record by ID.");
-    }
-  }
-
-  async destroy(options) {
-    try {
-      return await History.destroy(options);
-    } catch (error) {
-      console.error("Error destroying history record:", error);
-      throw new Error("Unable to destroy history record.");
-    }
-  }
-
   getModel() {
     return History;
   }
