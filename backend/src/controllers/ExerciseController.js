@@ -1,10 +1,17 @@
+// Importing the ModelFactory to interact with the database models
 import ModelFactory from "../models/modelFactory.js";
 
+// ExerciseController manages CRUD operations for exercises
 class ExerciseController {
   constructor() {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-exercise");
   }
 
+  /**
+   * Creates a new exercise entry in the database.
+   * @param {Object} req - The request object containing exercise details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async createExercise(req, res) {
     try {
       const { type, content, userID } = req.body;
@@ -18,6 +25,11 @@ class ExerciseController {
     }
   }
 
+  /**
+   * Retrieves all exercises from the database.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object to send back the results.
+   */
   async getAllExercises(req, res) {
     try {
       const model = await this.modelPromise;
@@ -30,6 +42,11 @@ class ExerciseController {
     }
   }
 
+  /**
+   * Retrieves all exercises from the database.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object to send back the results.
+   */
   async getExerciseByID(req, res) {
     try {
       const { id } = req.params;
@@ -44,6 +61,11 @@ class ExerciseController {
     }
   }
 
+  /**
+   * Updates an existing exercise based on its ID.
+   * @param {Object} req - The request object containing updated exercise details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async updateExercise(req, res) {
     try {
       const { id } = req.params;
@@ -65,6 +87,11 @@ class ExerciseController {
     }
   }
 
+  /**
+   * Deletes an exercise based on its ID.
+   * @param {Object} req - The request object containing the exercise ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteExercise(req, res) {
     try {
       const { id } = req.params;
@@ -80,4 +107,5 @@ class ExerciseController {
   }
 }
 
+// Export an instance of ExerciseController as the default export
 export default new ExerciseController();

@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 
+// Initializing Sequelize with SQLite dialect and specifying the storage file
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "database.sqlite",
@@ -44,11 +45,19 @@ function generateFlashcards() {
   ];
 }
 
+// _SQLiteUserModel handles the definition and interaction with the User model in SQLite
 class _SQLiteUserModel {
   constructor() {
     this.initialized = false;
   }
 
+  /**
+   * Initializes the User model and syncs it with the database.
+   * Optionally forces a fresh sync, dropping existing tables.
+   * Also populates the database with default users if none exist.
+   * @param {Sequelize} sequelize - The Sequelize instance.
+   * @param {boolean} fresh - Whether to force a fresh sync.
+   */
   async init(sequelize, fresh = false) {
     if (this.initialized) return;
     User = sequelize.define("User", {
@@ -110,6 +119,7 @@ class _SQLiteUserModel {
       },
     });
 
+    // Sync the User model with the database, optionally forcing a fresh sync
     await User.sync({ force: fresh });
 
     const userCount = await User.count();
@@ -120,6 +130,7 @@ class _SQLiteUserModel {
         { username: "demo2", email: "demo2@d.com", password: "demo2pass" },
         { username: "demo3", email: "demo3@d.com", password: "demo3pass" },
       ];
+      // Sync the User model with the database, optionally forcing a fresh sync
       for (const u of demoUsers) {
         await this.create({
           ...u,
@@ -134,9 +145,14 @@ class _SQLiteUserModel {
       console.log("User table already has data, no need to create defaults.");
     }
 
-    this.initialized = true;
+    this.initialized = true; // Mark as initialized to prevent re-initialization
   }
 
+  /**
+   * Creates a new user in the database.
+   * @param {Object} user - The user data to create.
+   * @returns {Promise<Object>} The created user object.
+   */
   async create(user) {
     try {
       return await User.create(user);
@@ -146,6 +162,10 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Retrieves all users from the database.
+   * @returns {Promise<Array>} An array of user objects.
+   */
   async findAll() {
     try {
       return await User.findAll();
@@ -155,6 +175,11 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Retrieves a user by their primary key (userID).
+   * @param {string} id - The userID of the user to retrieve.
+   * @returns {Promise<Object|null>} The user object or null if not found.
+   */
   async findByPk(id) {
     try {
       return await User.findByPk(id);
@@ -164,6 +189,12 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Updates a user's information based on their userID.
+   * @param {string} id - The userID of the user to update.
+   * @param {Object} updates - An object containing the fields to update.
+   * @returns {Promise<Object|null>} The updated user object or null if not found.
+   */
   async updateUser(id, updates) {
     try {
       const [rowsUpdated, [updatedUser]] = await User.update(updates, {
@@ -181,6 +212,11 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Deletes a user based on specified options.
+   * @param {Object} options - The options to determine which user(s) to delete.
+   * @returns {Promise<number>} The number of rows deleted.
+   */
   async destroy(options) {
     try {
       return await User.destroy(options);
@@ -190,6 +226,10 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Deletes all users from the database.
+   * @returns {Promise<number>} The number of users deleted.
+   */
   async deleteAll() {
     try {
       const rowsDeleted = await User.destroy({ where: {} });
@@ -200,10 +240,15 @@ class _SQLiteUserModel {
     }
   }
 
+  /**
+   * Deletes all users from the database.
+   * @returns {Promise<number>} The number of users deleted.
+   */
   getModel() {
     return User;
   }
 }
 
+// Instantiate the SQLiteUserModel and export it
 const SQLiteUserModel = new _SQLiteUserModel();
 export default SQLiteUserModel;

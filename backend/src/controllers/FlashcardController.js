@@ -1,10 +1,18 @@
+// Importing the ModelFactory to interact with the database models
 import ModelFactory from "../models/modelFactory.js";
 
+
+// FlashcardController manages CRUD operations for flashcards
 class FlashcardController {
   constructor() {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-flashcard");
   }
 
+  /**
+   * Creates a new flashcard entry in the database.
+   * @param {Object} req - The request object containing flashcard details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async createFlashcard(req, res) {
     try {
       const { front, back, userID } = req.body;
@@ -18,6 +26,11 @@ class FlashcardController {
     }
   }
 
+  /**
+   * Retrieves all flashcards from the database.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object to send back the results.
+   */
   async getAllFlashcards(req, res) {
     try {
       const model = await this.modelPromise;
@@ -30,6 +43,11 @@ class FlashcardController {
     }
   }
 
+  /**
+   * Retrieves a specific flashcard by its ID.
+   * @param {Object} req - The request object containing the flashcard ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getFlashcardByID(req, res) {
     try {
       const { id } = req.params;
@@ -44,6 +62,11 @@ class FlashcardController {
     }
   }
 
+  /**
+   * Updates an existing flashcard based on its ID.
+   * @param {Object} req - The request object containing updated flashcard details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async updateFlashcard(req, res) {
     try {
       const { id } = req.params;
@@ -63,6 +86,11 @@ class FlashcardController {
     }
   }
 
+  /**
+   * Deletes a flashcard based on its ID.
+   * @param {Object} req - The request object containing the flashcard ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteFlashcard(req, res) {
     try {
       const { id } = req.params;
@@ -78,4 +106,5 @@ class FlashcardController {
   }
 }
 
+// Export an instance of FlashcardController as the default export
 export default new FlashcardController();

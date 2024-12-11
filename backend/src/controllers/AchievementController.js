@@ -1,10 +1,17 @@
+// Importing the ModelFactory to interact with the database models
 import ModelFactory from "../models/modelFactory.js";
 
+// AchievementController manages CRUD operations for achievements
 class AchievementController {
   constructor() {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-achievement");
   }
 
+  /**
+   * Creates a new achievement entry in the database.
+   * @param {Object} req - The request object containing achievement details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async createAchievement(req, res) {
     try {
       const { name, description, userID } = req.body;
@@ -18,6 +25,12 @@ class AchievementController {
     }
   }
 
+  /**
+   * Retrieves all achievements from the database.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object to send back the results.
+   */
+
   async getAllAchievements(req, res) {
     try {
       const model = await this.modelPromise;
@@ -30,6 +43,11 @@ class AchievementController {
     }
   }
 
+  /**
+   * Retrieves a specific achievement by its ID.
+   * @param {Object} req - The request object containing the achievement ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getAchievementByID(req, res) {
     try {
       const { id } = req.params;
@@ -44,6 +62,11 @@ class AchievementController {
     }
   }
 
+   /**
+   * Updates an existing achievement based on its ID.
+   * @param {Object} req - The request object containing updated achievement details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async updateAchievement(req, res) {
     try {
       const { id } = req.params;
@@ -65,6 +88,11 @@ class AchievementController {
     }
   }
 
+   /**
+   * Finds achievements based on the provided userID.
+   * @param {Object} req - The request object containing the userID query parameter.
+   * @param {Object} res - The response object to send back the results.
+   */
   async findByUserID(req, res) {
     try {
       const { userID } = req.query;
@@ -80,6 +108,11 @@ class AchievementController {
     }
   }
 
+  /**
+   * Deletes an achievement based on its ID.
+   * @param {Object} req - The request object containing the achievement ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteAchievement(req, res) {
     try {
       const { id } = req.params;
@@ -95,4 +128,5 @@ class AchievementController {
   }
 }
 
+// Export an instance of AchievementController as the default export
 export default new AchievementController();
