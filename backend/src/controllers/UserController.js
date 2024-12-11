@@ -1,5 +1,7 @@
+// Importing the ModelFactory to interact with the database models
 import ModelFactory from "../models/modelFactory.js";
 
+// UserController manages CRUD operations for users
 class UserController {
   constructor() {
     // Get the user model via ModelFactory
@@ -9,6 +11,11 @@ class UserController {
     })
   }
 
+  /**
+   * Creates a new user entry in the database.
+   * @param {Object} req - The request object containing user details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async createUser(req, res) {
     try {
       const { username, email, password } = req.body;
@@ -20,6 +27,11 @@ class UserController {
     }
   }
 
+  /**
+   * Creates a new user entry in the database.
+   * @param {Object} req - The request object containing user details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getAllUsers(req, res) {
     try {
       
@@ -31,6 +43,11 @@ class UserController {
     }
   }
 
+  /**
+   * Retrieves a specific user by their ID.
+   * @param {Object} req - The request object containing the user ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getUserByID(req, res) {
     try {
       const { id } = req.params;
@@ -43,6 +60,11 @@ class UserController {
     }
   }
 
+  /**
+   * Updates an existing user based on their ID.
+   * @param {Object} req - The request object containing updated user details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async updateUser(req, res) {
     try {
       const { id } = req.params;
@@ -62,6 +84,11 @@ class UserController {
     }
   }
 
+  /**
+   * Deletes a user based on their ID.
+   * @param {Object} req - The request object containing the user ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteUser(req, res) {
     try {
       const { id } = req.params;
@@ -75,6 +102,11 @@ class UserController {
     }
   }
 
+  /**
+   * Deletes all users from the database.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteAllUsers(req, res) {
     try {
       const rowsDeleted = await this.model.deleteAll();
@@ -89,4 +121,5 @@ class UserController {
   }
 }
 
+// Export an instance of UserController as the default export
 export default new UserController();

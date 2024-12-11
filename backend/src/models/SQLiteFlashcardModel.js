@@ -1,13 +1,11 @@
-import {Sequelize, DataTypes} from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "database.sqlite",
 });
 
-let Flashcard;
-
-//define Flashcard model
+let FlashcardCollection;
 
 class _SQLiteFlashcardModel {
   constructor() {
@@ -16,79 +14,62 @@ class _SQLiteFlashcardModel {
 
   async init(sequelize, fresh = true) {
     if (this.initialized) return;
-    Flashcard = sequelize.define("Flashcard", {
-      flashcardID: {
+    FlashcardCollection = sequelize.define("FlashcardCollection", {
+      userID: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-      },
-      front: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
-      back: {
-        type: DataTypes.STRING,
+      flashcards: {
+        type: DataTypes.JSON, // Store the entire collection as JSON
         allowNull: false,
+        defaultValue: {}, // Start with an empty dictionary
       },
-      savedAt: {
+      updatedAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      userID: {
-        type: DataTypes.UUID,
-        allowNull: false,
-      },
     });
 
-    await Flashcard.sync({ force: fresh });
+    await FlashcardCollection.sync({ force: fresh });
     if (fresh) {
-      console.log("Flashcard table created successfully.");
-      await Flashcard.destroy({ where: {} });
+      console.log("FlashcardCollection table created successfully.");
+      await FlashcardCollection.destroy({ where: {} });
     } else {
-      console.log("Flashcard table connected to existing database!");
+      console.log("FlashcardCollection table connected to existing database!");
     }
 
     this.initialized = true;
   }
 
-  async create(flashcard) {
+  async saveFlashcards(userID, flashcards) {
     try {
-      return await Flashcard.create(flashcard);
+      const collection = await FlashcardCollection.findOne({ where: { userID } });
+      if (collection) {
+        collection.flashcards = flashcards;
+        collection.updatedAt = new Date();
+        await collection.save();
+      } else {
+        await FlashcardCollection.create({ userID, flashcards });
+      }
     } catch (error) {
-      console.error("Error creating flashcard:", error);
-      throw new Error("Unable to create flashcard.");
+      console.error("Error saving flashcards:", error);
+      throw new Error("Unable to save flashcards.");
     }
   }
 
-  async findAll() {
+  async getFlashcards(userID) {
     try {
-      return await Flashcard.findAll();
+      const collection = await FlashcardCollection.findOne({ where: { userID } });
+      return collection ? collection.flashcards : null;
     } catch (error) {
       console.error("Error fetching flashcards:", error);
       throw new Error("Unable to fetch flashcards.");
     }
   }
 
-  async findByPk(id) {
-    try {
-      return await Flashcard.findByPk(id);
-    } catch (error) {
-      console.error(`Error fetching flashcard by ID ${id}:`, error);
-      throw new Error("Unable to fetch flashcard by ID.");
-    }
-  }
-
-  async destroy(options) {
-    try {
-      return await Flashcard.destroy(options);
-    } catch (error) {
-      console.error("Error destroying flashcard:", error);
-      throw new Error("Unable to destroy flashcard.");
-    }
-  }
-
   getModel() {
-    return Flashcard;
+    return FlashcardCollection;
   }
 }
 
