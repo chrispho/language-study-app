@@ -56,14 +56,18 @@ export class AppControllerComponent {
       <nav>
           <ul class="nav__links">
               <li id="dashboard"><a>Dashboard</a></li>
+              
               <li class="dropdown"><a id="language-select">Select Language</a>
                   <ul class="dropdown-content">
-                      <li><a class="language-option" data-language="Spanish">Spanish</a></li>
-                      <li><a class="language-option" data-language="English">English</a></li>
-                      <li><a class="language-option" data-language="French">French</a></li>
-                      <li><a class="language-option" data-language="German">German</a></li>
+
+                      <li><a class="language-option" data-language="es" data-language-code="es">Spanish</a></li>
+                      <li><a class="language-option" data-language="en" data-language-code="en">English</a></li>
+                      <li><a class="language-option" data-language="fr" data-language-code="fr">French</a></li>
+                      <li><a class="language-option" data-language="de" data-language-code="de">German</a></li>
+                      <li><a class="language-option" data-language="ja" data-language-code="ja">Japanese</a></li>
                   </ul>
               </li>
+
               <li id="flashcard"><a>Flashcard</a></li>
               <li id="exercise"><a>Exercises</a></li>
               <li id="translate"><a>Translate</a></li>
@@ -205,9 +209,9 @@ export class AppControllerComponent {
     languageOptions.forEach((option) => {
       option.addEventListener("click", (event) => {
         event.preventDefault();
-        this.#hub.publish(Events.LanguageChanged, {
-          selectedLanguage: option.getAttribute("data-language"),
-        });
+        const selectedLanguage = option.getAttribute("data-language");
+        this.#hub.publish(Events.LanguageChanged, { selectedLanguage });
+        this.#updatePageContent(selectedLanguage);
       });
     });
 
@@ -217,8 +221,30 @@ export class AppControllerComponent {
     });
   }
 
+  #updatePageContent(language) {
+    fetch("/v1/translate-site", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ language })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+      return response.json(); // Ensure this is called only if response.ok
+    })
+    .then(translations => {
+      console.log("Received translations:", translations);
+      this.#renderCurrentView(translations);
+    })
+    .catch(error => {
+      console.error("Error fetching translations:", error);
+    });
+  }
+
+
   // Renders the current view based on the #currentView state
-  #renderCurrentView() {
+  #renderCurrentView(translations = null) {
     const viewContainer = this.#container.querySelector("#viewContainer");
     viewContainer.innerHTML = ""; // Clear existing content
 
