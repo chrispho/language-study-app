@@ -6,6 +6,7 @@ export class TranslationPageComponent extends Component {
   #container = null; // Private variable to store the container element
   #hub = null;
   #statusBar = null;
+  #historyDiv = null;
 
   #inputLangElem = null;
   #inputElem = null;
@@ -13,6 +14,16 @@ export class TranslationPageComponent extends Component {
   #outputElem = null;
   #translateButton = null;
   #toFlashcardButton = null;
+
+  #codeToLang = {
+    en: "English",
+    es: "Spanish",
+    fr: "French",
+    de: "German",
+    zh: "Chinese",
+    ja: "Japanese",
+    ko: "Korean",
+  }
 
   constructor() {
     super();
@@ -30,6 +41,15 @@ export class TranslationPageComponent extends Component {
     this.#setupContainerContent();
     this.#attachEventListeners();
     this.#createStatusBar();
+    // this.#populateHistoryEntries(
+    //   [{inLang: "en",
+    //   outLang: "ko",
+    //   input: "input",
+    //   output: "output"
+    // }]
+    // );
+
+    this.#hub.publish(Events.LoadTranslateHistory)
 
     return this.#container;
   }
@@ -43,8 +63,28 @@ export class TranslationPageComponent extends Component {
   #createStatusBar(){
     this.#statusBar = document.createElement("div");
     this.#statusBar.classList.add("translation-status-bar")
-    this.#statusBar.innerHTML = "TEST";
     this.#container.appendChild(this.#statusBar);
+  }
+
+  #createHistoryEntry(inLang, outLang, input, output) {
+    const histEntry = document.createElement("div")
+    histEntry.classList.add("hist-entry")
+    histEntry.addEventListener("click", () => {
+      this.#inputElem.value = input
+      this.#inputLangElem.value = inLang
+      this.#outputElem.value = output
+      this.#outputLangElem.value = outLang
+    })
+    histEntry.innerText=`${this.#codeToLang[inLang]}: ${input} => ${this.#codeToLang[outLang]}: ${output}`
+    return histEntry
+  }
+
+  #populateHistoryEntries(data){
+    this.#historyDiv = this.#container.querySelector("#history");
+
+    data.forEach(entry => {
+      this.#historyDiv.prepend(this.#createHistoryEntry(entry.inLang, entry.outLang, entry.input, entry.output))
+    });
   }
 
   // Sets up the basic HTML structure of the component
@@ -100,6 +140,9 @@ export class TranslationPageComponent extends Component {
         />
       </div>
     </form>
+    <h2>History</h2>
+    <div id="history">
+    </div>
   </div>
     `;
   }
@@ -152,12 +195,25 @@ export class TranslationPageComponent extends Component {
 
     this.#hub.subscribe(
       Events.TranslateSuccess,
-      (translatedObj) => {(this.#outputElem.value = translatedObj.translated); this.showStatus("Success!", "green", 1000)}
+      (translatedObj) => {(this.#outputElem.value = translatedObj.output); this.showStatus("Success!", "green", 1000); 
+        this.#historyDiv.prepend(this.#createHistoryEntry(translatedObj.inLang, translatedObj.outLang, translatedObj.input, translatedObj.output))
+      }
     );
 
     this.#hub.subscribe(
       Events.TranslateFailure,
       (failure) => {this.showStatus("ERROR: " + failure.error, "red", 3000)}
+    );
+
+    this.#hub.subscribe(
+      Events.TranslateHistorySuccess, (data) => {
+        this.#populateHistoryEntries(data)
+      }
+    )
+
+    this.#hub.subscribe(
+      Events.TranslateHistoryFail,
+      (failure) => {this.showStatus("ERROR IN GETTING HISTORY: " + failure.error, "red", 3000)}
     );
 
     // for switching from flashcards page

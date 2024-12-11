@@ -9,6 +9,11 @@ h1 {
   font-size: 36px;
   margin-bottom: 20px;
 }
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
 
 .submit-btn, .flashcard-btn {
   background-color: #618B4A;
@@ -77,6 +82,28 @@ textarea{
 
 .arrow{
   margin:auto
+}
+
+#history{
+  overflow-y:scroll;
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #AFBC88;
+  border-radius: 10px;
+  padding:15px;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2vh
+
+}
+
+.hist-entry{
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+  border-bottom-style:solid;
+  padding: 2px
 }
 
 .translation-status-bar{

@@ -4,6 +4,7 @@ import SQLiteExerciseModel from "./SQLiteExerciseModel.js";
 import SQLiteFlashcardModel from "./SQLiteFlashcardModel.js";
 import SQLiteAchievementsModel from "./SQLiteAchievementsModel.js";
 import SQLiteProgressModel from "./SQLiteProgressModel.js";
+import SQLiteTranslationHistoryModel from "./SQLiteTranslationHistoryModel.js";
 
 // Initialize Sequelize instance
 const sequelize = new Sequelize({
@@ -17,6 +18,7 @@ await SQLiteExerciseModel.init(sequelize, false);
 await SQLiteFlashcardModel.init(sequelize, false);
 await SQLiteAchievementsModel.init(sequelize, false);
 await SQLiteProgressModel.init(sequelize, false);
+await SQLiteTranslationHistoryModel.init(sequelize, false)
 
 // Get actual Sequelize model instances
 const User = SQLiteUserModel.getModel();
