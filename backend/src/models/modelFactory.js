@@ -3,9 +3,10 @@
 ! this you can extend with your own functions (see below)
 * *****************
 */
+import TranslationModel from "./translationModel.js";
+import ExerciseModel from "./exerciseModel.js";
 import SQLiteUserModel from "./SQLiteUserModel.js";
 import SQLiteTaskModel from "./taskModel.js";
-import TranslationModel from "./translationModel.js"
 import SQLiteExerciseModel from "./SQLiteExerciseModel.js";
 import SQLiteFlashcardModel from "./SQLiteFlashcardModel.js";
 import SQLiteAchievementsModel from "./SQLiteAchievementsModel.js";
@@ -14,10 +15,14 @@ import SQLiteTranslationHistoryModel from "./SQLiteTranslationHistoryModel.js";
 
 class _ModelFactory {
 
-  async getTranslationModel(){
+  async getTranslationModel() {
     return TranslationModel;
   }
 
+  async getExerciseModel() {
+    return ExerciseModel;
+  }
+  
   /*
     The `getDatabaseModel` function returns models based on a key.
     Available keys could be:

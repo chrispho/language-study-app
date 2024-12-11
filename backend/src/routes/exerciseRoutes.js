@@ -1,5 +1,6 @@
 import express from "express";
-import ExerciseController from "../controllers/ExerciseController.js";
+import ExerciseController from "../controllers/exerciseController.js";
+import { isAuthenticated } from "../auth/middleware.js";
 
 class ExerciseRoutes {
   constructor() {
@@ -8,35 +9,59 @@ class ExerciseRoutes {
   }
 
   initializeRoutes() {
-    // Create Exercise
-    this.router.post("/exercises", async (req, res) => {
-      console.log("POST /exercises");
-      await ExerciseController.createExercise(req, res);
-    });
 
-    // Get All Exercises
-    this.router.get("/exercises", async (req, res) => {
-      console.log("GET /exercises");
-      await ExerciseController.getAllExercises(req, res);
-    });
+    this.router.post(
+      "/users/:id/exercises",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        console.log(`POST /users/${userId}/exercises`);
+        await ExerciseController.createExercise(req, res);
+      }
+    );
 
-    // Get Exercise By ID
-    this.router.get("/exercises/:id", async (req, res) => {
-      console.log(`GET /exercises/${req.params.id}`);
-      await ExerciseController.getExerciseByID(req, res);
-    });
+    this.router.get(
+      "/users/:id/exercises",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        console.log(`GET /users/${userId}/exercises`);
+        await ExerciseController.getExerciseLibrary(req, res, userId)
+      }
+    );
 
-    // Update Exercise
-    this.router.put("/exercises/:id", async (req, res) => {
-      console.log(`PUT /exercises/${req.params.id}`);
-      await ExerciseController.updateExercise(req, res);
-    });
+    this.router.get(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`GET /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.getExercise(req, res, userId, exericseId)
+      }
+    );
 
-    // Delete Exercise
-    this.router.delete("/exercises/:id", async (req, res) => {
-      console.log(`DELETE /exercises/${req.params.id}`);
-      await ExerciseController.deleteExercise(req, res);
-    });
+    this.router.put(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`PUT /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.updateExercise(req, res, userId, exerciseId);
+      }
+    );
+  
+    this.router.delete(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`DELETE /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.deleteExercise(req.res, userId, exerciseId); // typo fixed here
+      }
+    );
   }
 
   getRouter() {
