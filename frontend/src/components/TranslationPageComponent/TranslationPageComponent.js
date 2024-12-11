@@ -181,11 +181,8 @@ export class TranslationPageComponent extends Component {
     this.#outputLangElem = this.#container.querySelector("#output_lang");
     this.#outputElem = this.#container.querySelector("#output");
     this.#translateButton = this.#container.querySelector("#translate");
-    this.#toFlashcardButton = this.#container.querySelector("#to_flashcard");
 
     this.#translateButton.addEventListener("click", () => this.translate());
-
-    this.#toFlashcardButton.addEventListener("click", () => this.toFlashcard());
 
     this.#hub.subscribe(
       Events.TranslateSuccess,

@@ -157,15 +157,6 @@ export class AppControllerComponent {
       this.#hub.publish(Events.RedirectToTranslation);
     });
 
-    const about = this.#container.querySelector("#about");
-    about.addEventListener("click", () => {
-      this.#hub.publish(Events.RedirectToAbout);
-    });
-
-    const contact = this.#container.querySelector("#contact");
-    contact.addEventListener("click", () => {
-      this.#hub.publish(Events.RedirectToContact);
-    });
 
     // Profile Menu Functionality
     const profileButton = this.#container.querySelector(".profile-button");
