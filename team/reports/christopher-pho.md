@@ -1,5 +1,23 @@
 ## Contribution Log for Christopher Pho
 
+### December 10, 2024
+- **Task**: Code review. Added endpoints for updating and deleting exercises.
+- **Details**: Left comments on PRs, merged PRs, and deleted branches. Added endpoints to controler, model, and routes for updating and deleting exercises. Fixed import routes so the server can run.
+- **Link to Commit**: [Exercise Page #49: Add support for updating and deleting exercises](https://github.com/chrispho/language-study-app/pull/70/commits/70023ddc4bcf7a69ea5964feab5ac019b7bb7c1d)
+
+
+### December 5, 2024
+- **Task**: Begin work on exercises page backend
+- **Details**: Templated backend files, deleted unnecessary files, and parameterized exercise question. Added endpoints for creating and reading exercises to model. Set up sequelize database.
+- **Link to Commit**: [Exercise Page #49: added endpoints for getExerciseLibrary, getExercise, and createExercise with model functionality to be completed later](https://github.com/chrispho/language-study-app/pull/70/commits/f4156d78245cdc0ddeef27d203a2a207bd65fe23)
+
+
+### December 3, 2024
+- **Task**: Help Alex set up backend folder.
+- **Details**: Worked with Alex and reviewed his pull request to setup the folder for backend code with template files and instructions.
+- **Link to Commit**: [initialize backend folder structure #42](https://github.com/chrispho/language-study-app/pull/42)
+
+
 ### November 17, 2024
 - **Task**: Meet with team to integrate different pages together and merge PR's. Code review.
 - **Details**: Assisted Tiffany and Henry with making components for their pages. Reviewed Alex Tong's PR #17.
