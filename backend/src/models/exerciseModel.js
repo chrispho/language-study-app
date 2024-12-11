@@ -63,18 +63,6 @@ class _ExerciseModel {
 
     if (fresh) {
       await this.delete();
-
-      await this.create({
-        task: "Description 1",
-      });
-
-      await this.create({
-        task: "Description 2",
-      });
-
-      await this.create({
-        task: "Description 3",
-      });
     }
   }
 
