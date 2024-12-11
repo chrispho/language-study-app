@@ -1,6 +1,7 @@
 import { AppControllerComponent } from './components/AppControllerComponent/AppControllerComponent.js';
 import { TranslationFactory } from './services/translationFactory.js';
 import { ProfileFactory } from './services/profileFactory.js';
+import { FlashcardsFactory } from './services/flashcardsFactory.js';
 
 // Create an instance of AppControllerComponent
 const appController = new AppControllerComponent();
@@ -14,3 +15,4 @@ appContainer.appendChild(appController.render());
 const translationService = TranslationFactory.get();
 const translationHistoryService = TranslationFactory.getHistory()
 const profileService = ProfileFactory.get(); // Make sure profileService has subscriptions
+const falshcardService = FlashcardsFactory.get();

@@ -13,7 +13,6 @@ import SQLiteProgressModel from "./SQLiteProgressModel.js";
 import SQLiteTranslationHistoryModel from "./SQLiteTranslationHistoryModel.js";
 
 class _ModelFactory {
-  
 
   async getTranslationModel(){
     return TranslationModel;

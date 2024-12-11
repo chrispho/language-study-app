@@ -5,75 +5,44 @@ class FlashcardController {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-flashcard");
   }
 
-  async createFlashcard(req, res) {
+  // Fetch the entire flashcard collection for a user
+  async getFlashcards(req, res) {
     try {
-      const { front, back, userID } = req.body;
+      const { id } = req.params; // Fetch userID from the request body
       const model = await this.modelPromise;
-      const Flashcard = model.getModel();
-      const flashcard = await Flashcard.create({ front, back, userID });
-      return res.status(201).json({ success: true, data: flashcard });
+      const FlashcardCollection = model.getModel();
+      const collection = await FlashcardCollection.findOne({ where: { id } });
+      if (!collection) {
+        return res.status(404).json({ success: false, error: "Flashcard collection not found." });
+      }
+      return res.status(200).json({ success: true, data: collection.flashcards });
     } catch (error) {
-      console.error("Error creating flashcard:", error);
-      return res.status(500).json({ success: false, error: "Error creating flashcard." });
+      console.error("Error getting flashcards:", error);
+      return res.status(500).json({ success: false, error: "Error getting flashcards." });
     }
   }
 
-  async getAllFlashcards(req, res) {
+  // Store (update or create) the entire flashcard collection for a user
+  async storeFlashcards(req, res) {
     try {
+      const { id } = req.params; // Retrieve flashcards and userID from the request body
+      const {flashcards} = req.body;
       const model = await this.modelPromise;
-      const Flashcard = model.getModel();
-      const flashcards = await Flashcard.findAll();
-      return res.status(200).json({ success: true, data: flashcards });
-    } catch (error) {
-      console.error("Error fetching flashcards:", error);
-      return res.status(500).json({ success: false, error: "Error fetching flashcards." });
-    }
-  }
+      const FlashcardCollection = model.getModel();
 
-  async getFlashcardByID(req, res) {
-    try {
-      const { id } = req.params;
-      const model = await this.modelPromise;
-      const Flashcard = model.getModel();
-      const flashcard = await Flashcard.findByPk(id);
-      if (!flashcard) return res.status(404).json({ success: false, error: "Flashcard not found." });
-      return res.status(200).json({ success: true, data: flashcard });
-    } catch (error) {
-      console.error("Error fetching flashcard:", error);
-      return res.status(500).json({ success: false, error: "Error fetching flashcard." });
-    }
-  }
+      const collection = await FlashcardCollection.findOne({ where: { id } });
+      if (collection) {
+        collection.flashcards = flashcards; // Update the existing collection
+        collection.updatedAt = new Date();
+        await collection.save();
+      } else {
+        await FlashcardCollection.create({ id, flashcards }); // Create a new collection
+      }
 
-  async updateFlashcard(req, res) {
-    try {
-      const { id } = req.params;
-      const { front, back } = req.body;
-      const model = await this.modelPromise;
-      const Flashcard = model.getModel();
-      const flashcard = await Flashcard.findByPk(id);
-      if (!flashcard) return res.status(404).json({ success: false, error: "Flashcard not found." });
-
-      flashcard.front = front ?? flashcard.front;
-      flashcard.back = back ?? flashcard.back;
-      await flashcard.save();
-      return res.status(200).json({ success: true, data: flashcard });
+      return res.status(201).json({ success: true, message: "Flashcards stored successfully." });
     } catch (error) {
-      console.error("Error updating flashcard:", error);
-      return res.status(500).json({ success: false, error: "Error updating flashcard." });
-    }
-  }
-
-  async deleteFlashcard(req, res) {
-    try {
-      const { id } = req.params;
-      const model = await this.modelPromise;
-      const Flashcard = model.getModel();
-      const deleted = await Flashcard.destroy({ where: { flashcardID: id } });
-      if (!deleted) return res.status(404).json({ success: false, error: "Flashcard not found." });
-      return res.status(200).json({ success: true, message: "Flashcard deleted." });
-    } catch (error) {
-      console.error("Error deleting flashcard:", error);
-      return res.status(500).json({ success: false, error: "Error deleting flashcard." });
+      console.error("Error storing flashcards:", error);
+      return res.status(500).json({ success: false, error: "Error storing flashcards." });
     }
   }
 }
