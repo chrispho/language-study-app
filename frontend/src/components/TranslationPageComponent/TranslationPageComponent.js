@@ -5,6 +5,7 @@ import { Events } from "../../eventhub/Events.js";
 export class TranslationPageComponent extends Component {
   #container = null; // Private variable to store the container element
   #hub = null;
+  #statusBar = null;
 
   #inputLangElem = null;
   #inputElem = null;
@@ -28,6 +29,7 @@ export class TranslationPageComponent extends Component {
     this.#createContainer();
     this.#setupContainerContent();
     this.#attachEventListeners();
+    this.#createStatusBar();
 
     return this.#container;
   }
@@ -36,6 +38,13 @@ export class TranslationPageComponent extends Component {
   #createContainer() {
     this.#container = document.createElement("div");
     this.#container.classList.add("translation-view");
+  }
+
+  #createStatusBar(){
+    this.#statusBar = document.createElement("div");
+    this.#statusBar.classList.add("translation-status-bar")
+    this.#statusBar.innerHTML = "TEST";
+    this.#container.appendChild(this.#statusBar);
   }
 
   // Sets up the basic HTML structure of the component
@@ -50,6 +59,11 @@ export class TranslationPageComponent extends Component {
           <select id="input_lang">
             <option value="en">English</option>
             <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="zh">Chinese</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
           </select>
           <label for="input">Input</label>
           <textarea type="text" id="input"></textarea>
@@ -61,6 +75,11 @@ export class TranslationPageComponent extends Component {
           <select id="output_lang">
             <option value="en">English</option>
             <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="zh">Chinese</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
           </select>
           <label for="output">Translated</label>
           <textarea type="text" id="output" readonly="readonly"></textarea>
@@ -82,7 +101,7 @@ export class TranslationPageComponent extends Component {
       </div>
     </form>
   </div>
-    `; // TODO add inputs here
+    `;
   }
 
   translate() {
@@ -111,6 +130,13 @@ export class TranslationPageComponent extends Component {
     });
   }
 
+  showStatus(text, color, time){
+    this.#statusBar.innerHTML = text;
+    this.#statusBar.style.background = color;
+    this.#statusBar.classList.add("translation-status-slide-in")
+    setTimeout(() => {this.#statusBar.classList.remove("translation-status-slide-in")}, time);
+  }
+
   // Attaches the event listeners to the component
   #attachEventListeners() {
     this.#inputLangElem = this.#container.querySelector("#input_lang");
@@ -126,12 +152,12 @@ export class TranslationPageComponent extends Component {
 
     this.#hub.subscribe(
       Events.TranslateSuccess,
-      (translatedObj) => (this.#outputElem.value = translatedObj.translated)
+      (translatedObj) => {(this.#outputElem.value = translatedObj.translated); this.showStatus("Success!", "green", 1000)}
     );
 
     this.#hub.subscribe(
       Events.TranslateFailure,
-      (failure) => (this.#outputElem.value = failure)
+      (failure) => {this.showStatus("ERROR: " + failure.error, "red", 3000)}
     );
 
     // for switching from flashcards page
