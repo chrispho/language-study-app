@@ -13,6 +13,7 @@ The following is the structure of the repository:
 - ``team/m2`` - Contains the files for Milestone 2, including ``data.md`` and ``roles.md``.
 - ``team/m3`` - Contains the files for Milestone 3, including ``data.md`` and ``roles.md``.
 - ``team/reports`` - Contains reports of each team member's commit history.
+
 Code sections:
 - ``frontend`` - Contains the frontend part of our application, structured similarly to the tasks-v3 app in class
 - ``backend`` - Contains the backend part of our application, structured similarly to the tasks-v5 and authentication apps in class
