@@ -120,6 +120,48 @@ class _ExerciseModel {
       throw new Error(`Failed to fetch exercise #${exerciseId}`);
     }
   }
+
+  // Update an existing exercise
+  async updateExercise(userId, exerciseId, updatedExerciseData) {
+    try {
+      const [numberOfAffectedRows, updatedExercise] = await Exercise.update(
+        updatedExerciseData,
+        {
+          where: {
+            userId: userId,
+            exerciseId: exerciseId,
+          },
+          returning: true,
+        }
+      );
+
+      if (numberOfAffectedRows > 0) {
+        return updatedExercise[0]; // Return the updated exercise object
+      } else {
+        return null; // Exercise not found or update failed
+      }
+    } catch (error) {
+      console.error("Error updating exercise:", error);
+      throw error;
+    }
+  }
+
+  // Delete an existing exercise
+  async deleteExercise(userId, exerciseId) {
+    try {
+      const result = await Exercise.destroy({
+        where: {
+          userId: userId,
+          exerciseId: exerciseId,
+        },
+      });
+
+      return result > 0; // Return true if the exercise was deleted successfully
+    } catch (error) {
+      console.error("Error deleting exercise:", error);
+      throw error;
+    }
+  }
 }
 
 // more verbose export singleton

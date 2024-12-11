@@ -50,6 +50,28 @@ class ExerciseRoutes {
         await ExerciseController.getExercise(req, res, userId, exericseId)
       }
     );
+
+    this.router.put(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`PUT /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.updateExercise(req, res, userId, exerciseId);
+      }
+    );
+  
+    this.router.delete(
+      "/users/:id/exercises/:exerciseId",
+      isAuthenticated,
+      async (req, res) => {
+        const userId = req.params.id;
+        const exerciseId = req.params.exerciseId;
+        console.log(`DELETE /users/${userId}/exercises/${exerciseId}`);
+        await ExerciseController.deleteExercise(req.res, userId, exerciseId); // typo fixed here
+      }
+    );
   }
 
   getRouter() {
