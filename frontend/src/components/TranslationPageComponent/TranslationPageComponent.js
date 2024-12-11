@@ -132,12 +132,6 @@ export class TranslationPageComponent extends Component {
           id="translate"
           value="TRANSLATE"
         />
-        <input
-          type="button"
-          class="flashcard-btn"
-          id="to_flashcard"
-          value="CREATE FLASHCARD"
-        />
       </div>
     </form>
     <h2>History</h2>

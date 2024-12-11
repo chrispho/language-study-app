@@ -81,8 +81,8 @@ export class FlashcardPageComponent extends Component {
     this.#hub.subscribe(Events.LanguageChanged, (data) => {
 
         const newLang = data.selectedLanguage;
-        const currlangDisplay = this.#container.querySelector("#currlang-display")
-        currlangDisplay.textContent = "Current Language: "+newLang;
+        // const currlangDisplay = this.#container.querySelector("#currlang-display")
+        // currlangDisplay.textContent = "Current Language: "+newLang;
 
         if(newLang != currLang){
             this.getSets(); //Update sets. This would, if language change, get new 
@@ -140,7 +140,6 @@ export class FlashcardPageComponent extends Component {
   // Sets up the basic HTML structure of the component
   #setupContainerContent() {
     this.#container.innerHTML = `
-    <h1 id="currlang-display">Current Language: Spanish</h1>
     <h1 style="text-align: center; margin-top: calc(10vh + 20px);">FLASHCARD SETS</h1>
     
     <!-- View Set Div-->
