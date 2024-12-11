@@ -3,10 +3,10 @@ import { Component } from "../Component/Component.js"
 import { EventHub } from "../../eventhub/EventHub.js";
 
 // Dictionary holding all sets
-const allFlashcards = {}
-const currLang = "spanish"
+let allFlashcards = {}
+let currLang = "Spanish";
 allFlashcards[currLang] = {};
-const flashcardSets = allFlashcards[currLang]; // Going to need one for each language
+let flashcardSets; // Going to need one for each language
 let currSet = NaN;
 let currCardPos = 0;
 
@@ -23,19 +23,11 @@ let adding = false;
 let addInfo = ["",""]; //First index is english, second is translation
 
 class flashcard{ //flashcard class
-    constructor(engish, translation, lang, set){
+    constructor(english, translation, lang, set){
         this.lang = lang;
-        this.engish = engish;
+        this.english = english;
         this.translation = translation;
         this.set = set;
-    }
-
-    getEnglish(){
-        return this.engish;
-    }
-
-    getTranslation(){
-        return this.translation;
     }
 
     // Check flashcard language matches set language?
@@ -60,23 +52,6 @@ class flashcardSet{ //flashcard set class
             colorsIndex += 1;
         }
     }
-
-    addCard(card){
-        this.flashcards.unshift(card); //Add to begining of array, changing all other indexes and length
-        this.length += 1;
-    }
-
-    getFlashcards(){
-        return this.flashcards;
-    }
-
-    getCurrFlashcards(){
-        return this.currflashcards;
-    }
-
-    getLength(){
-        return this.length;
-    }
 }
 
 export class FlashcardPageComponent extends Component {
@@ -89,8 +64,6 @@ export class FlashcardPageComponent extends Component {
     this.loadCSS('FlashcardsPageComponent');
     this.#hub = EventHub.getInstance();
 
-    // Get current language, then in getSets set flashcardsSets to allFlashcards[currlang] after get allFlashcards from subscription
-    this.getSets(); // Reload the sets we have
   }
 
   // Method to render the component and return the container
@@ -102,6 +75,52 @@ export class FlashcardPageComponent extends Component {
     this.#createContainer();
     this.#setupContainerContent();
     this.#attachEventListeners();
+
+    //Changes langauge
+
+    this.#hub.subscribe(Events.LanguageChanged, (data) => {
+
+        const newLang = data.selectedLanguage;
+        const currlangDisplay = this.#container.querySelector("#currlang-display")
+        currlangDisplay.textContent = "Current Language: "+newLang;
+
+        if(newLang != currLang){
+            this.getSets(); //Update sets. This would, if language change, get new 
+            currLang = newLang; //Change current language to get key from all flashcards
+            if(!Object.keys(allFlashcards).includes(currLang)){ // If no dictonary for this then make empty
+                allFlashcards[currLang] = {};
+            }
+            //flashcardSets = allFlashcards[currLang];
+
+            // //Remove sets when changed
+            // const setDivs = this.#container.querySelectorAll(".setbox")
+            // const exceptions = ['addbox', 'currcard', 'new-translation','new-english']
+            // setDivs.forEach(div => {
+            //     if(!exceptions.includes(div.id)){
+            //         div.remove();
+            //     }
+            // });
+
+            // // Add new sets
+            // const currDict = allFlashcards[currLang]; //Get current language dictionary
+            // for(const key in Object.keys(currDict)){ //Make set div for all sets in langauge. Flashcards will auto be made when pressed on each set I beleive
+            //     this.makeSetDiv(Object.keys(currDict)[key]);
+            // }
+
+            // if(Object.keys(allFlashcards[currLang]).length == 0){
+            //     const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+            //     deleteSetButton.style.display = 'none';
+            // }
+        }
+      });
+
+    this.getSets();
+
+    //Allow deleting after retreiving if needed
+    if(Object.keys(allFlashcards[currLang]).length > 0){
+        const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+        deleteSetButton.style.display = 'flex';
+    }
 
     return this.#container;
   }
@@ -121,7 +140,7 @@ export class FlashcardPageComponent extends Component {
   // Sets up the basic HTML structure of the component
   #setupContainerContent() {
     this.#container.innerHTML = `
-      <h1 id="currlang-display">Current Language:</h1>
+    <h1 id="currlang-display">Current Language: Spanish</h1>
     <h1 style="text-align: center; margin-top: calc(10vh + 20px);">FLASHCARD SETS</h1>
     
     <!-- View Set Div-->
@@ -231,10 +250,38 @@ export class FlashcardPageComponent extends Component {
     this.#hub.subscribe( //Only need success, if failed it doesnt load!
         Events.FlashcardsSuccess,
         (flashcardsObj) => {
-            flashcardSets = JSON.parse(flashcardsObj)
-            const currDict = flashcardSets[currLang]; //Get current language dictionary
-            for(key in Object.keys(currDict)){ //Make set div for all sets in langauge. Flashcards will auto be made when pressed on each set I beleive
-                this.makeSetDiv(key);
+            flashcardsObj = JSON.parse(flashcardsObj);
+            if(Object.keys(flashcardsObj).includes(currLang)){
+                allFlashcards = flashcardsObj
+                const currDict = allFlashcards[currLang]; //Get current language dictionary
+
+                //Remove sets when changed
+                const setDivs = this.#container.querySelectorAll(".setbox")
+                const exceptions = ['addbox', 'currcard', 'new-translation','new-english']
+                setDivs.forEach(div => {
+                    if(!exceptions.includes(div.id)){
+                        div.remove();
+                    }
+                });
+
+                // Add new sets:
+                for(const key in Object.keys(currDict)){ //Make set div for all sets in langauge. Flashcards will auto be made when pressed on each set I beleive
+                    this.makeSetDiv(Object.keys(currDict)[key]);
+                }
+
+                // Delete sets:
+                if(Object.keys(currDict).length > 0){
+                    const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+                    deleteSetButton.style.display = 'flex';
+                }
+
+                //If small then don't
+                if(Object.keys(allFlashcards[currLang]).length == 0){
+                    const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+                    deleteSetButton.style.display = 'none';
+                }
+
+            console.log(allFlashcards);
             }
         } //Comes out as json file
     );
@@ -252,8 +299,8 @@ export class FlashcardPageComponent extends Component {
     //   this.#renderTasks();
     // });
 
-    const currlangDisplay = this.#container.querySelector("#currlang-display")
-    currlangDisplay.textContent = "Current Language: "+currLang;
+    // const currlangDisplay = this.#container.querySelector("#currlang-display")
+    // currlangDisplay.textContent = "Current Language: "+currLang;
 
     // Toggle set stuff:
 
@@ -263,14 +310,14 @@ export class FlashcardPageComponent extends Component {
 
     // Close overlay when the close button is clicked
     closeSetBtn.addEventListener('click', () => {
-        this.storeSets();
-        this.getSets();
+        // this.storeSets();
+        // this.getSets();
         viewset.style.display = 'none';
     });
 
     //Delete set:
-    const deletSetButton = this.#container.querySelector("#delete-set-btn");
-    deletSetButton.addEventListener('click', () => {
+    const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+    deleteSetButton.addEventListener('click', () => {
         const deletingText = this.#container.querySelector("#deleting");
         deletingText.style.display = "flex";
         deleting = true;
@@ -305,15 +352,16 @@ export class FlashcardPageComponent extends Component {
         if(setName.length == 0){
             alert("Need a name for the new set");
         }
-        else if(Object.keys(flashcardSets).includes(setName)){
+        else if(Object.keys(allFlashcards[currLang]).includes(setName)){
             alert("Name must be different from another set")
         }
         else{
             const newSet = new flashcardSet(setName,currLang,[]);
-            flashcardSets[setName] = newSet;
+            allFlashcards[currLang][setName] = newSet;
+            this.storeSets(); //Store new set
 
-            if(Object.keys(flashcardSets).length > 0){
-                deletSetButton.style.display = 'flex';
+            if(Object.keys(allFlashcards[currLang]).length > 0){
+                deleteSetButton.style.display = 'flex';
             }
 
             this.makeSetDiv(setName);
@@ -418,8 +466,11 @@ export class FlashcardPageComponent extends Component {
     finishFlashcard.addEventListener('click',() => {
         const newCard = new flashcard(englishBox.value, translationBox.value, currLang, currSet);
 
-        const set = flashcardSets[currSet]; // get set from dictionary
-        set.addCard(newCard); //add new card to set array of flashcards
+        const set = allFlashcards[currLang][currSet]; // get set from dictionary
+        //set.addCard(newCard); //add new card to set array of flashcards
+        set.flashcards.unshift(newCard);
+        set.length += 1;
+        this.storeSets();
         if(currCardPos != 0){
             currCardPos +=1 ;
         } // shift current index to the right since we added a card to the begining
@@ -433,8 +484,8 @@ export class FlashcardPageComponent extends Component {
     // Shuffling current set in viewset
     const shufflesetBtn = this.#container.querySelector("#shuffle-set");
     shufflesetBtn.addEventListener('click', () => {
-        const set = flashcardSets[currSet]; // Get set by currset
-        const cardsInSet = set.getCurrFlashcards();
+        const set = allFlashcards[currLang][currSet]; // Get set by currset
+        const cardsInSet = set.currflashcards;
         shuffleArray(cardsInSet); //Shuffle it
         set.currflashcards = cardsInSet; // Change current flashcards to reflect
         currCardPos = 0; //Go to begining of shuffled set
@@ -444,8 +495,8 @@ export class FlashcardPageComponent extends Component {
     // Going to next card in set
     const nextCardBtn = this.#container.querySelector("#next-card");
     nextCardBtn.addEventListener('click', () => {
-        const set = flashcardSets[currSet];
-        if(currCardPos < set.getLength()-1){
+        const set = allFlashcards[currLang][currSet];
+        if(currCardPos < set.length-1){
             currCardPos += 1;
         }
         else{ //Loop to begining
@@ -457,13 +508,13 @@ export class FlashcardPageComponent extends Component {
 
     const prevCardBtn = this.#container.querySelector("#prev-card");
     prevCardBtn.addEventListener('click', () => {
-        const set = flashcardSets[currSet];
+        const set = allFlashcards[currLang][currSet];
         if(currCardPos > 0){
             currCardPos -= 1;
         }
         else{
             //alert("Looping to end of set");
-            currCardPos = set.getLength()-1;
+            currCardPos = set.length-1;
         }
         this.updateCards();
     })
@@ -471,7 +522,8 @@ export class FlashcardPageComponent extends Component {
   }
 
   makeSetDiv(setName){
-    const newSet = flashcardSets[setName];
+    const newSet = allFlashcards[currLang][setName];
+    console.log(newSet);
 
     const domSet = document.createElement("button");
     domSet.setAttribute("class","setbox");
@@ -487,17 +539,25 @@ export class FlashcardPageComponent extends Component {
             deleteSet.style.display = 'flex';
 
             const confirmText = this.#container.querySelector("#are-you-sure-delete");
-            confirmText.innerText += " '"+setName+"'";
+            confirmText.innerText = "Are you sure you want to delete set"+" '"+setName+"'";
 
             const confirmDeleteButton = this.#container.querySelector("#confirm-delete-btn");
             confirmDeleteButton.addEventListener('click', () => {
-                delete flashcardSets[setName];
+                delete allFlashcards[currLang][setName];
                 domSet.remove(); //Remove from html
                 deleteSet.style.display = 'none';
                 const deletingText = this.#container.querySelector("#deleting");
                 deletingText.style.display = "none";
+
+                // Reset database
                 this.storeSets();
                 this.getSets();
+
+                //Get rid of delete set option if only one left
+                if(Object.keys(allFlashcards[currLang]).length == 0){
+                    const deleteSetButton = this.#container.querySelector("#delete-set-btn");
+                    deleteSetButton.style.display = 'none';
+                }
             })
             deleting = false;
         }
@@ -508,13 +568,14 @@ export class FlashcardPageComponent extends Component {
                 addToSet.style.display = 'flex';
 
                 const confirmText = this.#container.querySelector("#are-you-sure-add");
-                confirmText.innerText += " '"+setName+"'";
+                confirmText.innerText = "Are you sure you want to add to set"+" '"+setName+"'";
 
                 const confirmAddButton = this.#container.querySelector("#confirm-add-btn");
                 confirmAddButton.addEventListener('click', () => {
                     const newCard = new flashcard(addInfo[0], addInfo[1], currLang, setName);
-                    const set = flashcardSets[setName]; // get set from dictionary
-                    set.addCard(newCard); //add new card to set array of flashcards
+                    const set = allFlashcards[currLang][setName]; // get set from dictionary
+                    set.flashcards.unshift(newCard); //add new card to set array of flashcards
+                    set.length += 1;
                     addInfo = [];
 
                     addToSet.style.display = 'none';
@@ -528,7 +589,7 @@ export class FlashcardPageComponent extends Component {
                 adding = false; //Reset adding info
             }
         }
-        else{
+        else{ //View flashcard
             viewset.style.display = 'flex';
             const setName = domSet.getAttribute("data-set-name");
             currSet = setName;
@@ -537,7 +598,7 @@ export class FlashcardPageComponent extends Component {
             const currcard = this.#container.querySelector("#currcard")
             currcard.replaceWith(currcard.cloneNode(true)); // Remove event listeners by replacing the node when we first open the set!
             currCardPos = 0; //Go to front of array;
-            newSet.currflashcards = newSet.getFlashcards(); //Reset current flashcards to be normal order
+            newSet.currflashcards = newSet.flashcards; //Reset current flashcards to be normal order
             this.updateCards();
         }
     });
@@ -558,19 +619,19 @@ export class FlashcardPageComponent extends Component {
     const currCardText = this.#container.querySelector("#currcard-english");
     
     const setName = currSet;
-    const set = flashcardSets[setName]
-    const cardsInSet = set.getCurrFlashcards();
+    const set = allFlashcards[currLang][setName]
+    const cardsInSet = set.currflashcards;
 
-    if(set.getLength() == 0){
+    if(set.length == 0){
         currCardText.textContent = "No Cards in Set"
     }
     // Behavior for current flashcard in viewset
     else{
         const topCardInSet = cardsInSet[currCardPos];
-        currCardText.textContent = topCardInSet.getEnglish();
+        currCardText.textContent = topCardInSet.english;
         // Problem: I am giving a click event to curr card already before, it s not ging to this if statement but has the click event already on it.
         currCard.addEventListener('click', () => {
-            currCardText.textContent = topCardInSet.getTranslation();
+            currCardText.textContent = topCardInSet.translation;
         })
     }
 }
@@ -582,31 +643,6 @@ export class FlashcardPageComponent extends Component {
   storeSets(){ //Publish storing when needed. Will change server
     this.#hub.publish(Events.StoreFlashcards, {data: allFlashcards});
   }
-
-    async #updateSets(){
-
-    const translatedResp = await fetch("/v1/flashcards", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers:{
-            "Content-Type": "application/json"
-        }
-    });
-
-    const data = await translatedResp.json();
-
-    const userResp = data.user;        // { success: true, data: { ...user fields... } }
-    const userObj = userResp.data;     // The actual user object with all fields
-  
-    // Extract necessary fields from userObj
-    const {
-      flashcardsSaved,
-    } = userObj;
-
-    const flashcardsArr = flashcardsSaved || [];
-
-
-    }
 }
 
 function shuffleArray(array) {

@@ -13,25 +13,37 @@ export class FlashcardsService extends Service {
       // const inputLang = inputLangElem.value;
       // const outputLang = outputLangElem.value;
       try{
-        await fetch(`/v1/flashcards/${USER_ID}`, {
+        const response = await fetch(`/v1/flashcards/${USER_ID}`, {
           method: "POST",
           body: JSON.stringify(data),
           headers:{
             "Content-Type": "application/json"
           }
         });
+        if (!response.ok) {
+          // Explicitly handle HTTP errors
+          localStorage.setItem(`flashcards_${USER_ID}`, JSON.stringify(data)); //For protection lets store it
+          throw new Error(
+            `HTTP error! status: ${response.status}, statusText: ${response.statusText}`
+          );
+        }
       } catch(error){
-        console.error("Error fetching flashcards:", error);
+        console.error("Error storing flashcards:", error);
       }
     }
 
     async getFlashcards(){
       try{
         const flashcardResp = await fetch(`/v1/flashcards/${USER_ID}`);
+
+        let flashcards;
         if (!flashcardResp.ok) {
+          flashcards = localStorage.getItem(`flashcards_${USER_ID}`); //For protection lets store it
+          this.publish(Events.FlashcardsSuccess, flashcards); //Give data to event hub
           throw new Error(`Error fetching flashcards: ${flashcardResp.status} ${flashcardResp.statusText}`);
         }
-        const flashcards = await flashcardResp.json();
+
+        flashcards = await flashcardResp.json();
 
         this.publish(Events.FlashcardsSuccess, flashcards); //Give data to event hub
       } catch(error){
@@ -44,7 +56,7 @@ export class FlashcardsService extends Service {
         this.getFlashcards();
       });
       this.subscribe(Events.StoreFlashcards, (data) => {
-        this.storeFlashcards(data);
+        this.storeFlashcards(data.data);
       });
     }
   }
