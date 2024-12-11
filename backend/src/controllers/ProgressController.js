@@ -1,10 +1,17 @@
+// Importing the ModelFactory to interact with the database models
 import ModelFactory from "../models/modelFactory.js";
 
+// ProgressController manages CRUD operations for progress records
 class ProgressController {
   constructor() {
     this.modelPromise = ModelFactory.getDatabaseModel("sqlite-progress");
   }
 
+  /**
+   * Creates a new progress record in the database.
+   * @param {Object} req - The request object containing progress details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async createProgress(req, res) {
     try {
       const { language, progress, userID } = req.body;
@@ -18,6 +25,11 @@ class ProgressController {
     }
   }
 
+  /**
+   * Creates a new progress record in the database.
+   * @param {Object} req - The request object containing progress details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getAllProgress(req, res) {
     try {
       const model = await this.modelPromise;
@@ -30,6 +42,11 @@ class ProgressController {
     }
   }
 
+  /**
+   * Retrieves a specific progress record by its ID.
+   * @param {Object} req - The request object containing the progress record ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async getProgressByID(req, res) {
     try {
       const { id } = req.params;
@@ -44,6 +61,11 @@ class ProgressController {
     }
   }
 
+  /**
+   * Updates an existing progress record based on its ID.
+   * @param {Object} req - The request object containing updated progress details.
+   * @param {Object} res - The response object to send back the result.
+   */
   async updateProgress(req, res) {
     try {
       const { id } = req.params;
@@ -64,6 +86,11 @@ class ProgressController {
     }
   }
 
+  /**
+   * Deletes a progress record based on its ID.
+   * @param {Object} req - The request object containing the progress record ID.
+   * @param {Object} res - The response object to send back the result.
+   */
   async deleteProgress(req, res) {
     try {
       const { id } = req.params;
@@ -79,4 +106,5 @@ class ProgressController {
   }
 }
 
+// Export an instance of ProgressController as the default export
 export default new ProgressController();

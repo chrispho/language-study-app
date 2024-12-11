@@ -12,7 +12,6 @@ import SQLiteAchievementsModel from "./SQLiteAchievementsModel.js";
 import SQLiteProgressModel from "./SQLiteProgressModel.js";
 
 class _ModelFactory {
-  
 
   async getTranslationModel(){
     return TranslationModel;

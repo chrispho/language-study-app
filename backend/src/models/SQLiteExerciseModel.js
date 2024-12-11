@@ -1,6 +1,6 @@
 import {Sequelize, DataTypes} from "sequelize";
 
-let Exercise;
+let Exercise; // Placeholder for the defined Exercise model
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -9,11 +9,18 @@ const sequelize = new Sequelize({
 
 //define Exercise model
 
+// _SQLiteExerciseModel handles the definition and interaction with the Exercise model in SQLite
 class _SQLiteExerciseModel {
   constructor() {
     this.initialized = false;
   }
 
+  /**
+   * Initializes the Exercise model and syncs it with the database.
+   * Optionally forces a fresh sync, dropping existing tables.
+   * @param {Sequelize} sequelize - The Sequelize instance.
+   * @param {boolean} fresh - Whether to force a fresh sync.
+   */
   async init(sequelize, fresh = true) {
     if (this.initialized) return;
     Exercise = sequelize.define("Exercise", {
@@ -51,6 +58,11 @@ class _SQLiteExerciseModel {
     this.initialized = true;
   }
 
+  /**
+   * Creates a new exercise record in the database.
+   * @param {Object} exercise - The exercise data to create.
+   * @returns {Promise<Object>} The created exercise record.
+   */
   async create(exercise) {
     try {
       return await Exercise.create(exercise);
@@ -60,6 +72,10 @@ class _SQLiteExerciseModel {
     }
   }
 
+  /**
+   * Retrieves all exercise records from the database.
+   * @returns {Promise<Array>} An array of exercise objects.
+   */
   async findAll() {
     try {
       return await Exercise.findAll();
@@ -69,6 +85,11 @@ class _SQLiteExerciseModel {
     }
   }
 
+  /**
+   * Retrieves a specific exercise by its ID.
+   * @param {string} id - The exerciseID of the record to retrieve.
+   * @returns {Promise<Object|null>} The exercise record object or null if not found.
+   */
   async findByPk(id) {
     try {
       return await Exercise.findByPk(id);
@@ -78,6 +99,11 @@ class _SQLiteExerciseModel {
     }
   }
 
+  /**
+   * Deletes exercise records based on specified options.
+   * @param {Object} options - The options to determine which records to delete.
+   * @returns {Promise<number>} The number of records deleted.
+   */
   async destroy(options) {
     try {
       return await Exercise.destroy(options);
@@ -87,10 +113,15 @@ class _SQLiteExerciseModel {
     }
   }
 
+  /**
+   * Retrieves the defined Exercise model.
+   * @returns {Object} The Sequelize Exercise model.
+   */
   getModel() {
     return Exercise;
   }
 }
 
+// Instantiate the SQLiteExerciseModel and export it
 const SQLiteExerciseModel = new _SQLiteExerciseModel();
 export default SQLiteExerciseModel;

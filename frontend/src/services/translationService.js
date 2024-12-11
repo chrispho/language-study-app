@@ -7,10 +7,6 @@ export class TranslationService extends Service {
   }
 
   async translate(data) {
-    // const input = inputElem.value;
-    // const inputLang = inputLangElem.value;
-    // const outputLang = outputLangElem.value;
-
     const translatedResp = await fetch("/v1/translate", {
       method: "POST",
       body: JSON.stringify(data),
@@ -21,7 +17,6 @@ export class TranslationService extends Service {
 
     const translatedObj = await translatedResp.json();
 
-    // outputElem.value = translatedObj.translated;
     if(translatedResp.ok){
       this.publish(Events.TranslateSuccess, translatedObj);
     }else{
