@@ -23,4 +23,19 @@
 ### November 17, 2024
 - **Task**: Frontend - landing page images
 - **Details**: update the src path for landing page images and logo on the header
-- **Link to Commit**: https://github.com/chrispho/language-study-app/pull/40#issue-2667001278  
+- **Link to Commit**: https://github.com/chrispho/language-study-app/pull/40#issue-2667001278
+
+### December 10, 2024
+- **Task**: Creation of site wide-user database(with mshivang)
+- **Details**: Collaborate on coming up the flow and structure.
+- **Link to Commit**: https://github.com/chrispho/language-study-app/issues/53
+
+### December 10, 2024
+- **Task**: Creation of demo-video
+- **Details**: Recorded the demo-video and added in the repo as per  the project guidelines.
+- **Link to Commit**: https://github.com/chrispho/language-study-app/pull/73
+
+### December 10, 2024
+- **Task**: Backend and frontend logic for site-wide transaltion feature
+- **Details**: Added the routes and controllers for site-wide translation feature. Updated all the files related to it accordingly. Added the fetching logic in frontend. Utilized POST as mentioned in the document.
+- **Link to Commit**: https://github.com/chrispho/language-study-app/pull/71
