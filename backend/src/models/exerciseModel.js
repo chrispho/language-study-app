@@ -1,4 +1,10 @@
-import sequelize from "sequelize";
+import { Sequelize, DataTypes } from '@sequelize/core';
+import { SqliteDialect } from '@sequelize/sqlite3';
+
+const sequelize = new Sequelize({
+  dialect: SqliteDialect,
+  storage: 'authentication.sqlite',
+});
 
 // Define the ExerciseLibrary model
 const ExerciseLibrary = sequelize.define("ExerciseLibrary", {
@@ -23,7 +29,7 @@ const Exercise = sequelize.define("Exercise", {
   exerciseListId: {
     type: DataTypes.UUID,
     references: {
-      model: ExerciseList,
+      model: ExerciseLibrary,
       key: "exerciseListId",
     },
   },
@@ -43,17 +49,6 @@ const Exercise = sequelize.define("Exercise", {
     type: DataTypes.JSON,
     allowNull: false,
   },
-});
-
-// establish the one-to-many relationship between libraries and exercises.
-ExerciseLibrary.hasMany(Exercise, {
-  foreignKey: 'exerciseListId',
-  as: 'exercises'
-});
-
-Exercise.belongsTo(ExerciseLibrary, {
-  foreignKey: 'exerciseListId',
-  as: 'exerciseLibrary'
 });
 
 class _ExerciseModel {

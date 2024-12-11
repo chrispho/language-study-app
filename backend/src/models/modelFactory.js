@@ -3,7 +3,8 @@
 ! this you can extend with your own functions (see below)
 * *****************
 */
-import TranslationModel from "./translationModel.js"
+import TranslationModel from "./translationModel.js";
+import ExerciseModel from "./exerciseModel.js";
 
 class _ModelFactory {
   // ! delete this in final version
@@ -18,8 +19,12 @@ class _ModelFactory {
   //   }
   // }
 
-  async getTranslationModel(){
+  async getTranslationModel() {
     return TranslationModel;
+  }
+
+  async getExerciseModel() {
+    return ExerciseModel;
   }
 }
 
