@@ -44,6 +44,7 @@ export class ExercisePageComponent extends Component {
     const questionBox = document.createElement("div");
     questionBox.classList.add("question-box");
 
+    // Helper function to format the Spanish time question
     function createQuestion(spanishTime) {
       const words = spanishTime.split(' ');
       const htmlWords = words.map(word => `<b><em><span class='word es-ES'>${word}</span></em></b>`).join(' ');
@@ -63,6 +64,7 @@ export class ExercisePageComponent extends Component {
       { value: "7:05", correct: true },
     ];
 
+    // Create individual answer option buttons
     options.forEach((option) => {
       const optionBox = document.createElement("button");
       optionBox.classList.add("option-box");
@@ -126,25 +128,13 @@ export class ExercisePageComponent extends Component {
     this.#container.appendChild(mainContainer);
   }
 
-  // TODO copy for switching quesetion
-  // Renders the tasks in the list
-  // #renderTasks() {
-  //   const taskList = this.#container.querySelector('#simpleTaskList');
-  //   taskList.innerHTML = ''; // Clear existing content
-
-  //   this.#tasks.forEach(taskData => {
-  //     const taskContainer = document.createElement('li');
-  //     taskContainer.classList.add('task-item');
-
-  //     // Create a new TaskComponent for each task
-  //     const task = new TaskComponent(taskData);
-  //     taskContainer.appendChild(task.render());
-  //     taskList.appendChild(taskContainer);
-  //   });
-  // }
-
   // Attaches the event listeners to the component
   #attachEventListeners() {
+
+    // Add event listeners to each word element:
+    // - Mouseover: Show the definition in the popup
+    // - Mouseleave: Hide the definition popup
+    // - Click: Speak the word in the specified language
     this.#container.querySelectorAll(".word").forEach((wordElement) => {
       console.log(wordElement);
       wordElement.addEventListener("mouseover", function () {
@@ -162,6 +152,9 @@ export class ExercisePageComponent extends Component {
       });
     });
 
+    // Add event listener to the submit button:
+    // - Show the feedback panel
+    // - Mark all options as submitted
     const submitBtn = this.#container.getElementsByClassName("submit-btn");
     const feedbackPanel =
       this.#container.getElementsByClassName("feedback-panel");
@@ -173,6 +166,10 @@ export class ExercisePageComponent extends Component {
         options[i].classList.add("submitted");
       }
     });
+
+    // Add event listener to the try again button:
+    // - Hide the feedback panel
+    // - Remove 'submitted' and 'selected' classes from all options
     const tryAgain = this.#container.getElementsByClassName("try-again-btn");
     tryAgain[0].addEventListener("click", () => {
       feedbackPanel[0].classList.remove("visible");
@@ -182,21 +179,11 @@ export class ExercisePageComponent extends Component {
         options[i].classList.remove("selected");
       }
     });
+    
+    // Add event listener to the next button (currently empty):
+    // - Implement logic for handling the next exercise (e.g., fetch new data, update UI)
     const nextButton = this.#container.getElementsByClassName("next-btn");
     nextButton[0].addEventListener("click", () => {});
-
-    // })
-
-    // const hub = EventHub.getInstance();
-    // hub.subscribe(Events.NewTask, (taskData) => {
-    //   this.#tasks.push(taskData);
-    //   this.#renderTasks();
-    // });
-
-    // hub.subscribe(Events.UnStoreTasks, () => {
-    //   this.#tasks = [];
-    //   this.#renderTasks();
-    // });
   }
 }
 

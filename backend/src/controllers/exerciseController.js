@@ -2,25 +2,29 @@ import ModelFactory from "../models/modelFactory.js";
 
 class ExerciseController {
   constructor() {
+    // Fetches the ExerciseModel from the ModelFactory and assigns it to the `this.model` property.
     ModelFactory.getExerciseModel().then((model) => {
       this.model = model;
     });
   }
 
+  // Creates a new exercise list.
   async createExerciseList(req, res) {
     await this.model.createExerciseList();
   }
 
+  // Creates a new exercise.
   async createExercise(req, res) {
-    // TODO: Fix variables when request format is known
-    const exerciseName = req;
-    const question = req;
-    const options = req;
-    const answers = req;
+    // Extract exercise details from the request body (adjust based on actual request format)
+    const exerciseName = req.body.name;
+    const question = req.body.question;
+    const options = req.body.options;
+    const answers = req.body.answers;
 
-    await this.model.createExercise();
+    await this.model.createExercise(exerciseName, question, options, answers); // Pass the extracted details to the model
   }
 
+  // Retrieves a list of exercise libraries for a given user ID.
   async getExerciseLibrary(req, res, userId) {
     try {
       const exerciseLibrary = await this.model.getExerciseLibrary(userId);
@@ -33,6 +37,7 @@ class ExerciseController {
     }
   }
 
+  // Retrieves a specific exercise for a given user ID and exercise ID.
   async getExercise(req, res, userId, exerciseId) {
     try {
       const exercise = await this.model.getExercise(userId, exerciseId);
@@ -44,22 +49,6 @@ class ExerciseController {
         .json({ error: `Failed to fetch exercise #${exerciseId}` });
     }
   }
-
-  // //essentially passes through params to model
-  // async translate(req, res){
-  //   const inLang = req.body.inLang;
-  //   const outLang = req.body.outLang;
-  //   const text = req.body.text;
-  //   const translated = await this.model.translate(inLang, outLang, text);
-
-  //   const error = false
-  //   if(error){
-  //     res.status(500).json({ error: "some error" })
-  //   }
-
-  //   console.log(`translated ${inLang} ${text} ===> ${outLang} ${translated}`)
-  //   res.status(200).json({ translated: translated })
-  // }
 }
 
 // export singleton

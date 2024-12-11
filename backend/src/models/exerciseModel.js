@@ -1,5 +1,6 @@
 import sequelize from "sequelize";
 
+// Define the ExerciseLibrary model
 const ExerciseLibrary = sequelize.define("ExerciseLibrary", {
   exerciselistid: {
     type: DataTypes.UUID,
@@ -12,6 +13,7 @@ const ExerciseLibrary = sequelize.define("ExerciseLibrary", {
   },
 });
 
+// Define the Exercise model
 const Exercise = sequelize.define("Exercise", {
   exerciseId: {
     type: DataTypes.UUID,
@@ -43,6 +45,7 @@ const Exercise = sequelize.define("Exercise", {
   },
 });
 
+// establish the one-to-many relationship between libraries and exercises.
 ExerciseLibrary.hasMany(Exercise, {
   foreignKey: 'exerciseListId',
   as: 'exercises'
@@ -56,6 +59,7 @@ Exercise.belongsTo(ExerciseLibrary, {
 class _ExerciseModel {
   constructor() {}
 
+  // Initialize the database connection and synchronize models
   async init(fresh = false) {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
@@ -66,6 +70,7 @@ class _ExerciseModel {
     }
   }
 
+  // Create a new exercise list
   async createExerciseList(name) {
     try {
       return await ExerciseLibrary.create({ name: name });
@@ -75,8 +80,10 @@ class _ExerciseModel {
     }
   }
 
+
+  // Create a new exercise (missing parameters for `exerciseListId`, `questionType`, `question`, `options`, and `answerData`)
   async createExercise() {
-    const exerciseObj = {};
+    const exerciseObj = {}; // Empty object, needs to be filled with actual exercise data
     try {
       return await Exercise.create(exerciseObj);
     } catch {
@@ -85,6 +92,7 @@ class _ExerciseModel {
     }
   }
 
+  // Get exercise libraries for a specific user 
   async getExerciseLibrary(userId) {
     try {
       return await Exercise.findAll({
@@ -93,11 +101,12 @@ class _ExerciseModel {
         },
       });
     } catch {
-      console.error(`Error fetching exercise #${exerciseId}`);
-      throw new Error(`Failed to fetch exercise #${exerciseId}`);
+      console.error(`Error fetching exercises for user #${userId}`);
+      throw new Error(`Failed to fetch exercises for user #${userId}`);
     }
   }
 
+  // Get exercises for a specific user and exercise ID
   async getExercise(userId = null, exerciseId = null) {
     try {
       return await Exercise.findAll({
