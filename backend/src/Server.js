@@ -4,10 +4,16 @@
 
 import "dotenv/config";
 import express from "express";
+import "./models/SQLiteRelationships.js";
 import TranslationRoutes from "./routes/translationRoutes.js";
 import ExerciseRoutes from "./routes/exerciseRoutes.js";
 import session from "express-session";
 import passport from "passport";
+import UserRoutes from "./routes/userRoutes.js";
+import ExerciseRoutes from "./routes/exerciseRoutes.js";
+import FlashcardRoutes from "./routes/flashcardRoutes.js";
+import AchievementRoutes from "./routes/achievementRoutes.js";
+import ProgressRoutes from "./routes/progressRoutes.js";
 
 class Server {
   constructor() {
@@ -18,8 +24,9 @@ class Server {
   }
 
   configureMiddleware() {
-    this.app.use(express.static("../frontend/src"));
-    this.app.use(express.json({ limit: "10mb" }));
+    this.app.use(express.static("../frontend/src"))
+    this.app.use(express.static("../frontend/public"))
+    this.app.use(express.json({ limit: "10mb" }))
   }
 
   configureAuth() {
@@ -40,6 +47,11 @@ class Server {
     this.app.use("/v1", TranslationRoutes);
     this.app.use("/v1", ExerciseRoutes);
     // this.app.use("/v1", AuthRoutes)
+    this.app.use("/v1", UserRoutes);
+    this.app.use("/v1", ExerciseRoutes);
+    this.app.use("/v1", FlashcardRoutes);
+    this.app.use("/v1", AchievementRoutes);
+    this.app.use("/v1", ProgressRoutes);
   }
 
   start(port = 3000) {
