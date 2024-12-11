@@ -18,6 +18,11 @@ export const Events = {
   TranslateSuccess: "TranslateSuccess",
   TranslateFailure: "TranslateFailure",
 
+  LoadTranslateHistory: "LoadTranslateHistory",
+  TranslateHistorySuccess: "TranslateHistorySuccess",
+  TranslateHistoryFail: "TranslateHistoryFail",
+
+
   // New Events for User Profile Loading
   LoadUserProfile: "LoadUserProfile",
   UserProfileSuccess: "UserProfileSuccess",

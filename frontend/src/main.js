@@ -12,4 +12,5 @@ appContainer.appendChild(appController.render());
 // Services
 // const taskRepository = TaskRepositoryFactory.get('remote');
 const translationService = TranslationFactory.get();
+const translationHistoryService = TranslationFactory.getHistory()
 const profileService = ProfileFactory.get(); // Make sure profileService has subscriptions
