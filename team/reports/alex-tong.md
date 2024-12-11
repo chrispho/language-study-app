@@ -43,4 +43,19 @@
 ### November 27, 2024
 - **Task**: create backend for cloud translation
 - **Details**: copied and modified code from November 7th, integrating it into the model/controller format
-- **Link to Commit**: link TODO
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/9d27665aa10ede19bef6e33b5fbc91951539f1e1)
+
+### December 12, 2024
+- **Task**: Implement translation history
+- **Details**: The history appears below the translation section, and is stored in an SQLite database.
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/10881346062e0e1305bc4592f4d335ce82c9e3c3)
+
+### December 12, 2024
+- **Task**: Implement better user feedback for translation errors
+- **Details**: A CSS animated box shows up for both successes and errors.
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/e59c5b11015ac2d8c096298d71b44d338ddba635)
+
+### December 12, 2024
+- **Task**: Cleaning up the repository
+- **Details**: Added instructions to the README and removed artifacts
+- **Link to Commit**: [link](https://github.com/chrispho/language-study-app/commit/9bae7e343d7e974bc94a840337fee0290e6a7ce1)
