@@ -9,7 +9,7 @@ export class ProfilePageComponent extends Component {
   constructor() {
     super();
     this.#hub = EventHub.getInstance();
-    this.loadCSS("ProfilePageCoMponent"); // Ensure CSS is dynamically loaded
+    this.loadCSS("ProfilePageComponent"); // Ensure CSS is dynamically loaded
   }
 
   render() {
