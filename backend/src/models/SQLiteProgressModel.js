@@ -1,18 +1,25 @@
 import {Sequelize, DataTypes} from "sequelize";
 
+// Initializing Sequelize with SQLite dialect and specifying the storage file
 const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "database.sqlite",
 });
 
-let Progress;
-//define progress model
+let Progress; // Placeholder for the defined Progress model
 
+// _SQLiteProgressModel handles the definition and interaction with the Progress model in SQLite
 class _SQLiteProgressModel {
   constructor() {
     this.initialized = false;
   }
 
+  /**
+   * Initializes the Progress model and syncs it with the database.
+   * Optionally forces a fresh sync, dropping existing tables.
+   * @param {Sequelize} sequelize - The Sequelize instance.
+   * @param {boolean} fresh - Whether to force a fresh sync.
+   */
   async init(sequelize, fresh = true) {
     if (this.initialized) return;
     Progress = sequelize.define("Progress", {
@@ -36,6 +43,7 @@ class _SQLiteProgressModel {
       },
     });
 
+    // Sync the Progress model with the database, optionally forcing a fresh sync
     await Progress.sync({ force: fresh });
     if (fresh) {
       console.log("Progress table created successfully.");
@@ -47,6 +55,11 @@ class _SQLiteProgressModel {
     this.initialized = true;
   }
 
+  /**
+   * Creates a new progress record in the database.
+   * @param {Object} record - The progress record data to create.
+   * @returns {Promise<Object>} The created progress record.
+   */
   async create(record) {
     try {
       return await Progress.create(record);
@@ -56,6 +69,10 @@ class _SQLiteProgressModel {
     }
   }
 
+  /**
+   * Retrieves all progress records from the database.
+   * @returns {Promise<Array>} An array of progress record objects.
+   */
   async findAll() {
     try {
       return await Progress.findAll();
@@ -65,6 +82,11 @@ class _SQLiteProgressModel {
     }
   }
 
+  /**
+   * Retrieves a specific progress record by its ID.
+   * @param {string} id - The progressID of the record to retrieve.
+   * @returns {Promise<Object|null>} The progress record object or null if not found.
+   */
   async findByPk(id) {
     try {
       return await Progress.findByPk(id);
@@ -74,6 +96,11 @@ class _SQLiteProgressModel {
     }
   }
 
+  /**
+   * Deletes progress records based on specified options.
+   * @param {Object} options - The options to determine which records to delete.
+   * @returns {Promise<number>} The number of records deleted.
+   */
   async destroy(options) {
     try {
       return await Progress.destroy(options);
@@ -83,10 +110,16 @@ class _SQLiteProgressModel {
     }
   }
 
+  /**
+   * Retrieves the defined Progress model.
+   * @returns {Object} The Sequelize Progress model.
+   */
   getModel() {
     return Progress;
   }
 }
 
+
+// Instantiate the SQLiteProgressModel and export it
 const SQLiteProgressModel = new _SQLiteProgressModel();
 export default SQLiteProgressModel;

@@ -1,7 +1,9 @@
+// Importing necessary modules and dependencies
 import { Component } from "../Component/Component.js";
 import { EventHub } from "../../eventhub/EventHub.js";
 import { Events } from "../../eventhub/Events.js";
 
+// ProfilePageComponent extends the base Component class
 export class ProfilePageComponent extends Component {
   #container = null;
   #hub = null;
@@ -12,6 +14,7 @@ export class ProfilePageComponent extends Component {
     this.loadCSS("ProfilePageCoMponent");
   }
 
+  // Render method to create and return the component's DOM structure
   render() {
     if (this.#container) {
       return this.#container;
@@ -27,11 +30,13 @@ export class ProfilePageComponent extends Component {
     return this.#container;
   }
 
+  // Private method to create the main container div
   #createContainer() {
     this.#container = document.createElement("div");
     this.#container.classList.add("profile-page");
   }
 
+  // Private method to set up the initial HTML content of the container
   #setupContainerContent() {
     // Initially, leave placeholders or empty data.
     // We'll fill them when UserProfileSuccess is received.
@@ -77,6 +82,7 @@ export class ProfilePageComponent extends Component {
     `;
   }
 
+  // Private method to attach event listeners for tabs and handle profile data events
   #attachEventListeners() {
     const tabs = this.#container.querySelectorAll(".tab");
     const tabContents = this.#container.querySelectorAll(".tab-content");
@@ -107,6 +113,7 @@ export class ProfilePageComponent extends Component {
     });
   }
 
+  // Private method to update the profile page with fetched user data
   #updateProfilePage(data) {
     // Extract user response object
     const userResp = data.user;        // { success: true, data: { ...user fields... } }
