@@ -11,7 +11,7 @@ export class ProfilePageComponent extends Component {
   constructor() {
     super();
     this.#hub = EventHub.getInstance();
-    this.loadCSS("ProfilePageCoMponent");
+    this.loadCSS("ProfilePageComponent");
   }
 
   // Render method to create and return the component's DOM structure
