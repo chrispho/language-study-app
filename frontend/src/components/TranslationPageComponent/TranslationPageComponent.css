@@ -92,18 +92,4 @@ textarea{
 
 .translation-status-slide-in{
   right: 20px;
-  /* animation: slide-in 2s forwards;
-  animation-delay:0.5s;
-  -webkit-animation: slide-in 2s forwards;
-  -webkit-animation-delay:0.5s */
 }
-
-/* @keyframes slide-in{
-  0% {right: 0px;}
-  100% {right: 500px;}
-}
-
-@-webkit-keyframes slide-in{
-  0% {right: 0px;}
-  100% {right: 500px;}
-} */
