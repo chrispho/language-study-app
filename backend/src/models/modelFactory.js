@@ -7,7 +7,6 @@ import TranslationModel from "./translationModel.js";
 import ExerciseModel from "./exerciseModel.js";
 import SQLiteUserModel from "./SQLiteUserModel.js";
 import SQLiteTaskModel from "./taskModel.js";
-import TranslationModel from "./translationModel.js"
 import SQLiteExerciseModel from "./SQLiteExerciseModel.js";
 import SQLiteFlashcardModel from "./SQLiteFlashcardModel.js";
 import SQLiteAchievementsModel from "./SQLiteAchievementsModel.js";

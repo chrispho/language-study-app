@@ -6,7 +6,6 @@ import "dotenv/config";
 import express from "express";
 import "./models/SQLiteRelationships.js";
 import TranslationRoutes from "./routes/translationRoutes.js";
-import ExerciseRoutes from "./routes/exerciseRoutes.js";
 import session from "express-session";
 import passport from "passport";
 import UserRoutes from "./routes/userRoutes.js";
