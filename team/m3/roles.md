@@ -3,8 +3,8 @@
 ## Chris Pho - Project Manager
 - **Role**: Oversees the overall project timeline, ensures that milestones are met, and coordinates the team’s efforts. Chris is responsible for setting meeting agendas and ensuring that the team stays focused on project goals.
 - **Top 3 Commits**:
-  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/c0e8a094bacbe94c85597718b07eeed40557dd05): Add event-based page navigation to multi-view-ui.
-  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/858229d5d940284088fde9345b2cd9174e247d41): Exercise page working draft, mocked correct and incorrect answers on exercise.
+  1. [Commit 1](https://github.com/chrispho/language-study-app/commit/70023ddc4bcf7a69ea5964feab5ac019b7bb7c1d): Added API endpoints for creating, reading, updating, and deleting exercises.
+  2. [Commit 2](https://github.com/chrispho/language-study-app/commit/2a54f54e265883d4d102667878aebe42f9fd661a): Added sequelize database for storing exercises and exercise libraries.
   3. Task 3: Led weekly lab meetings and coordinated integration of different pages.
 
 ## Tiffany Lin - Time Keeper
